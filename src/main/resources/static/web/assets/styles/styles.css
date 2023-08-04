@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+*{
+    font-family: 'Quicksand', sans-serif;
+}
+.header{
+    min-height: 18vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #007894;
+    padding: 1rem;
+}
+
+.header a{
+    color:white !important;
+}
+.img{
+    height: 7rem;
+    border-radius:  60px;
+}
+.img-footer{
+  height: 3rem;
+  border-radius: 60px;
+}
+.main{
+    min-height: 72vh;
+    background-color: #f4f4f4;
+}
+.footer{
+    min-height:10vh; 
+    background-color: #e5e5e5;
+}
+.footer a{
+  text-decoration: none;
+}
+.card{
+    max-width: 15rem !important;
+    min-height: 13rem;
+    background-color:#a876b3;
+    color: white;
+    font-weight: bolder;
+    border-radius:1rem ;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
+
+}
+#card-details{
+    width: 25rem !important;
+    display: flex;
+    flex-wrap: wrap;
+    background-color:#a876b3;
+    color: white;
+    
+}
+.code-editor {
+    /* max-width: 300px; */
+    min-width: 18rem;
+    max-height: 15rem;
+    background-color: #007894;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bi .bi-bank2{
+    color:#288bef00;
+  }
+  #header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+  }
+  
+  .title {
+    font-family: Quicksand, sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 1.57px;
+    color: rgb(212 212 212);
+  }
+  
+  .icon {
+    width: 20px;
+    transition: .2s ease;
+  }
+  
+  .icon:hover {
+    cursor: pointer;
+    border-radius: 50px;
+    background-color: #6e7281;
+  }
+ .code{
+    color: white;
+    font-size: 20px;
+    font-weight: bolder ;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+ }
+ .Btn {
+    --black: #000000;
+    --ch-black: #141414;
+    --eer-black: #1b1b1b;
+    --night-rider: #2e2e2e;
+    --white: #ffffff;
+    --af-white: #f3f3f3;
+    --ch-white: #e1e1e1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    background-color: var(--af-white);
+  }
+  
+  /* plus sign */
+  .sign {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sign svg {
+    width: 17px;
+  }
+  
+  .sign svg path {
+    fill: var(--night-rider);
+  }
+  /* text */
+  .text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: var(--night-rider);
+    font-size: 1.2em;
+    font-weight: 600;
+    transition-duration: .3s;
+  }
+  /* hover effect on button width */
+  .Btn:hover {
+    width: 125px;
+    border-radius: 5px;
+    transition-duration: .3s;
+  }
+  
+  .Btn:hover .sign {
+    width: 20%;
+    transition-duration: .3s;
+    padding-left: 20px;
+  }
+  /* hover effect button's text */
+  .Btn:hover .text {
+    opacity: 4;
+    width: 70%;
+    transition-duration: .3s;
+    padding-right: 10px;
+  }
+  /* button click effect*/
+  .Btn:active {
+    transform: translate(4px ,4px);
+  }
+  @media only screen and (min-width:320px) and (max-width:767px) {
+    .header{
+      display: flex;
+      flex-direction: column !important;
+    }
+    .header img{
+      display: none;
+    }
+  }
+  @media only screen and (min-width:768px) {
+    h1{
+      display: none;
+    }
+  }
