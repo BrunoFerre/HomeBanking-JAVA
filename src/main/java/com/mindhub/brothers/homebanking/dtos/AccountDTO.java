@@ -1,23 +1,19 @@
 package com.mindhub.brothers.homebanking.dtos;
 
 import com.mindhub.brothers.homebanking.models.Account;
+import com.mindhub.brothers.homebanking.models.Transaction;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AccountDTO {
     private long id;
     private String number;
     private LocalDate creationDate;
     double balance;
-
+    private Set<TransactionDTO> transactionDTOSet = new HashSet<>();
     public AccountDTO() {
-    }
-
-    public AccountDTO(long id, String number, LocalDate creationDate, double balance) {
-        this.id = id;
-        this.number = number;
-        this.creationDate = creationDate;
-        this.balance = balance;
     }
 
     public AccountDTO(Account acounnt) {
@@ -25,39 +21,28 @@ public class AccountDTO {
         this.number=acounnt.getNumber();
         this.creationDate=acounnt.getCreationDate();
         this.balance=acounnt.getBalance();
+        this.transactionDTOSet = new HashSet<>();
+        for (Transaction transaction: acounnt.getTransactions()) {
+            this.transactionDTOSet.add(new TransactionDTO(transaction));
+        }
     }
-
     public long getId() {
         return id;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getNumber() {
         return number;
     }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public LocalDate getCreationDate() {
         return creationDate;
     }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
     public double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public Set<TransactionDTO> getTransactionDTOSet() {
+        return transactionDTOSet;
     }
+
 
     @Override
     public String toString() {

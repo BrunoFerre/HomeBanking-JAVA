@@ -3,7 +3,6 @@
     font-family: 'Quicksand', sans-serif;
 }
 .header{
-    min-height: 18vh;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -27,7 +26,7 @@
     background-color: #f4f4f4;
 }
 .footer{
-    min-height:10vh; 
+    min-height:15vh;
     background-color: #e5e5e5;
 }
 .footer a{
