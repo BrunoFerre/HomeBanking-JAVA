@@ -27,7 +27,7 @@ createApp({
                     }
                     this.transaction.sort((a,b)=> a.id - b.id)
                     console.log(this.transaction)
-                }).catch(error => console.error(error))
+                })
         }
     }
 }).mount("#app")
