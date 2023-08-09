@@ -4,7 +4,6 @@ createApp({
     data() {
         return {
             clients: [],
-            clients_accounts: [],
             accounts: []
         }
     },
@@ -13,12 +12,11 @@ createApp({
     },
     methods: {
         loadData() {
-            axios.get(`http://localhost:8080/api/clients/`)
+            axios.get(`http://localhost:8080/api/clients/1`)
                 .then(response => {
                     this.clients = response.data
-                    this.clients_accounts = this.clients[0].accounts
+                    this.clients_accounts = this.clients.accounts
                     for (const account of this.clients_accounts) {
-                        console.log(account);
                         const aux = {
                             id: account.id,
                             number: account.number,
@@ -27,6 +25,7 @@ createApp({
                         }
                         this.accounts.push(aux)
                     }
+                localStorage.setItem('client',JSON.stringify(this.clients))
                 })
         }
     }

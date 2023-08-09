@@ -13,10 +13,10 @@
 </head>
 
 <body>
-  <div id="app">
+  <div id="app" v-cloak>
     <header class="header w-100 fs-3">
       <h1 class="h1">Home</h1>
-      <img src="./images/Home_Banking.png" alt="Logo" class="img">
+      <img src="./images/bank-banking-finance-icon_112235.ico" alt="Logo" class="img">
       <nav class="navbar sticky-top navbar-expand-lg text-center">
         <div class="container-fluid justify-content-around">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -49,9 +49,8 @@
       <div class="card text-bg-tertiary">
         <img src="./images/melba.jpg" class="card-img-top" alt="Logo-Melba">
         <div class="card-body">
-          <template v-if="clients.length>0" v-for="client of clients">
-            <h5 class="card-title fw-bolder fs-5">Hello {{client.firstName}} {{client.lastName}}</h5>
-            <h6 class="card-text fs-5 fw-bold">Email : {{client.email}}</h6>
+            <h5 class="card-title fw-bolder fs-5">Hello {{clients.firstName}} {{clients.lastName}}</h5>
+            <h6 class="card-text fs-5 fw-bold">Email : {{clients.email}}</h6>
           </template>
           <button class="Btn">
             <div class="sign"><svg viewBox="0 0 512 512">
@@ -63,26 +62,25 @@
           </button>
        </div>
       </div>
-      <div class="d-flex gap-4 align-items-center justify-content-center flex-wrap">
+      <div class="d-flex gap-4 align-items-center justify-content-center flex-wrap ">
+        <p class="fw-bold fs-5 w-100 text-center fw-bolder">Account Details</p>
         <template v-if="accounts.length>0" v-for="account of accounts">
-          <div class="code-editor d-flex flex-wrap">
-            <div class="editor-content p-3 ">
-              <code class="code">
-                  <p class="fw-bold fs-5">Account Details</p>
-                    <p class="property">
-                    <span class="color-2">Account Number</span><span> : </span>
-                    <span class="color-1">{{account.number}}</span>
-                  </p>
-                  <p class="property">
-                    <span class="color-2">Creation Date</span><span> : </span>
-                    <span class="color-preview-1"></span><span>{{account.creationDate}}</span>
-                  </p>
-                  <p class="property">
-                    <span class="color-2">Balance</span> : <span></span>
-                    <span class="color-1">{{account.balance}}</span>
-                  </p>
-                </code>
-            <a :href="'./pages/account.html?id=' + account.id" class="btn btn-success fs-4"> Go transactions</a>
+          <div class="code-editor d-flex flex-column text-white fs-5 align-items-center gap-2 p-2 fw-bold">
+            <p class="property">
+            <span class="color-2">Account Number</span><span> : </span>
+            <span class="color-1">{{account.number}}</span>
+          </p>
+            <p class="property">
+              <span class="color-2">Creation Date</span><span> : </span>
+              <span class="color-preview-1"></span><span>{{account.creationDate}}</span>
+            </p>
+             
+            <p class="property">
+              <span class="color-2">Balance</span> : <span></span>
+              <span class="color-1">{{account.balance}}</span>
+            </p>
+            <a :href="'./pages/account.html?id=' + account.id" class="btn btn-success"> Go transactions</a>
+          </div>
           </div>
         </template>
       </div>

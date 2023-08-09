@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @SpringBootApplication
 public class HomebankingApplication {
  LocalDate date = LocalDate.now();
- private LocalDateTime date1 = LocalDateTime.now();
- private LocalDateTime date2 = LocalDateTime.now().plusDays(1);
+ private LocalDateTime date1 = LocalDateTime.now().withNano(0);
+ private LocalDateTime date2 = LocalDateTime.now().withNano(0).plusDays(1);
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}

@@ -14,16 +14,14 @@ createApp({
     },
     methods: {
         loadData() {
-            axios.get(`http://localhost:8080/api/clients/1`)
+            this.client= JSON.parse(localStorage.getItem('client'))??[]
+            parameter = location.search
+            parameterUrl = new URLSearchParams(parameter)
+            this.id_account = parameterUrl.get("id")
+            
+            axios.get(`http://localhost:8080/api/accounts/${this.id_account}`)
                 .then(response => {
-                    this.client = response.data
-                    parameter = location.search
-                    parameterUrl = new URLSearchParams(parameter)
-                    this.id_account = parameterUrl.get("id")
-                    for (const account of this.client.accounts) {
-                        this.accounts.push(account)
-                    }
-                    this.account = this.accounts.find(account => account.id == this.id_account)
+                    this.account = response.data
                     for(let transaction of this.account.transactionDTOSet){
                         this.transaction.push(transaction)
                     }
