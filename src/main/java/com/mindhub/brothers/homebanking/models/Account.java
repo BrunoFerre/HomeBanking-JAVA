@@ -16,12 +16,10 @@ public class Account {
     private long id;
     private String number;
     private LocalDate creationDate;
-    double balance;
-
+    private double balance;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private Client owner;
-
     @OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
     private Set<Transaction> transactions = new HashSet<>();
     public Account() {

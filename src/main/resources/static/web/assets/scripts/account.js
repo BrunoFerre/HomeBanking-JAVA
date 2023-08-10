@@ -3,7 +3,6 @@ createApp({
     data() {
         return {
             client: [],
-            accounts: [],
             account: [],
             id_account: Number,
             transaction:[]
@@ -27,7 +26,7 @@ createApp({
                     }
                     this.transaction.sort((a,b)=> a.id - b.id)
                     console.log(this.transaction)
-                })
+            })
         }
     }
 }).mount("#app")

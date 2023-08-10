@@ -79,8 +79,7 @@
                     <tbody>
                       <template v-for="(transaction,index) of transaction">
                         <tr>
-                          <td v-if="transaction.type == 'DEBIT'" class="text-danger">{{transaction.type}}</td>
-                          <td v-else class="text-success">{{transaction.type}}</td>
+                          <td :class="transaction.type == 'DEBIT' ? 'text-danger' : 'text-success'">{{transaction.type}}</td>
                           <td>{{transaction.amount}}</td>
                           <td>{{transaction.description}}</td>
                           <td>{{transaction.date}}</td>
