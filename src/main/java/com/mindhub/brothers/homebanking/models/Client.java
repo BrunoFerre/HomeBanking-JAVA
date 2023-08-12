@@ -4,7 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Client {
@@ -17,21 +19,27 @@ public class Client {
     private String email;
 
     @OneToMany(mappedBy = "owner",fetch = FetchType.EAGER)
-
-   private Set <Account> accounts = new HashSet<>();
-
-    public Client() {
-
-    }
+    private Set <Account> accounts = new HashSet<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoans=new HashSet<>();;
+    public Client() {}
     public Client(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
-
+    public void addAccount(Account account){
+        account.setOwner(this);
+        accounts.add(account);
+    }
     public long getId() {
         return id;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -56,15 +64,23 @@ public class Client {
         this.email = email;
     }
 
-    public Set<Account> getAccount() {
+    public Set<Account> getAccounts() {
         return accounts;
     }
 
-    public void addAccount(Account account){
-        account.setOwner(this);
-        accounts.add(account);
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
     }
-
+    public void setLoan(Set<ClientLoan> loan) {
+        this.clientLoans = loan;
+    }
+public List<String> getLoans(){
+        return clientLoans.stream().map(loan->loan.getLoan().getName()).collect(Collectors.toList());
+}
+public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setClient(this);
+        this.clientLoans.add(clientLoan);
+}
     @Override
     public String toString() {
         return "Client{" +
