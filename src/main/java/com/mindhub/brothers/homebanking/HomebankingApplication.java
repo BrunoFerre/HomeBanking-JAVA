@@ -46,8 +46,8 @@ public class HomebankingApplication {
 			Loan loan3 = new Loan("Automotriz", 300.000,this.automotriz);
 			ClientLoan clientLoan = new ClientLoan(60,400.000);
 			repositoryClient.save(client);
-			loanRepository.save(loan1);
 			loanRepository.save(loan2);
+			loanRepository.save(loan1);
 			loanRepository.save(loan3);
 			client.addClientLoan(clientLoan);
 			loan1.addClientLoan(clientLoan);
