@@ -4,23 +4,28 @@ import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.models.ClientLoan;
 import com.mindhub.brothers.homebanking.models.Loan;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class ClientLoanDTO {
     private long id;
     private long id_loan;
-    private String loanName;
+
+    private String loan;
+
     private double amount;
     private int payments;
-
     public ClientLoanDTO() {
     }
 
     public ClientLoanDTO(ClientLoan clientLoan) {
         this.id = clientLoan.getId();
         this.id_loan = clientLoan.getLoan().getId();
-        this.loanName = clientLoan.getLoan().getName();
+        this.loan= clientLoan.getLoan().getName();
         this.amount = clientLoan.getAmount();
         this.payments = clientLoan.getPayments();
+
     }
 
     public long getId() {
@@ -31,8 +36,8 @@ public class ClientLoanDTO {
         return id_loan;
     }
 
-    public String getLoanName() {
-        return loanName;
+    public String getLoan() {
+        return loan;
     }
 
     public double getAmount() {

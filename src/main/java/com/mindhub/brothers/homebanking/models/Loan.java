@@ -2,10 +2,14 @@ package com.mindhub.brothers.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 @Entity
 public class Loan {
@@ -31,7 +35,7 @@ public class Loan {
         this.clientLoan.add(clientLoan);
     }
     public List<String> getClients(){
-        return clientLoan.stream().map(clientLoan ->clientLoan.getClient().getLastName()).collect(Collectors.toList());
+        return clientLoan.stream().map(clientLoan->clientLoan.getClient().getFirstName()+" "+ clientLoan.getClient().getLastName()).collect(Collectors.toList());
     }
     public long getId() {
         return id;

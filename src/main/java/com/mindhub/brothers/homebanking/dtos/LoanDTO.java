@@ -1,7 +1,9 @@
 package com.mindhub.brothers.homebanking.dtos;
 
 import com.mindhub.brothers.homebanking.models.ClientLoan;
+import com.mindhub.brothers.homebanking.models.Loan;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,16 +13,12 @@ public class LoanDTO {
     private String name;
     private double maxAmount;
     private List<Integer> payments;
-    private Set<ClientLoan> clientLoan = new HashSet<>();
-
     public LoanDTO() {
     }
-
-    public LoanDTO(String name, double maxAmount, List<Integer> payments, Set<ClientLoan> clientLoan) {
-        this.name = name;
-        this.maxAmount = maxAmount;
-        this.payments = payments;
-        this.clientLoan = clientLoan;
+    public LoanDTO(Loan loan){
+        this.name = loan.getName();
+        this.maxAmount = loan.getMaxAmount();
+        this.payments = loan.getPayments();
     }
     public long getId() {
         return id;
@@ -38,7 +36,4 @@ public class LoanDTO {
         return payments;
     }
 
-    public Set<ClientLoan> getClientLoan() {
-        return clientLoan;
-    }
 }
