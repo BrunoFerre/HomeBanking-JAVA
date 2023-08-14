@@ -4,7 +4,8 @@ createApp({
     data() {
         return {
             clients: [],
-            accounts: []
+            accounts: [],
+            loans:[]
         }
     },
     created() {
@@ -15,7 +16,9 @@ createApp({
             axios.get(`http://localhost:8080/api/clients/1`)
                 .then(response => {
                     this.clients = response.data
+                    console.log(this.clients);
                     this.clients_accounts = this.clients.accounts
+                    this.loans= this.clients.loans
                     for (const account of this.clients_accounts) {
                         const aux = {
                             id: account.id,

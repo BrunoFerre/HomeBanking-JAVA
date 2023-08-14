@@ -45,13 +45,13 @@
         </div>
       </nav>
     </header>
-    <main class="main d-flex gap-3 flex-wrap align-items-center p-3 justify-content-center">
-      <div class="card text-bg-tertiary">
+    <main class="main d-flex gap-3 flex-wrap p-3">
+      <div class="d-flex flex-wrap gap-1">
+      <section class="card text-bg-tertiary">
         <img src="./images/melba.jpg" class="card-img-top" alt="Logo-Melba">
-        <div class="card-body">
+        <article class="card-body">
             <h5 class="card-title fw-bolder fs-5">Hello {{clients.firstName}} {{clients.lastName}}</h5>
             <h6 class="card-text fs-5 fw-bold">Email : {{clients.email}}</h6>
-          </template>
           <button class="Btn">
             <div class="sign"><svg viewBox="0 0 512 512">
                 <path
@@ -60,12 +60,12 @@
               </svg></div>
             <div class="text">Log Out</div>
           </button>
-       </div>
-      </div>
-      <div class="d-flex gap-4 align-items-center justify-content-center flex-wrap ">
+       </article> 
+      </section>
+      <section class="d-flex flex-wrap gap-1 justify-content-around align-content-start">
         <p class="fw-bold fs-5 w-100 text-center fw-bolder">Account Details</p>
         <template v-if="accounts.length>0" v-for="account of accounts">
-          <div class="code-editor d-flex flex-column text-white fs-5 align-items-center gap-2 p-2 fw-bold">
+          <div class="code-editor d-flex flex-column text-white fs-5 align-items-center  p-2 fw-bold">
             <p class="property">
             <span class="color-2">Account Number</span><span> : </span>
             <span class="color-1">{{account.number}}</span>
@@ -74,17 +74,41 @@
               <span class="color-2">Creation Date</span><span> : </span>
               <span class="color-preview-1"></span><span>{{account.creationDate}}</span>
             </p>
-             
             <p class="property">
               <span class="color-2">Balance</span> : <span></span>
               <span class="color-1">{{account.balance}}</span>
             </p>
             <a :href="'./pages/account.html?id=' + account.id" class="btn btn-success"> Go transactions</a>
           </div>
-          </div>
         </template>
-      </div>
-    </main>
+      </section>
+    </div>
+    <section class="container d-flex flex-column">
+      <h2 class="text-center "> Loans Resume</h2>
+      <template v-if="loans.length > 0 ">
+        <table class="table table-primary table-bordered border-black text-center shadow-lg p-3 rounded" id="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Payments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template v-for="loan of loans">
+          <tr>
+            <td>{{loan.loan}}</td>
+            <td>{{loan.amount}}</td>
+            <td>{{loan.payments}}</td>
+          </template>
+        </tr>
+      </tbody>
+    </table>
+  </template>
+  <h2 v-else> No Transaction</h2>
+    </section>
+  </main>
+
     <footer class="footer d-flex align-items-center justify-content-around flex-wrap ">
       <i class="bi bi-bank2 fs-1 text-primary"></i>
       <p class="fs-5"> Mind Hub Brother &#169</p>
@@ -94,6 +118,8 @@
       </div>
     </footer>
   </div>
+</div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>
