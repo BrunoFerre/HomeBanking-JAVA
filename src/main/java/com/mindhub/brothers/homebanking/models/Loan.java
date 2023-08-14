@@ -5,6 +5,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 @Entity
 public class Loan {
     @Id
@@ -15,7 +17,7 @@ public class Loan {
     private double maxAmount;
     @ElementCollection
     private List<Integer> payments;
-    @OneToMany(mappedBy = "clientsLoan", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoan = new HashSet<>();
     public Loan() {
     }
@@ -23,6 +25,13 @@ public class Loan {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+    }
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setLoan(this);
+        this.clientLoan.add(clientLoan);
+    }
+    public List<String> getClients(){
+        return clientLoan.stream().map(clientLoan ->clientLoan.getClient().getLastName()).collect(Collectors.toList());
     }
     public long getId() {
         return id;
@@ -54,8 +63,5 @@ public class Loan {
     public void setClientLoan(Set<ClientLoan> clientLoan) {
         this.clientLoan = clientLoan;
     }
-    public void addClientLoan(ClientLoan clientLoan){
-        clientLoan.setLoan(this);
-        this.clientLoan.add(clientLoan);
-    }
+
 }

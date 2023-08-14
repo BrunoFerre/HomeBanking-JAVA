@@ -32,6 +32,10 @@ public class Client {
         account.setOwner(this);
         accounts.add(account);
     }
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setClient(this);
+        this.clientLoans.add(clientLoan);
+    }
     public long getId() {
         return id;
     }
@@ -74,13 +78,13 @@ public class Client {
     public void setLoan(Set<ClientLoan> loan) {
         this.clientLoans = loan;
     }
-public List<String> getLoans(){
-        return clientLoans.stream().map(loan->loan.getLoan().getName()).collect(Collectors.toList());
-}
-public void addClientLoan(ClientLoan clientLoan){
-        clientLoan.setClient(this);
-        this.clientLoans.add(clientLoan);
-}
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+    public List<String> getLoans(){
+        return clientLoans.stream().map(clientLoan -> clientLoan.getLoan().getName()).collect(Collectors.toList());
+    }
     @Override
     public String toString() {
         return "Client{" +

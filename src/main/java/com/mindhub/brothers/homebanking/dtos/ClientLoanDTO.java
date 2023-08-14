@@ -7,37 +7,39 @@ import com.mindhub.brothers.homebanking.models.Loan;
 
 public class ClientLoanDTO {
     private long id;
-    private Integer payments;
+    private long id_loan;
+    private String loanName;
     private double amount;
-    private Client client;
-    private Loan clientsLoan;
+    private int payments;
 
     public ClientLoanDTO() {
     }
 
     public ClientLoanDTO(ClientLoan clientLoan) {
-        this.payments= clientLoan.getPayments();
+        this.id = clientLoan.getId();
+        this.id_loan = clientLoan.getLoan().getId();
+        this.loanName = clientLoan.getLoan().getName();
         this.amount = clientLoan.getAmount();
-        this.client = clientLoan.getClient();
+        this.payments = clientLoan.getPayments();
     }
 
     public long getId() {
         return id;
     }
 
-    public Integer getPayments() {
-        return payments;
+    public long getId_loan() {
+        return id_loan;
+    }
+
+    public String getLoanName() {
+        return loanName;
     }
 
     public double getAmount() {
         return amount;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public Loan getClientsLoan() {
-        return clientsLoan;
+    public int getPayments() {
+        return payments;
     }
 }
