@@ -1,10 +1,9 @@
 package com.mindhub.brothers.homebanking.repositories;
 
-import com.mindhub.brothers.homebanking.models.Account;
+import com.mindhub.brothers.homebanking.models.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
-public interface AccountsRepository extends JpaRepository<Account,Long> {
-
+public interface CardRepository extends JpaRepository<Card, Long> {
 }

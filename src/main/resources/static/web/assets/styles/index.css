@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+*{
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url("../images/wallpaperflare.com_wallpaper.jpg");
+  }
+[v-cloak]{
+  display: none;
+}
+#nav{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+#img-hasbu{
+  height: 6rem;
+}
+.header{
+  background-color: rgb(108, 89, 233);
+    filter: contrast(200%);
+    min-height: 15vh;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem 0 3rem;
+    justify-content: space-around;
+}
+.navbar>a{
+    text-decoration: none;
+    color: white;
+    margin-top: 3rem;
+}
+.dropdown-menu{
+  background-color: darkgrey;
+}
+/* .dropdown-item:hover{
+} */
+.main{
+    min-height: 70vh;
+    filter: contrast(1.75);
+}
+.code-editor {
+    max-width: 27rem;
+    min-height: 25rem;
+    background-color: #007894;
+    filter: drop-shadow(16px 16px 20px rgb(36, 52, 231));
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 1rem !important ;
+    display: flex;
+  }
+  .nav-link{
+    font-weight: bolder !important;
+  }
+  .bi .bi-bank2{
+    color:#288bef00;
+  }
+  .img-footer{
+    height: 3rem;
+    border-radius: 60px;
+  }
+  .footer{
+    min-height:10vh;
+    margin-top: 3rem;
+}
+.footer a{
+  text-decoration: none;
+}
+@media only screen and (min-width:320px) and (max-width:767px) {
+  .header{
+    display: flex;
+    flex-direction: column !important;
+  }
+  .header img{
+    display: none;
+  }.footer{
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+}
+@media only screen and (min-width:768px) {
+  h1{
+    display: none;
+  }
+}
+.flex__1 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.flex__2 {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.card {
+  width: 23rem;
+  min-height: 15rem;
+  position: relative;
+  perspective: 800px;
+  background-color: transparent;
+  border: none !important;
+}
+
+.card__side {
+  width: 100%;
+  height: 100%;
+  border-radius: 3.18mm;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  transition: transform 0.7s ease-out;
+  cursor: pointer;
+  padding: 10px;
+}
+
+
+.card__side_front {
+  background: linear-gradient(90deg, rgb(18, 17, 17) 0%,#ee3333 100%);
+  filter: brightness(1.75);
+  transform: rotateY(0deg);
+}
+.card__side_front-gold  {
+  background: linear-gradient(90deg, rgb(38, 36, 36) 0%,gold 100%);
+  filter: brightness(1.75);
+  transform: rotateY(0deg);
+}
+.card__side_front-silver {
+  background: linear-gradient(90deg, rgb(18, 17, 17) 0%,silver 100%);
+  filter: brightness(1.75);
+  transform: rotateY(0deg);
+}
+.card__side_front-titanium {
+  background: linear-gradient(90deg, rgb(18, 17, 17) 0%,gray 100%);
+  filter: brightness(1.75);
+  transform: rotateY(0deg);
+}
+
+
+.card__side_back {
+  background: linear-gradient(-90deg,#c6c1b4,#424141 100%);
+  filter: brightness(1.75);
+  transform: rotateY(-180deg);
+  text-align: center;
+  color: black;
+}
+.card__side__name-bank {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  position: relative;
+  font-size: 22px;
+  margin-left: 8px;
+  color: white;
+}
+
+.card__side__name-bank::after {
+  content: "Universal Bank";
+  position: absolute;
+  margin: 1rem;
+  font-size: 18px;
+  top: 105%;
+  left: 21%;
+  color: #635c77;
+}
+.card__side__chip{
+  height: 1rem;
+}
+.card__side__name-bank::before {
+  content: "₴";
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #635c77;
+}
+.card__side__chip:after {
+  display: block;
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  top: 80px;
+  right: 15px;
+  transform: scale(1.3);
+}
+
+.card__side__name-person {
+  text-transform: uppercase;
+  font-family: Roboto Mono, sans-serif;
+  font-size: 14px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  position: relative;
+  display: block;
+  color: white;
+}
+
+.card__side__name-person::before {
+  display: block;
+  position: absolute;
+  width: 45px;
+  aspect-ratio: 1 / 1;
+  background: red;
+  bottom: -10px;
+  right: 0px;
+  border-radius: 50%;
+}
+
+.card__side__name-person::after {
+  display: block;
+  position: absolute;
+  width: 45px;
+  aspect-ratio: 1 / 1;
+  background: orange;
+  bottom: -10px;
+  right: 23px;
+  border-radius: 50%;
+}
+
+.card__side__black {
+  background: black;
+  width: 100%;
+  height: 50px;
+  border-radius: 3.18mm 3.18mm 0 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.card__side__number {
+  font-size: 18px;
+  font-family: Roboto Mono, sans-serif;
+  color: white;
+}
+
+.card__side__other-numbers {
+  font-family: Roboto Mono, sans-serif;
+  color: #eeeeee;
+  display: block;
+  font-size: 12px;
+  backface-visibility: hidden;
+  position: relative;
+}
+
+.card__side__other-numbers::after {
+  color: #635c77;
+  position: absolute;
+  font-size: 8px;
+  left: 0;
+  bottom: 60px;
+}
+.card__side__other-info {
+  color: #635c77;
+  font-size: 4px;
+  text-align: center;
+  font-family: Roboto Mono, sans-serif;
+  position: absolute;
+  bottom: 10px;
+  left: 38px;
+  backface-visibility: hidden;
+}
+
+.card__side__debit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 75%;
+  gap: 3ch;
+  padding-top: 5px;
+  border-radius: 1cm;
+  background: #191818;
+  position: absolute;
+  right: 12px;
+  bottom: 25px;
+}
+
+.card__side__debit::after {
+  display: block;
+  position: absolute;
+  background: rgba(166, 163, 163, 0.7);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  right: 0;
+}
+
+.card:hover .card__side_front {
+  transform: rotateY(180deg);
+}
+
+.card:hover .card__side_back {
+  transform: rotateY(0deg);
+}
+/* aca */
+
+.card__side__name-person::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 45px;
+  aspect-ratio: 1 / 1;
+  background: red;
+  bottom: -10px;
+  right: 0px;
+  border-radius: 50%;
+}
+
+.card__side__name-person::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 45px;
+  aspect-ratio: 1 / 1;
+  background: orange;
+  bottom: -10px;
+  right: 23px;
+  border-radius: 50%;
+}
+@media only screen and (max-width:360px) {
+  .card{
+  width: 20rem;
+  }
+}

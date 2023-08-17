@@ -1,5 +1,7 @@
 package com.mindhub.brothers.homebanking.models;
 
+import com.mindhub.brothers.homebanking.models.enums.TransactionType;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
