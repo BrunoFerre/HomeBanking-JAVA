@@ -14,7 +14,7 @@
 <body>
   <div id="app">
     <header class="header">
-      <img src="../images/hasbu2.png" alt="Logo Home Banking" id="img-hasbu">
+      <img src="../images/bank-banking-finance-icon_112235.ico" alt="Logo Home Banking" id="img-hasbu">
 
       <nav class="navbar navbar-expand-lg fs-4">
         <div class="container-fluid" id="nav">
@@ -97,7 +97,9 @@
           <h3 class="w-100 text-center fs-2 fw-bold">Debit Cards</h3>
           <template v-if="debit.length>0" v-for="(card,index) of debit">
             <div class="card">
-              <div :class="{'cards card__side card__side_front-gold card__side_front':card.color == 'GOLD','cards card__side card__side_front-titanium  card__side_front':card.color == 'TITANIUM','cards card__side card__side_front-silver  card__side_front':card.color == 'SILVER'}">
+              <div :class="{'cards card__side card__side_front-gold card__side_front':card.color
+               == 'GOLD','cards card__side card__side_front-titanium  card__side_front':card.color == 
+               'TITANIUM','cards card__side card__side_front-silver  card__side_front':card.color == 'SILVER'}">
                 <div class="flex__1">
                   <p class="card__side__name-bank">MindHub Brothers</p>
                   <div class="card__side__chip">s</div>
