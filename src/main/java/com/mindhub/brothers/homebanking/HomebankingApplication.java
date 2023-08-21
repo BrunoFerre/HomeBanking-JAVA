@@ -5,10 +5,12 @@ import com.mindhub.brothers.homebanking.models.enums.CardColor;
 import com.mindhub.brothers.homebanking.models.enums.CardType;
 import com.mindhub.brothers.homebanking.models.enums.TransactionType;
 import com.mindhub.brothers.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,6 +29,8 @@ public class HomebankingApplication {
     private final List<Integer> hipotecario = List.of(12, 24, 36, 48, 60);
     private final List<Integer> personal = List.of(6, 12, 24);
     private final List<Integer> automotriz = List.of(6, 12, 24, 36);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(HomebankingApplication.class, args);
@@ -59,7 +63,7 @@ public class HomebankingApplication {
                     -1500, "DESCRIPTION2", this.date2);
             Client client = new Client("Melba",
                     "Morel",
-                    "melba@melba");
+                    "melba@melba",passwordEncoder.encode("pass123"));
             Loan loan1 = new Loan("Hipotecario", 400.000, this.hipotecario);
             Loan loan2 = new Loan("Personal", 100.000, this.personal);
             Loan loan3 = new Loan("Automotriz", 300.000, this.automotriz);
@@ -101,14 +105,25 @@ public class HomebankingApplication {
             cardRepository.save(cardCredit);
             cardRepository.save(cardDebit);
 
-            Client bruno = new Client("Bruno Marcos", "Ferreira","fbrunomarcos@gmail.com");
+            Client bruno = new Client("Bruno Marcos",
+                    "Ferreira",
+                    "fbrunomarcos@gmail.com",
+                    passwordEncoder.encode("pass123"));
             Account accountBruno1 = new Account("VIN0067",this.date.plusDays(5),15000);
             Account accountBruno2 = new Account("VIN0068",this.date.plusDays(6),15000);
-            Transaction transactionBruno = new Transaction(TransactionType.CREDIT,2500,"nose que poner je",this.date1.plusDays(1));
+            Transaction transactionBruno = new Transaction(TransactionType.CREDIT,2500,
+                    "nose que poner je",
+                    this.date1.plusDays(1));
             ClientLoan loanBruno = new ClientLoan(12,50000);
 
-            Card cardBruno = new Card(bruno.getLastName()+ bruno.getFirstName(),CardType.CREDIT,CardColor.TITANIUM,"9898-9898-9898-9898",
-                    346,this.date.plusMonths(1),this.date.plusYears(5));
+            Card cardBruno = new Card(bruno.getLastName()+ bruno.getFirstName(),
+                    CardType.CREDIT,CardColor.TITANIUM,
+                    "9898-9898-9898-9898",
+                    346,
+                    this.date.plusMonths(1),
+                    this.date.plusYears(5));
+
+
             bruno.addAccount(accountBruno1);
             bruno.addAccount(accountBruno2);
             bruno.addCard(cardBruno);
