@@ -35,17 +35,7 @@ public class HomebankingApplication {
     public static void main(String[] args) {
         SpringApplication.run(HomebankingApplication.class, args);
     }
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Bean
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").
-                        allowedOrigins("http://127.0.0.1:5500")
-                        .allowedMethods("*");
-            }
-        };
-    }
+
     @Bean
     public CommandLineRunner initData(ClientRepository repositoryClient,
                                       AccountsRepository accountsRepository,
@@ -122,8 +112,8 @@ public class HomebankingApplication {
                     346,
                     this.date.plusMonths(1),
                     this.date.plusYears(5));
-
-
+            Client admin = new Client("GG", "RR","admin@admin.com", passwordEncoder.encode("1235"));
+            repositoryClient.save(admin);
             bruno.addAccount(accountBruno1);
             bruno.addAccount(accountBruno2);
             bruno.addCard(cardBruno);
@@ -136,6 +126,7 @@ public class HomebankingApplication {
             transactionRepository.save(transactionBruno);
             clientLoanRepository.save(loanBruno);
             cardRepository.save(cardBruno);
+
 
         };
     }

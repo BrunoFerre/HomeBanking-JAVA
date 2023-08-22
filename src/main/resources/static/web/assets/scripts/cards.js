@@ -18,7 +18,7 @@ createApp({
     },
     methods: {
         loadData() {
-            axios.get(`http://localhost:8080/api/clients/1`)
+            axios.get(`http://localhost:8080/api/clients/current`)
                 .then(response => {
                     this.clients = response.data
                     this.cards = this.clients.cards
@@ -33,6 +33,13 @@ createApp({
                 
                     localStorage.setItem('client',JSON.stringify(this.clients)) 
                 })
+        },
+        logOut(){
+            axios.post("/api/logout")
+            .then(response =>{
+                location.href = "../../index.html"
+            })
+            .catch(error=> console.log(error.message))
         }
     }
 }).mount("#app")

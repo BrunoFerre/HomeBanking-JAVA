@@ -13,8 +13,9 @@ createApp({
     },
     methods: {
         loadData() {
-            axios.get(`http://localhost:8080/api/clients/1`)
+            axios.get(`http://localhost:8080/api/clients/current`)
                 .then(response => {
+                    console.log(response);
                     this.clients = response.data
                     console.log(this.clients);
                     this.clients_accounts = this.clients.accounts
@@ -30,6 +31,13 @@ createApp({
                     }
                 localStorage.setItem('client',JSON.stringify(this.clients))
                 })
+        },
+        logOut(){
+            axios.post("/api/logout")
+            .then(response =>{
+                location.href = "../../index.html"
+            })
+            .catch(error=> console.log(error.message))
         }
     }
 }).mount("#app")

@@ -27,6 +27,13 @@ createApp({
                     this.transaction.sort((a,b)=> a.id - b.id)
                     console.log(this.transaction)
             })
+        },
+        logOut(){
+            axios.post("/api/logout")
+            .then(response =>{
+                location.href = "../../index.html"
+            })
+            .catch(error=> console.log(error.message))
         }
     }
 }).mount("#app")
