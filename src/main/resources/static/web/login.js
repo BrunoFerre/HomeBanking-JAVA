@@ -31,11 +31,11 @@ createApp({
             })
             .catch(error => alert(error.message))
         },
-        register(){
-            axios.post('/api/clients', 'firstName=' + this.firstName + '&lastName=' + this.lastName + '&email=' + this.email + '&password=' + this.password)
-            .then(response=> this.logIn())
-            .catch(error => alert(error.message))
+        // register(){
+        //     axios.post('/api/clients', 'firstName=' + this.firstName + '&lastName=' + this.lastName + '&email=' + this.email + '&password=' + this.password)
+        //     .then(response=> this.logIn())
+        //     .catch(error => alert(error.message))
             
-        }
+        // }
     }
 }).mount("#app")

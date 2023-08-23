@@ -53,7 +53,7 @@ public class HomebankingApplication {
                     -1500, "DESCRIPTION2", this.date2);
             Client client = new Client("Melba",
                     "Morel",
-                    "melba@melba",passwordEncoder.encode("pass123"));
+                    "melba@melba.com",passwordEncoder.encode("pass123"));
             Loan loan1 = new Loan("Hipotecario", 400.000, this.hipotecario);
             Loan loan2 = new Loan("Personal", 100.000, this.personal);
             Loan loan3 = new Loan("Automotriz", 300.000, this.automotriz);

@@ -19,14 +19,17 @@ public class WebAuthorization {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                        .antMatchers(HttpMethod.POST,"/api/clients","/api/login","/api/logout").permitAll()
-                        .antMatchers("/web/index.html", "/web/assets/**").permitAll()
-                        .antMatchers("/web/assets/**").permitAll()
+         .antMatchers(HttpMethod.POST,"/api/clients","/api/login","/api/logout").permitAll()
+                        .antMatchers("/web/index.html","/web/login.html","/web/register.html").permitAll()
+                        .antMatchers("/web/assets/styles/**","/web/assets/images/**").permitAll()
+                        .antMatchers("/web/login.js","/web/register.js").permitAll()
                         .antMatchers("/rest/**","/h2-console/").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.html").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.js").hasAnyAuthority("ADMIN")
-                        .antMatchers("/api/clients").hasAuthority("ADMIN");
-
+                        .antMatchers("/api/clients").hasAuthority("ADMIN")
+                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/accounts/{id}",
+                                "/web/**").hasAuthority("CLIENT")
+                .anyRequest().denyAll();
         http.formLogin().usernameParameter("email").passwordParameter("password").loginPage("/api/login");
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
         http.csrf().disable();

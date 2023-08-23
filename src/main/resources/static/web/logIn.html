@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/styles/register.css">
+    <title>Login Mind Hub Brother</title>
+</head>
+<body>
+    <div id="app">
+    <main class="d-flex justify-content-center align-items-center bg-dark">
+    <form class="form">
+        <p class="title">Log In </p>
+        <p class="message">SignIn now and get full access to our app. </p>          
+        <label>
+            <input required="" placeholder="" type="email" class="input" v-model="email">
+            <span>Email</span>
+        </label> 
+        <label>
+            <input required="" placeholder="" type="password" class="input" v-model="password">
+            <span>Password</span>
+        </label>
+        <button class="submit" @click.prevent="logIn">Submit</button>
+        <p class="signin">Don't you have an account? Sign up ? <a href="./register.html">SignUp</a> </p>
+    </form>
+</main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="./login.js"></script>
+</body>
+</html>

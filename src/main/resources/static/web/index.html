@@ -5,38 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/styles/log.css">
-    <title>Log In</title>
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+    <title>Home Page MindHub Brothers</title>
 </head>
 <body>
-    <div id="app">
-    <main class="d-flex align-items-center justify-content-center bg-dark text-white flex-column gap-5">
-        <h1 class="d-flex gap-4">Login or Register <br> MindHub Brother</h1>
-        <div class="main">  	
-            <input type="checkbox" id="chk" aria-hidden="true">
-                <div class="login">
-                    <form class="form">
-                        <label for="chk" aria-hidden="true">Log in</label>
-                        <input class="input" type="email" name="email" placeholder="Email" required="" v-model="email">
-                        <input class="input" type="password" name="password" placeholder="Password" required="" v-model="password">
-                        <button @click.prevent="logIn">Log in</button>
-                    </form>
-                </div>
-          <div class="register">
-                    <form class="form">
-                        <label for="chk" aria-hidden="true">Register</label>
-                        <input class="input" type="text" name="txt" placeholder="Username" required="">
-                        <input class="input" type="email" name="email" placeholder="Email" required="">
-                        <input class="input" type="password" name="pswd" placeholder="Password" required="">
-                        <button>Register</button>
-                    </form>
-                </div>
+    <header class="d-flex">
+    <img src="./assets/images/bank.png" alt="Logo" class="logo">        
+    <nav>
+      <a href="./login.html">Log In</a>
+      <a href="./register.html">Register</a>
+    </nav>
+  </header>
+    <main class="">
+      <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner w-100">
+          <div class="carousel-item active">
+            <img src="./assets/images/pexels-pixabay-259200.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="./assets/images/pexels-moose-photos-1037912.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="./assets/images/pexels-yurii-hlei-1398431.jpg" class="d-block w-100" alt="...">
+          </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </main>
-</div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="./assets/scripts/index.js"></script>
+    <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
+        <div class="d-flex align-items-center justify-content-center gap-3">
+          <i class="bi bi-bank2 fs-1 text-dark"></i>
+          <span class=""> Mind Hub Brother &#169 </span>
+        </div>
+        <div class="d-flex gap-5 flex-wrap ">
+          <a href="tel:+3743614796" class="d-flex gap-2 text-dark"><i class="bi bi-telephone-inbound-fill "></i>Call</a>
+          <a href="mailto:fbrunomarcos@gmail.com" class="d-flex gap-2 text-dark"><i class="bi bi-envelope-at"></i>Email</a>
+        </div>
+      </footer>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>

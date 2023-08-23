@@ -27,13 +27,12 @@ public class ClientController {
     public List<ClientDTO> getClients(){
       return  clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
     }
-    @RequestMapping("/clients/current")
+    @RequestMapping("/clients/{current}")
     public ClientDTO getClient(Authentication authentication) {
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
     }
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
-
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
