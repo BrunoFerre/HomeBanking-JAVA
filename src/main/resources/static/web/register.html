@@ -10,35 +10,31 @@
 <body>
     <div id="app">
     <main class="d-flex justify-content-center align-items-center bg-dark">
-    <form class="form">
-        <p class="title">Register </p>
+    <form class="form" >
+        <p class="title">Register</p>
         <p class="message">Signup now and get full access to our app. </p>
             <div class="flex">
             <label>
-                <input required="" placeholder="" type="text" class="input">
+                <input required="" placeholder="" type="text" class="input" v-model="firstName">
                 <span>Firstname</span>
             </label>
     
             <label>
-                <input required="" placeholder="" type="text" class="input">
+                <input required="" placeholder="" type="text" class="input" v-model="lastName">
                 <span>Lastname</span>
             </label>
         </div>  
                 
         <label>
-            <input required="" placeholder="" type="email" class="input">
+            <input required="" placeholder="" type="email" class="input" v-model="email">
             <span>Email</span>
         </label> 
-            
+
         <label>
-            <input required="" placeholder="" type="password" class="input">
-            <span>Password</span>
-        </label>
-        <label>
-            <input required="" placeholder="" type="password" class="input">
+            <input required="" placeholder="" type="password" class="input" v-model="password">
             <span>Confirm password</span>
         </label>
-        <button class="submit">Submit</button>
+        <button type="submit" class="submit" @click="register">Submit</button>
         <p class="signin">Already have an acount ? <a href="./login.html">Signin</a> </p>
     </form>
 </main>

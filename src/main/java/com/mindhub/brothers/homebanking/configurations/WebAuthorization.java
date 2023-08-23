@@ -23,7 +23,7 @@ public class WebAuthorization {
                         .antMatchers("/web/index.html","/web/login.html","/web/register.html").permitAll()
                         .antMatchers("/web/assets/styles/**","/web/assets/images/**").permitAll()
                         .antMatchers("/web/login.js","/web/register.js").permitAll()
-                        .antMatchers("/rest/**","/h2-console/").hasAnyAuthority("ADMIN")
+                        .antMatchers("/rest/**","/h2-console/**").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.html").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.js").hasAnyAuthority("ADMIN")
                         .antMatchers("/api/clients").hasAuthority("ADMIN")
