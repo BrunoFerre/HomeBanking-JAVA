@@ -38,6 +38,32 @@ createApp({
                 location.href = "../../index.html"
             })
             .catch(error=> console.log(error.message))
+        },
+        createAccount(){
+            Swal.fire({
+				title: 'Quieres crear una nueva cuenta?',
+				inputAttributes: {
+					autocapitalize: 'off',
+				},
+				showCancelButton: true,
+				confirmButtonText: 'Sure',
+				showLoaderOnConfirm: true,
+				preConfirm: login => {
+					return axios
+						.post('/api/clients/current/accounts')
+						.then(response => {
+							location.href = '../pages/accounts.html';
+						})
+						.catch(error => {
+							Swal.fire({
+								icon: 'error',
+								text: error.response.data,
+								confirmButtonColor: '#5b31be93',
+							});
+						});
+				},
+				allowOutsideClick: () => !Swal.isLoading(),
+			});
         }
     }
 }).mount("#app")

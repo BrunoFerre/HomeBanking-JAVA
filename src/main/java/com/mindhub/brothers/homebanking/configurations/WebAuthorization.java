@@ -26,9 +26,11 @@ public class WebAuthorization {
                         .antMatchers("/rest/**","/h2-console/**").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.html").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.js").hasAnyAuthority("ADMIN")
+                        .antMatchers("/web/adminPages/**").hasAnyAuthority("ADMIN")
                         .antMatchers("/api/clients").hasAuthority("ADMIN")
-                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/accounts/{id}",
+                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/clients/current/accounts/{id}",
                                 "/web/**").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts").hasAuthority("CLIENT")
                 .anyRequest().denyAll();
         http.formLogin().usernameParameter("email").passwordParameter("password").loginPage("/api/login");
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");

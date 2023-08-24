@@ -27,7 +27,14 @@ createApp({
                     location.href='./assets/pages/accounts.html'
                 }
             })
-            .catch(error => alert(error.message))
+            .catch(error =>  {
+                Swal.fire({
+                  title: 'Error!',
+                  text: error.message,
+                  icon: 'error',
+                  confirmButtonText: 'Cool'
+                })
+              })
         }
     }
 }).mount("#app")
