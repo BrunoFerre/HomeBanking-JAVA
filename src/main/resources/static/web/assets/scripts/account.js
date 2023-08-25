@@ -1,4 +1,5 @@
 const { createApp } = Vue
+import { logout } from './logout.js'
 createApp({
     data() {
         return {
@@ -14,11 +15,10 @@ createApp({
     methods: {
         loadData() {
             this.client= JSON.parse(localStorage.getItem('client'))??[]
-            parameter = location.search
-            parameterUrl = new URLSearchParams(parameter)
+           const parameter = location.search
+           const parameterUrl = new URLSearchParams(parameter)
             this.id_account = parameterUrl.get("id")
-            
-            axios.get(`http://localhost:8080/api/accounts/${this.id_account}`)
+            axios.get(`http://localhost:8080/api/clients/current/accounts/${this.id_account}`)
                 .then(response => {
                     this.account = response.data
                     for(let transaction of this.account.transactionDTOSet){
@@ -29,11 +29,7 @@ createApp({
             })
         },
         logOut(){
-            axios.post("/api/logout")
-            .then(response =>{
-                location.href = "../../index.html"
-            })
-            .catch(error=> console.log(error.message))
+            logout()
         }
     }
 }).mount("#app")

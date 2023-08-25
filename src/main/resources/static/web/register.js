@@ -30,7 +30,8 @@ createApp({
     register(event) {
       event.preventDefault();
       axios
-      .post("/api/clients",`firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`,{headers:{'content-type': 'application/x-www-form-urlencoded'}})
+      .post("/api/clients",`firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`,
+      {headers:{'content-type': 'application/x-www-form-urlencoded'}})
         .then((response) =>{
             this.logIn()
         }) 

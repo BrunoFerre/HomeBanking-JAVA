@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="shortcut icon" href="../images/bank-banking-finance-icon_112235.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/create.css">
+    <title>Create Cards</title>
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <img src="../images/bank-banking-finance-icon_112235.ico" alt="Logo Home Banking" id="img-hasbu">
+            <nav class="navbar navbar-expand-lg fs-4">
+              <div class="container-fluid" id="nav">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                  aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-4">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="../pages/accounts.html">Accounts</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="../pages/cards.html">Cards</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="../pages/loans.html">Loans</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="../pages/transacionts.html">Transacionts</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+            <button class="Btn" @click.prevent="logOut">
+              <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>        
+              <div class="text">Logout</div>
+            </button>
+          </header>
+    <main class="d-flex flex-column">
+          <h2>Create Cards</h2>
+        <form class="form d-flex flex-column align-items-center justify-content-center gap-3    ">
+            <div class="form-group">
+                <select class="form-select form-select-lg mb-2" aria-label="Large select example"  v-model="type">
+                    <option selected>Select Type</option>
+                    <option value="DEBIT"> Debit Card </option>
+                    <option value="CREDIT"> Credit Card </option>
+                  </select>    
+            </div>
+            <div class="form-group">
+                <select class="form-select form-select-lg mb-2"  aria-label="Default select example" v-model="color" required="" >
+                    <option selected>Select Color</option>
+                    <option value="GOLD" >Gold</option>
+                    <option value="SILVER" >Silver</option>
+                    <option value="PLATINIUM">Platinum </option>
+                </select>    
+            </div>
+            <button class="btn btn-success" @click.prevent="createCard">Create Card</button>
+        </form>    
+    </main>
+    <footer>
+
+    </footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="module" src="../scripts/createCards.js"></script>
+</body>
+</html>

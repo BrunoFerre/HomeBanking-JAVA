@@ -28,9 +28,9 @@ public class WebAuthorization {
                         .antMatchers("/web/adminPages/manager.js").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/**").hasAnyAuthority("ADMIN")
                         .antMatchers("/api/clients").hasAuthority("ADMIN")
-                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/clients/current/accounts/{id}",
+                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/cards","/api/clients/current/accounts/{id}",
                                 "/web/**").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts","/api/clients/current/cards").hasAuthority("CLIENT")
                 .anyRequest().denyAll();
         http.formLogin().usernameParameter("email").passwordParameter("password").loginPage("/api/login");
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");

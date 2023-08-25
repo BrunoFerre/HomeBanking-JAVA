@@ -21,9 +21,7 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class ClientController {
     @Autowired
-
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
@@ -31,7 +29,7 @@ public class ClientController {
     private String randomNumber(){
         String random;
         do {
-            int number= (int)(Math.random()*1000+9999);
+            int number= (int)(Math.random()*100+999);
             random= "VIN-"+number;
         }while (accountsRepository.findByNumber(random)!=null);
         return  random;
@@ -44,7 +42,6 @@ public class ClientController {
     public ClientDTO getClient(Authentication authentication) {
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
     }
-
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,

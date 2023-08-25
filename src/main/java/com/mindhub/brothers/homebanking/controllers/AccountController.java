@@ -28,7 +28,7 @@ public class AccountController {
     private String randomNumber(){
         String random;
         do {
-            int number= (int)(Math.random()*1000+9999);
+            int number= (int)(Math.random()* 100 + 999 );
             random= "VIN-"+number;
         }while (accountsRepository.findByNumber(random)!=null);
         return  random;
@@ -47,6 +47,9 @@ public class AccountController {
     public AccountDTO getAccount(@PathVariable Long id){
         return accountsRepository.findById(id).map(account -> new AccountDTO(account)).orElse(null);
     }
+
+
+
     @RequestMapping(path = "/api/clients/current/accounts",method = RequestMethod.POST)
     public ResponseEntity<Object> newAccount(Authentication authentication){
         if (clientRepository.findByEmail(authentication.getName()).getAccounts().size() <=2){

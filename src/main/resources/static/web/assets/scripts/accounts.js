@@ -1,5 +1,5 @@
 const { createApp } = Vue
-
+import {logout} from './logout.js'
 createApp({
     data() {
         return {
@@ -33,11 +33,7 @@ createApp({
                 })
         },
         logOut(){
-            axios.post("/api/logout")
-            .then(response =>{
-                location.href = "../../index.html"
-            })
-            .catch(error=> console.log(error.message))
+            logout()
         },
         createAccount(){
             Swal.fire({
