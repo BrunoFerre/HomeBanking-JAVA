@@ -8,6 +8,7 @@ import com.mindhub.brothers.homebanking.models.enums.CardColor;
 import com.mindhub.brothers.homebanking.models.enums.CardType;
 import com.mindhub.brothers.homebanking.repositories.CardRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
+import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,57 +24,43 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
+@RequestMapping("/api")
 public class CardController {
     @Autowired
     private CardRepository cardRepository;
     @Autowired
     private ClientRepository clientRepository;
 
-    private String randomNumberCard(){
-        String randomCards="";
-        for (int i = 0; i < 4; i++) {
-            int min = 1000;
-            int max = 8999;
-            randomCards+= (int)(Math.random()*(max-min+1)+min)+"-";
-        }
-        return randomCards;
-    }
-    private int randomCvv(){
-        int cvv= (int)(Math.random()*899+100);
-        return cvv;
-    }
-    @RequestMapping("/api/cards")
+    @RequestMapping("/cards")
     public List<CardDTO>getCards(){
         return cardRepository.findAll().stream().map(CardDTO::new).collect(toList());
     }
-    @RequestMapping("/api/clients/current/cards")
+    @RequestMapping("/clients/current/cards")
     public List<CardDTO>getCards(Authentication authentication){
         return new ClientDTO(clientRepository.findByEmail(authentication.getName())).getCards()
                 .stream().collect(toList());
     }
-    @PostMapping("/api/clients/current/cards")
-    public ResponseEntity<Object> addCard(
-            Authentication authentication,@RequestParam CardType type, @RequestParam CardColor color){
-        if (type==null|| color==null){
-            return new ResponseEntity<>("Missing type", HttpStatus.FORBIDDEN);
+    @PostMapping("/clients/current/cards")
+    public ResponseEntity<Object> addCard(Authentication authentication,@RequestParam CardType type,
+            @RequestParam CardColor color) {
+        Client client = clientRepository.findByEmail(authentication.getName());
+        if (type == null||color == null) {
+            return new ResponseEntity<>("Missing type or empty type", HttpStatus.FORBIDDEN);
         }
-    String numberCard;
-        do {numberCard=randomNumberCard();}while (cardRepository.findByNumber(numberCard)!=null);
-
-        int cardCvv=randomCvv();
-        do {
-            cardCvv=randomCvv();
-        }while (cardRepository.findByCvv(cardCvv)!=null);
-        Client client=clientRepository.findByEmail(authentication.getName());
-        for (Card card:client.getCards()){
-            if (card.getType().equals(type)&&card.getColor().equals(color)){
-                return new ResponseEntity<>("Card already exists",HttpStatus.FORBIDDEN);
+        String numberCard;
+        do {numberCard = RandomNumberGenerate.CardNumber();} while (cardRepository.findByNumber(numberCard) != null);
+        int cardCvv = RandomNumberGenerate.getCardCVV();
+        do {cardCvv = RandomNumberGenerate.getCardCVV();} while (cardRepository.findByCvv(cardCvv) != null);
+        for (Card card : client.getCards()) {
+            if (card.getType().equals(type) && card.getColor().equals(color)) {
+                return new ResponseEntity<>("Card already exists", HttpStatus.FORBIDDEN);
             }
         }
-        Card newCard=new Card(client.getFirstName()+" "+client.getLastName(),type,color,numberCard,cardCvv,LocalDate.now(),LocalDate.now().plusYears(5));
+        System.out.println(type);
+        System.out.println(color);
+        Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), type, color, numberCard, cardCvv, LocalDate.now(), LocalDate.now().plusYears(5));
         client.addCard(newCard);
-        clientRepository.save(client);
         cardRepository.save(newCard);
-        return new ResponseEntity<>(newCard,HttpStatus.CREATED);
-        }
+        return new ResponseEntity<>("Card Created", HttpStatus.CREATED);
+    }
 }

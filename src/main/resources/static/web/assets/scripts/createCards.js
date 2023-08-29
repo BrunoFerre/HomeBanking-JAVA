@@ -5,7 +5,8 @@ const app = createApp({
         return {
             clients: [],
             type: '',
-            color: ''
+            color: '',
+            mesagge: '',
         }
     },
     created() {
@@ -26,25 +27,34 @@ const app = createApp({
         createCard(event) {
             event.preventDefault()
             Swal.fire({
-                title: 'Quieres crear una nueva tarjeta?',
+                title: 'Add a new card?',
                 inputAttributes: {
                     autocapitalize: 'off',
                 },
                 showCancelButton: true,
-                confirmButtonText: 'Sure',
+                confirmButtonText: 'Yes',
                 showLoaderOnConfirm: true,
                 preConfirm: login => {
                     return axios
-                        .post('/api/clients/current/cards',`type=${this.type}&color=${this.color}`,{headers:{'content-type': 'application/x-www-form-urlencoded'}})
+                        .post('/api/clients/current/cards',`type=${this.type}&color=${this.color}`
+                        ,{headers:{'content-type': 'application/x-www-form-urlencoded'}})
                         .then(response => {
-                            location.href = "../pages/cards.html";
-                        })
-                        .catch(error => {
+                            setTimeout(() =>{
+                            location.href = "../pages/cards.html";  
+                            },2000)
+                        }).catch(error => {
+                            console.log(error);
                             Swal.fire({
                                 icon: 'error',
+                                title: 'Oops...',
+                                text: error.response.data,
                                 confirmButtonColor: '#5b31be93',
-                            });
-                        })
+                            })
+                            setTimeout(() => {
+                            location.href = "../pages/cards.html";   
+                            },2000)
+                        
+                 })
                 }
             })
         }

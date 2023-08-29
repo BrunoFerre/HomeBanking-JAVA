@@ -3,8 +3,10 @@ package com.mindhub.brothers.homebanking.controllers;
 import com.mindhub.brothers.homebanking.dtos.AccountDTO;
 import com.mindhub.brothers.homebanking.dtos.ClientDTO;
 import com.mindhub.brothers.homebanking.models.Account;
+import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
+import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,14 +27,7 @@ public class AccountController {
 
     @Autowired
     private ClientRepository clientRepository;
-    private String randomNumber(){
-        String random;
-        do {
-            int number= (int)(Math.random()* 100 + 999 );
-            random= "VIN-"+number;
-        }while (accountsRepository.findByNumber(random)!=null);
-        return  random;
-    }
+
     @RequestMapping("/api/accounts")
     public List<AccountDTO> getAccounts(){
         return accountsRepository.findAll().stream().map(AccountDTO::new).collect(toList());
@@ -40,30 +35,31 @@ public class AccountController {
 
     @RequestMapping("/api/clients/current/accounts")
     public List<AccountDTO> getAcccount(Authentication authentication){
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName())).getAccounts().stream().collect(toList());
+        return new ClientDTO(clientRepository.findByEmail(authentication.getName()))
+                .getAccounts().stream().collect(toList());
     }
-
-    @RequestMapping("/api/clients/current/accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id){
-        return accountsRepository.findById(id).map(account -> new AccountDTO(account)).orElse(null);
-    }
-
-
 
     @RequestMapping(path = "/api/clients/current/accounts",method = RequestMethod.POST)
     public ResponseEntity<Object> newAccount(Authentication authentication){
         if (clientRepository.findByEmail(authentication.getName()).getAccounts().size() <=2){
-            String accountNumber = randomNumber();
-            Account newAccount = new Account(accountNumber, LocalDate.now(),0.0);
+            int accountNumber = RandomNumberGenerate.getRandomNumber(1000, 9999);
+            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0);
             clientRepository.findByEmail(authentication.getName()).addAccount(newAccount);
             accountsRepository.save(newAccount);
         }else{
-            return new ResponseEntity<>("Maximo de cuentas alcanzado", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Maximum of accounts made", HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-   /* @RequestMapping("/api/accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id){
-        return accountsRepository.findById(id).map(AccountDTO::new).orElse(null);
-    }*/
+    @RequestMapping("/api/clients/accounts/{id}")
+    public ResponseEntity<Object>  getAccount(@PathVariable Long id, Authentication authentication){
+        Client client = clientRepository.findByEmail(authentication.getName());
+        Account acc = accountsRepository.findById(id).orElse(null);
+        if (client.getId() == acc.getOwner().getId()){
+            return new ResponseEntity<>(new AccountDTO(acc),HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
+    }
+    }
 }
+

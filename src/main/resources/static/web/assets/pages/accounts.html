@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../images/bank-banking-finance-icon_112235.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -48,12 +49,8 @@
                   </button> 
         </header>
         <main class="container col-12 main">
-          <section>
-            <nav>
-            </nav>
-          </section>
           <section class="d-flex flex-wrap gap-1 justify-content-evenly align-content-start gap-4 ">
-            <p class="fw-bold fs-1 w-100 text-center fw-bolder">Account Details</p>
+            <p class="fw-bold fs-1 w-100 text-center text-white fw-bolder">Account Details</p>
             <template v-if="accounts.length>0" v-for="account of accounts">
               <div class="code-editor d-flex flex-column text-white fs-3 align-items-center justify-content-around p-2 fw-bolder">
                 <p class="property">
@@ -68,10 +65,10 @@
                   <span class="color-2">Balance</span> : <span></span>
                   <span class="color-1">{{account.balance}}</span>
                 </p>
-                <a :href="'./account.html?id=' + account.id" class="btn fs-3 text-white fw-bold"> Go transactions</a>
+                <a :href="'./account.html?id=' + account.id" class="btn btn-dark fs-3 text-white fw-bold"> Go transactions</a>
               </div>
             </template>
-            <article class="d-flex flex-column align-items-center">
+            <article v-if="accounts.length < 3" class="d-flex flex-column align-items-center">
               <h3>Do you want to add accounts?</h3>
               <a href="#" @click.prevent="createAccount" class="btn btn-success">ADD ACCOUNTS</a>
             </article>

@@ -45,8 +45,8 @@ public class HomebankingApplication {
                                       CardRepository cardRepository) {
         return (args) -> {
 
-            Account account = new Account("VIN001", this.date, 5000);
-            Account account1 = new Account("VIN002", this.date, 7500);
+            Account account = new Account("VIN-001", this.date, 5000);
+            Account account1 = new Account("VIN-002", this.date, 7500);
             Transaction transaction = new Transaction(TransactionType.CREDIT,
                     1700, "DESCRIPTION ", this.date1);
             Transaction transaction1 = new Transaction(TransactionType.DEBIT,
@@ -54,9 +54,9 @@ public class HomebankingApplication {
             Client client = new Client("Melba",
                     "Morel",
                     "melba@melba.com",passwordEncoder.encode("pass123"));
-            Loan loan1 = new Loan("Hipotecario", 400.000, this.hipotecario);
+            Loan loan1 = new Loan("Mortgage", 400.000, this.hipotecario);
             Loan loan2 = new Loan("Personal", 100.000, this.personal);
-            Loan loan3 = new Loan("Automotriz", 300.000, this.automotriz);
+            Loan loan3 = new Loan("Automotive", 300.000, this.automotriz);
 
             ClientLoan clientLoan = new ClientLoan(60, 400.000);
             ClientLoan clientLoan1 = new ClientLoan(12, 50000);
@@ -99,8 +99,8 @@ public class HomebankingApplication {
                     "Ferreira",
                     "fbrunomarcos@gmail.com",
                     passwordEncoder.encode("pass123"));
-            Account accountBruno1 = new Account("VIN0067",this.date.plusDays(5),15000);
-            Account accountBruno2 = new Account("VIN0068",this.date.plusDays(6),15000);
+            Account accountBruno1 = new Account("VIN-0067",this.date.plusDays(5),15000);
+            Account accountBruno2 = new Account("VIN-0068",this.date.plusDays(6),15000);
             Transaction transactionBruno = new Transaction(TransactionType.CREDIT,2500,
                     "nose que poner je",
                     this.date1.plusDays(1));

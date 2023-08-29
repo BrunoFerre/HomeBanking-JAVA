@@ -1,14 +1,24 @@
 *{
+  font-family: 'Quicksand', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-header{
+[v-cloak] {
+    display: none;
+}
+body{
+  background-color:  #3b82f6;
+
+}
+.header{
+  background-color: #1f6ae1;
+    filter: contrast(200%);
+    min-height: 15vh;
     display: flex;
-    min-height: 10vh;
     align-items: center;
+    padding: 0 3rem 0 3rem;
     justify-content: space-around;
-    background-color: rgb(108, 89, 233);
 }
 .Btn {
     display: flex;
@@ -79,26 +89,28 @@ header{
   main{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 80vh;
+    align-content: flex-start;
+    min-height: 75vh;
     gap: 3rem;
-    background-color: rgb(102, 85, 212);
     background-repeat: no-repeat;
     background-size: cover;
     filter: brightness(1.5);
   }
-  form{
-    min-height: 30rem;
-    background-color: slateblue;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-  option{
-    background-color: bisque;
-  }
+.form{
+  background-color: rgb(40, 40, 113);
+  width: 40rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 1rem;
+  border-radius: 5px;
+}
+.form select{
+  width: 50%;
+  height: 2rem;
+}
   footer{
     display: flex;
     align-items: center;
@@ -106,3 +118,16 @@ header{
     min-height: 10vh;
     background-color: rgb(108, 89, 233);
   }
+  .img-footer{
+    height: 3rem;
+    border-radius: 60px;
+  }
+  .footer{
+    min-height:10vh;
+}
+.footer a{
+  text-decoration: none;
+}
+.logo-t{
+  height: 12rem;
+}

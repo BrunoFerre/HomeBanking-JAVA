@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-<link rel="shortcut icon" href="../images/bank-banking-finance-icon_112235.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/bank-banking-finance-icon_112235.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/create.css">
     <title>Create Cards</title>
@@ -45,28 +45,39 @@
             </button>
           </header>
     <main class="d-flex flex-column">
-          <h2>Create Cards</h2>
-        <form class="form d-flex flex-column align-items-center justify-content-center gap-3    ">
-            <div class="form-group">
-                <select class="form-select form-select-lg mb-2" aria-label="Large select example"  v-model="type">
-                    <option selected>Select Type</option>
-                    <option value="DEBIT"> Debit Card </option>
-                    <option value="CREDIT"> Credit Card </option>
-                  </select>    
-            </div>
-            <div class="form-group">
-                <select class="form-select form-select-lg mb-2"  aria-label="Default select example" v-model="color" required="" >
-                    <option selected>Select Color</option>
-                    <option value="GOLD" >Gold</option>
-                    <option value="SILVER" >Silver</option>
-                    <option value="PLATINIUM">Platinum </option>
-                </select>    
-            </div>
-            <button class="btn btn-success" @click.prevent="createCard">Create Card</button>
-        </form>    
+				<div class="d-flex flex-column align-items-center justify-content-center div-cards-create">
+					<h1 class="text-light mb-5">- Request a Card -</h1>
+					<form @submit.prevent="createCard" action="" class="d-flex flex-column align-items-center form shadow">
+						<label for="" class="text-light text-center fs-3">Type of card</label>
+						<div class="d-flex flex-column justify-content-start fs-4">
+							<div class="form-check">
+								<input value="DEBIT" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" required v-model="type" />
+								<label class="form-check-label text-light" for="flexRadioDefault1"> DEBIT </label>
+							</div>
+							<div class="form-check">
+								<input value="CREDIT" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" required v-model="type" />
+								<label class="form-check-label text-light" for="flexRadioDefault2"> CREDIT </label>
+							</div>
+						</div>
+						<select class="" aria-label="Default select example" required v-model="color">
+							<option selected value="">- CARDS -</option>
+							<option value="SILVER">SILVER</option>
+							<option value="GOLD">GOLD</option>
+							<option value="TITANIUM">TITANIUM</option>
+						</select>
+						<button type="submit" class="btn btn-success">Create</button>
+					</form>
+				</div>
     </main>
-    <footer>
-
+    <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
+      <div class="d-flex align-items-center justify-content-center gap-3">
+        <i class="bi bi-bank2 fs-1 text-dark"></i>
+        <span class=""> Mind Hub Brother &#169 </span>
+      </div>
+      <div class="d-flex gap-5 flex-wrap ">
+        <a href="tel:+3743614796" class="d-flex gap-2 text-dark"><i class="bi bi-telephone-inbound-fill "></i>Call</a>
+        <a href="mailto:fbrunomarcos@gmail.com" class="d-flex gap-2 text-dark"><i class="bi bi-envelope-at"></i>Email</a>
+      </div>
     </footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>

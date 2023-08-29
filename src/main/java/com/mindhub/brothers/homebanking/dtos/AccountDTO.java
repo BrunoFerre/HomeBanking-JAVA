@@ -2,6 +2,8 @@ package com.mindhub.brothers.homebanking.dtos;
 
 import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -14,6 +16,7 @@ public class AccountDTO {
     private LocalDate creationDate;
     private double balance;
     private Set<TransactionDTO> transactionDTOSet = new HashSet<>();
+
     public AccountDTO() {
     }
 

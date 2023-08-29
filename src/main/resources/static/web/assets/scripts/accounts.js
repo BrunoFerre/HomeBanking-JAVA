@@ -37,18 +37,20 @@ createApp({
         },
         createAccount(){
             Swal.fire({
-				title: 'Quieres crear una nueva cuenta?',
+				title: 'Add a new account?',
 				inputAttributes: {
 					autocapitalize: 'off',
 				},
 				showCancelButton: true,
-				confirmButtonText: 'Sure',
+				confirmButtonText: 'Look up',
 				showLoaderOnConfirm: true,
 				preConfirm: login => {
 					return axios
 						.post('/api/clients/current/accounts')
 						.then(response => {
+                            setTimeout(() =>{
 							location.href = '../pages/accounts.html';
+                            },2000)
 						})
 						.catch(error => {
 							Swal.fire({
@@ -56,6 +58,9 @@ createApp({
 								text: error.response.data,
 								confirmButtonColor: '#5b31be93',
 							});
+                            setTimeout(() => {
+                            location.href = '../pages/accounts.html';
+                            },2000)
 						});
 				},
 				allowOutsideClick: () => !Swal.isLoading(),
