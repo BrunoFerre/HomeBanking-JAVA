@@ -8,11 +8,10 @@
     display: none;
 }
 body{
-  background-color:  #3b82f6;
 
 }
 .header{
-  background-color: #1f6ae1;
+  background: linear-gradient(70deg,#ff9100,#e83420);
     filter: contrast(200%);
     min-height: 15vh;
     display: flex;
@@ -69,7 +68,9 @@ body{
     border-radius: 40px;
     transition-duration: .3s;
   }
-  
+  .buttonBro{
+    background-color: #ca670a !important;
+  }
   .Btn:hover .sign {
     width: 30%;
     transition-duration: .3s;
@@ -92,12 +93,10 @@ body{
     align-content: flex-start;
     min-height: 75vh;
     gap: 3rem;
-    background-repeat: no-repeat;
-    background-size: cover;
     filter: brightness(1.5);
   }
 .form{
-  background-color: rgb(40, 40, 113);
+  background-color: #c85000;
   width: 40rem;
   height: 20rem;
   display: flex;
@@ -116,7 +115,7 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 10vh;
-    background-color: rgb(108, 89, 233);
+    background-color: #2c3038;
   }
   .img-footer{
     height: 3rem;

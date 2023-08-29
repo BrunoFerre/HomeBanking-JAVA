@@ -26,11 +26,20 @@
                 <span>Lastname</span>
             </label>
         </div>  
-                
-        <label>
-            <input required="" placeholder="" type="email" class="input" v-model="email">
-            <span>Email</span>
-        </label> 
+        <!-- aca flaco -->
+        <div class="d-flex flex-column gap-3">
+            <label>
+                <input required="" placeholder="" type="text" class="input" v-model="email">
+                <span>Email</span>
+            </label>
+            <label>
+              <select name="domain" class="input" id="" v-model="emailType">
+                <option value="" disabled>Select Domain</option>
+                <option value="mindhub.com">mindhub.com</option>
+                <option value="mindhub.net">mindhub.net</option>
+              </select>
+            </label>
+        </div>  
 
         <label>
             <input required="" placeholder="" type="password" class="input" v-model="password">

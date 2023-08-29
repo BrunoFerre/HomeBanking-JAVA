@@ -6,6 +6,8 @@ createApp({
       lastName: "",
       email: "",
       password: "",
+      emailType: "",
+      emailAddress: this.email+"@"+this.emailType,
     };
   },
   created() {
@@ -16,7 +18,7 @@ createApp({
       event.preventDefault()
     },
     logIn() {
-      axios.post("/api/login", `email=${this.email}&password=${this.password}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+      axios.post("/api/login", `email=${this.emailAddress}&password=${this.password}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
         .then((response) => {
           if (this.email == "admin@admin.com") {
             location.href = "./adminPages/manager.html"
@@ -37,8 +39,9 @@ createApp({
         confirmButtonText: 'Yes',
         showLoaderOnConfirm: true,
         preConfirm: login => {
+           this.emailAddress = this.email+"@"+this.emailType
           return axios
-            .post("/api/clients", `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`,
+            .post("/api/clients", `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.emailAddress}&password=${this.password}`,
               { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
             .then(response => {
               setTimeout(() => {

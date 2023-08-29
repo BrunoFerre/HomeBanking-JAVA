@@ -6,7 +6,6 @@ const app = createApp({
             clients: [],
             type: '',
             color: '',
-            mesagge: '',
         }
     },
     created() {

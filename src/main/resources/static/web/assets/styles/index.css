@@ -9,8 +9,9 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-color:  #3b82f6;
+    /* background-image: linear-gradient(-45deg, #279D2EFF, #25B4BDFF); */
   }
+  
 [v-cloak]{
   display: none;
 }
@@ -26,8 +27,8 @@ body{
   height: 6rem;
 }
 .header{
-  background-color: #1f6ae1;
-  min-height: 15vh;
+    background: linear-gradient(70deg,#ff9100,#e83420);
+    min-height: 15vh;
     display: flex;
     align-items: center;
     padding: 0 3rem 0 3rem;
@@ -35,7 +36,6 @@ body{
 }
 .navbar>a{
     text-decoration: none;
-    color: white;
     margin-top: 3rem;
 }
 .dropdown-menu{
@@ -45,23 +45,27 @@ body{
 } */
 .main{
     min-height: 70vh;
-    filter: contrast(1.75);
     background-size: contain;
 }
 .code-editor {
     max-width: 27rem;
     min-height: 25rem;
-    background-color: #00037f96;
+    background-color: #c85000;
     color: #ffffff !important;
     border-radius: 8px;
     padding: 1rem !important ;
     display: flex;
+    border: 3px solid #191818;
   }
   .nav-link{
     font-weight: bolder !important;
-    color: white !important;
+    color:black !important;
+  }
+  .buttonBro{
+    background-color: #ca670a !important;
   }
   .bi .bi-bank2{
+    font-size: 5px !important;
     color:#288bef00;
   }
   .img-footer{
@@ -71,6 +75,8 @@ body{
   .footer{
     min-height:10vh;
     margin-top: 3rem;
+    background-color: #2c3038;
+    color: white;
 }
 .footer a{
   text-decoration: none;
