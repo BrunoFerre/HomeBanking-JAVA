@@ -14,7 +14,7 @@
 <body>
     <div id="app" v-cloak>
         <header class="header d-flex gap-5" >
-                <img src="../images/bank-banking-finance-icon_112235.ico" alt="Logo Home Banking" id="img-hasbu">
+            <img src="../images/bank.png" alt="Logo Home Banking" id="logo">
                 <nav class="navbar navbar-expand-lg fs-4">
                     <div class="container-fluid " id="nav">
                       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,12 +32,11 @@
                             <a class="nav-link" href="#">Loans</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#">Transacionts</a>
+                            <a class="nav-link" href="./transfer.html">Transacionts</a>
                             <li class="nav-item">
-                              <a class="nav-link" href="#">{{clients.firstName}} {{clients.lastName}}</a>
+                              <span class="nav-link" >{{clients.firstName}} {{clients.lastName}}</span>
                             </li>
                         </ul>
-                       
                       </div>
                     </div>
                   </nav>
@@ -98,7 +97,7 @@
           <h2 v-else> No Transaction</h2>
           </section>
         </div>
-        </main>
+      </main>
         <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
           <div class="d-flex align-items-center justify-content-center gap-3">
             <i class="bi bi-bank2 fs-5 text-white"></i>

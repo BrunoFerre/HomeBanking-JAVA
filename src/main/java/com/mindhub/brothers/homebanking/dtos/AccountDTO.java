@@ -15,7 +15,7 @@ public class AccountDTO {
     private String number;
     private LocalDate creationDate;
     private double balance;
-    private Set<TransactionDTO> transactionDTOSet = new HashSet<>();
+    private Set<TransactionDTO> transactions = new HashSet<>();
 
     public AccountDTO() {
     }
@@ -25,7 +25,7 @@ public class AccountDTO {
         this.number=acounnt.getNumber();
         this.creationDate=acounnt.getCreationDate();
         this.balance=acounnt.getBalance();
-        this.transactionDTOSet = acounnt.getTransactions()
+        this.transactions = acounnt.getTransactions()
                 .stream()
                 .map(TransactionDTO::new)
                 .collect(Collectors.toSet());
@@ -42,8 +42,8 @@ public class AccountDTO {
     public double getBalance() {
         return balance;
     }
-    public Set<TransactionDTO> getTransactionDTOSet() {
-        return transactionDTOSet;
+    public Set<TransactionDTO> getTransactions() {
+        return transactions;
     }
     @Override
     public String toString() {

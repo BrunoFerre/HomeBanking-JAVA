@@ -3,6 +3,7 @@ import { logout } from './logout.js'
 createApp({
     data() {
         return {
+            client:[],
             clients: [],
             cards:[],
             debit:[],
@@ -18,6 +19,7 @@ createApp({
     },
     methods: {
         loadData() {
+            this.client= JSON.parse(localStorage.getItem('client'))??[]
             axios.get(`http://localhost:8080/api/clients/current`)
                 .then(response => {
                     this.clients = response.data

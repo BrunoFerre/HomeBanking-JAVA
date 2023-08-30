@@ -1,28 +1,31 @@
-*{
-  font-family: 'Quicksand', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+* {
+    font-family: 'Quicksand', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-[v-cloak] {
-    display: none;
-}
-
-.header{
-  background: linear-gradient(69deg,#ff9100,#c46055);
-    filter: contrast(200%);
+.header {
+  background: linear-gradient(70deg,#ff9100,#da3725);
     min-height: 15vh;
     display: flex;
     align-items: center;
     padding: 0 3rem 0 3rem;
     justify-content: space-around;
 }
+#logo{
+    height: 5rem;
+}
+main{
+  min-height: 75vh;
+}
+.navbar>a {
+    text-decoration: none;
+    margin-top: 3rem;
+}
 .nav-link{
   font-weight: bolder !important;
   color:black !important;
-}
-#logo{
-  height: 5rem;
 }
 .Btn {
     display: flex;
@@ -37,7 +40,7 @@
     overflow: hidden;
     transition-duration: .3s;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-    background-color: rgb(9, 10, 103);
+    background-color: rgb(5, 65, 65);
   }
   
   /* plus sign */
@@ -73,9 +76,7 @@
     border-radius: 40px;
     transition-duration: .3s;
   }
-  .buttonBro{
-    background-color: #ca670a !important;
-  }
+  
   .Btn:hover .sign {
     width: 30%;
     transition-duration: .3s;
@@ -92,29 +93,24 @@
   .Btn:active {
     transform: translate(2px ,2px);
   }
-  main{
+  .btn{
+    width: 20rem;
+  }
+  .form{
+    background-color: #c85000;
+    width: 40rem;
+    height: 20rem;
     display: flex;
     flex-direction: column;
-    align-content: flex-start;
-    min-height: 75vh;
-    gap: 3rem;
-    filter: brightness(1.5);
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1rem;
+    border-radius: 5px;
   }
-.form{
-  background-color: #c85000;
-  width: 40rem;
-  height: 20rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 1rem;
-  border-radius: 5px;
-}
-.form select{
-  width: 50%;
-  height: 2rem;
-}
+  .form select{
+    width: 50%;
+    height: 2rem;
+  }
   footer{
     display: flex;
     align-items: center;
@@ -132,6 +128,37 @@
 .footer a{
   text-decoration: none;
 }
-.logo-t{
-  height: 12rem;
+.info{
+  min-height: 34rem;
+  padding: 1rem;
+  border-radius: 2rem;
+}
+.send{
+  min-height: 3rem;
+  width: 42%;
+}
+option{
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 0.2rem;
+}
+.input-group{
+  width: 30%;
+}
+footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh;
+  background-color: #2c3038;
+}
+.img-footer{
+  height: 3rem;
+  border-radius: 60px;
+}
+.footer{
+  min-height:10vh;
+}
+.footer a{
+text-decoration: none;
 }

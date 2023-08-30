@@ -3,7 +3,7 @@ import { logout } from './logout.js'
 const app = createApp({
     data() {
         return {
-            clients: [],
+            client: [],
             type: '',
             color: '',
         }
@@ -13,7 +13,8 @@ const app = createApp({
     },
     methods: {
         loadData() {
-            axios.get(`/api/clients/current/cards`,)
+            this.client= JSON.parse(localStorage.getItem('client'))??[]
+            axios.get(`/api/clients/current/cards`)
                 .then(response => {
                     this.clients = response.data
                 }).catch(error => {

@@ -11,8 +11,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,7 +37,7 @@ public class HomebankingApplication {
     @Bean
     public CommandLineRunner initData(ClientRepository repositoryClient,
                                       AccountsRepository accountsRepository,
-                                      RepositoryTransaction transactionRepository,
+                                      TransactionRepository transactionRepository,
                                       LoanRepository loanRepository,
                                       ClientLoanRepository clientLoanRepository,
                                       CardRepository cardRepository) {

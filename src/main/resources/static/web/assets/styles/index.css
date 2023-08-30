@@ -23,8 +23,8 @@ body{
 #create{
   height: 4rem
 }
-#img-hasbu{
-  height: 6rem;
+#logo{
+  height: 5rem;
 }
 .header{
     background: linear-gradient(70deg,#ff9100,#e83420);

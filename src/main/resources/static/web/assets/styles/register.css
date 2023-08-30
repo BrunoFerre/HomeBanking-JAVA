@@ -11,7 +11,9 @@ main{
     border-radius: 20px;
     position: relative;
   }
-  
+  #logo{
+    height: 5rem;
+  }
   .title {
     font-size: 28px;
     color: royalblue;

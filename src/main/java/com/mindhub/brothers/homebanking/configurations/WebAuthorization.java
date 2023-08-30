@@ -30,9 +30,9 @@ public class WebAuthorization {
                         .antMatchers("/api/clients").hasAuthority("ADMIN")
                         .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/cards",
                                 "/web/**").hasAuthority("CLIENT")
-                .antMatchers("/api/clients/accounts/{id}").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts","/api/clients/current/cards").hasAuthority("CLIENT")
-                .anyRequest().denyAll();
+                        .antMatchers("/api/clients/accounts/{id}").hasAuthority("CLIENT")
+                        .antMatchers(HttpMethod.POST,"/api/clients/current/accounts","/api/clients/current/cards","/api/transactions").hasAuthority("CLIENT")
+                        .anyRequest().denyAll();
         http.formLogin().usernameParameter("email").passwordParameter("password").loginPage("/api/login");
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
         http.csrf().disable();

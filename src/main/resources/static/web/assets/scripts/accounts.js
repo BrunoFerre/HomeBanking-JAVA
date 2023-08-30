@@ -5,7 +5,8 @@ createApp({
         return {
             clients: [],
             accounts: [],
-            loans:[]
+            loans:[],
+            client:[],
         }
     },
     created() {
@@ -13,6 +14,7 @@ createApp({
     },
     methods: {
         loadData() {
+            this.client= JSON.parse(localStorage.getItem('client'))??[]
             axios.get(`http://localhost:8080/api/clients/current`)
                 .then(response => {
                     console.log(response);
