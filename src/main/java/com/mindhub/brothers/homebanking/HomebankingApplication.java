@@ -125,8 +125,6 @@ public class HomebankingApplication {
             transactionRepository.save(transactionBruno);
             clientLoanRepository.save(loanBruno);
             cardRepository.save(cardBruno);
-
-
         };
     }
 }

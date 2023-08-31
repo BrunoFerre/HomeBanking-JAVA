@@ -65,7 +65,7 @@ public class TransactionController {
             originalAccount.setBalance(originalAccount.getBalance()-amount);
             destAccount.setBalance(destAccount.getBalance()+amount);
             Transaction debit= new Transaction(TransactionType.DEBIT,amount*-1,description,LocalDateTime.now());
-            Transaction credit= new Transaction(TransactionType.CREDIT,amount*-1,description,LocalDateTime.now());
+            Transaction credit= new Transaction(TransactionType.CREDIT,amount,description,LocalDateTime.now());
             originalAccount.addTransaction(debit);
             destAccount.addTransaction(credit);
             accountsRepository.save(originalAccount);

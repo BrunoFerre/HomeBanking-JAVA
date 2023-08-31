@@ -47,12 +47,12 @@
   <main class="main">
     <div class="container p-3">
         <div class="d-flex gap-5 align-items-center justify-content-center flex-wrap">
-          <button class="btn btn-danger btn-lg" type="button" @click.prevent="form2">Own Transfer</button>
-          <button class="btn btn-danger btn-lg" type="button"  @click.prevent="form1">Transfer to third parties</button>
+          <button class="btn btn-success fw-bold btn-lg" type="button" @click.prevent="form2">Own Transfer</button>
+          <button class="btn btn-success fw-bold btn-lg" type="button"  @click.prevent="form1">Transfer to third parties</button>
         </div>
       </div>
-      <div class="info container bg-dark d-flex  justify-content-evenly gap-2 flex-wrap">
-        <div class="d-flex w-100 flex-wrap gap-2 align-items-center justify-content-center">
+      <div class="info container d-flex justify-content-evenly gap-2 flex-wrap">
+        <div class="d-flex w-100 flex-wrap gap-2 form align-items-center justify-content-center">
         <form class="d-flex flex-column" v-if="showForm1">
           <div class="d-flex">
         <section class="send mx-2 d-flex align-items-center flex-column gap-1">
@@ -72,16 +72,16 @@
           </select>
         </section>
       </div>
-        <div class="d-flex flex-column  gap-2 align-items-center justify-content-center">
-          <div class="input-group mt-3 ">
-            <input type="number" placeholder="Amount" class="form-control" v-model="amount"
-             aria-label="Example text with button addon" aria-describedby="button-addon1">
+        <div class="d-flex flex-column gap-2 align-items-center justify-content-center">
+          <div class="input-group mt-3 d-flex flex-column align-items-center">
+           <label for="">Amount<input type="number" placeholder="Example: 100" class="form-control" v-model="amount"
+             aria-label="Example text with button addon" aria-describedby="button-addon1"></label>
           </div>
-          <div class="input-group mt-3">
-            <input type="text" placeholder="Description" v-model="description" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1">
+          <div class="input-group mt-3 d-flex flex-column align-items-center">
+           <label for="">Description<input type="text" placeholder="Description" v-model="description" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1"></label>
           </div>
           <div class="input-group my-3 d-flex justify-content-center align-items-center">
-          <button class="btn btn-success" @click.prevent="newTransfer">SEND </button>
+          <button class="btn btn-dark" @click.prevent="newTransfer">SEND </button>
           </div>
         </div>
         </form>
@@ -97,21 +97,20 @@
           </select>
         </section>
         <section class="send mx-2 d-flex align-items-center justify-content-center flex-column gap-1">
-          <h3 class="text-white">RECEIVE</h3>
           <div class="input-group">
-            <label for="dest"><input type="text" placeholder="Account destination" class="form-control" v-model="destination"
-              aria-label="Example text with button addon" aria-describedby="button-addon1"> Amount </label>
+            <label for="dest" class="ms-3  fs-5 fw-bold">Account destination<input type="text" placeholder="Example: VIN-001" class="form-control" v-model="destination"
+              aria-label="Example text with button addon" aria-describedby="button-addon1"></label>
           </div>
           <div class="d-flex flex-column ">
           <div class="input-group">
-            <label for="amount"><input type="number" placeholder="Amount" class="form-control" v-model="amount"
-              aria-label="Example text with button addon" aria-describedby="button-addon1"> Amount </label>
+            <label for="amount" class="fs-5 fw-bold" >Amount <input type="number" placeholder="Example: 100" class="form-control" v-model="amount"
+              aria-label="Example text with button addon" aria-describedby="button-addon1"></label>
           </div>
           <div class="input-group">
-            <label for=""><input type="text" placeholder="Description" v-model="description" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1"></label>
+            <label for="Description" class="fs-5 fw-bold">Description<input type="text" placeholder="Transaction Shop" v-model="description" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1"></label>
           </div>
           <div class="input-group my-3 d-flex justify-content-center align-items-center">
-          <button class="btn btn-success" @click.prevent="newTransfer">SEND </button>
+          <button class="btn btn-dark" @click.prevent="newTransfer">SEND </button>
           </div>
         </div>
         </section>

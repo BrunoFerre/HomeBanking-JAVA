@@ -714,7 +714,7 @@ linear-gradient(hsl(0, 0%, 100%), hsl(0deg 0% 0%) 15% 55%, hsl(0deg 0% 0%) 70%);
   width: 30rem;
   height: 30rem;
   border: 1px solid black;
-  background-color: #3883c5;
+  background-image: linear-gradient(339deg, #158e41, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
