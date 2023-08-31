@@ -7,6 +7,7 @@ createApp({
             accounts: [],
             loans:[],
             client:[],
+             
         }
     },
     created() {
@@ -44,8 +45,9 @@ createApp({
 					autocapitalize: 'off',
 				},
 				showCancelButton: true,
-				confirmButtonText: 'Look up',
+				confirmButtonText: 'Yes',
 				showLoaderOnConfirm: true,
+                buttonColor: '#32a852',
 				preConfirm: login => {
 					return axios
 						.post('/api/clients/current/accounts')
@@ -67,6 +69,7 @@ createApp({
 				},
 				allowOutsideClick: () => !Swal.isLoading(),
 			});
-        }
+        },
+       
     }
 }).mount("#app")

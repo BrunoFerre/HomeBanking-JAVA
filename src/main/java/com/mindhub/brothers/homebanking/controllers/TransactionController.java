@@ -35,7 +35,7 @@ public class TransactionController {
     public ResponseEntity<Object> newTransaction(Authentication authentication,
               @RequestParam Double amount,@RequestParam String description,@RequestParam String accountOrigin,
               @RequestParam String accountDestination) {
-        Client clientAuth = clientRepository.findByEmail(authentication.getName());
+
         if (amount.isNaN() || amount < 0) {
             return new ResponseEntity<>("Invalid amount", HttpStatus.FORBIDDEN);
         }
@@ -54,18 +54,22 @@ public class TransactionController {
         if (accountsRepository.findByNumber(accountOrigin) == null) {
             return new ResponseEntity<>("Invalid account origin", HttpStatus.FORBIDDEN);
         }
-        Account account= clientAuth.getAccounts().stream().filter(accountC ->
-                accountC.getNumber().equals(accountOrigin)).collect(Collectors.toList()).get(0);
-        Account accountDest = accountsRepository.findByNumber(accountDestination);
-        if (account.getBalance() >= amount){
-            account.setBalance(account.getBalance()-amount);
-            accountDest.setBalance(accountDest.getBalance()+amount);
-            Transaction debit= new Transaction(TransactionType.DEBIT,amount,description,LocalDateTime.now());
-            Transaction credit= new Transaction(TransactionType.CREDIT,amount,description,LocalDateTime.now());
-            account.addTransaction(debit);
-            accountDest.addTransaction(credit);
-            accountsRepository.save(account);
-            accountsRepository.save(accountDest);
+        Client clientAuth = clientRepository.findByEmail(authentication.getName());
+        Account originalAccount = accountsRepository.findByNumber(accountOrigin);
+        Account destAccount = accountsRepository.findByNumber(accountDestination);
+
+        if (originalAccount.getOwner().getId() != clientAuth.getId()) {
+            return new ResponseEntity<>("Invalid account origin", HttpStatus.FORBIDDEN);
+        }
+        if (originalAccount.getBalance() >= amount){
+            originalAccount.setBalance(originalAccount.getBalance()-amount);
+            destAccount.setBalance(destAccount.getBalance()+amount);
+            Transaction debit= new Transaction(TransactionType.DEBIT,amount*-1,description,LocalDateTime.now());
+            Transaction credit= new Transaction(TransactionType.CREDIT,amount*-1,description,LocalDateTime.now());
+            originalAccount.addTransaction(debit);
+            destAccount.addTransaction(credit);
+            accountsRepository.save(originalAccount);
+            accountsRepository.save(destAccount);
             transactionRepository.save(debit);
             transactionRepository.save(credit);
         }else{

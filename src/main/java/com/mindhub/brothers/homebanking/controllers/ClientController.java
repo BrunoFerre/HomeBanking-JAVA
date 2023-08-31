@@ -58,7 +58,7 @@ public class ClientController {
         }
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientRepository.save(newClient);
-        int accountNumber = RandomNumberGenerate.getRandomNumber(1000, 9999);
+        String accountNumber = RandomNumberGenerate.accountNumber();
         Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0);
         newClient.addAccount(newAccount);
         accountsRepository.save(newAccount);

@@ -5,6 +5,7 @@ import com.mindhub.brothers.homebanking.models.enums.CardColor;
 import com.mindhub.brothers.homebanking.models.enums.CardType;
 import com.mindhub.brothers.homebanking.models.enums.TransactionType;
 import com.mindhub.brothers.homebanking.repositories.*;
+import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -97,8 +98,8 @@ public class HomebankingApplication {
                     "Ferreira",
                     "fbrunomarcos@gmail.com",
                     passwordEncoder.encode("pass123"));
-            Account accountBruno1 = new Account("VIN-0067",this.date.plusDays(5),15000);
-            Account accountBruno2 = new Account("VIN-0068",this.date.plusDays(6),15000);
+            Account accountBruno1 = new Account("VIN-"+RandomNumberGenerate.accountNumber(),this.date.plusDays(5),15000);
+            Account accountBruno2 = new Account("VIN-"+ RandomNumberGenerate.accountNumber(),this.date.plusDays(6),15000);
             Transaction transactionBruno = new Transaction(TransactionType.CREDIT,2500,
                     "nose que poner je",
                     this.date1.plusDays(1));

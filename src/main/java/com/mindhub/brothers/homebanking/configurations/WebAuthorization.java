@@ -23,24 +23,36 @@ public class WebAuthorization {
                         .antMatchers("/web/index.html","/web/login.html","/web/register.html","/web/images/**").permitAll()
                         .antMatchers("/web/assets/styles/**","/web/assets/images/**").permitAll()
                         .antMatchers("/web/login.js","/web/register.js").permitAll()
+                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/cards",
+                        "/web/**").hasAuthority("CLIENT")
+                        .antMatchers("/api/clients/accounts/{id}").hasAuthority("CLIENT")
+                        .antMatchers(HttpMethod.POST,"/api/clients/current/accounts",
+                                "/api/clients/current/cards",
+                                "/api/transactions").hasAuthority("CLIENT")
                         .antMatchers("/rest/**","/h2-console/**").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.html").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.js").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/**").hasAnyAuthority("ADMIN")
                         .antMatchers("/api/clients").hasAuthority("ADMIN")
-                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/cards",
-                                "/web/**").hasAuthority("CLIENT")
-                        .antMatchers("/api/clients/accounts/{id}").hasAuthority("CLIENT")
-                        .antMatchers(HttpMethod.POST,"/api/clients/current/accounts","/api/clients/current/cards","/api/transactions").hasAuthority("CLIENT")
+
                         .anyRequest().denyAll();
+
         http.formLogin().usernameParameter("email").passwordParameter("password").loginPage("/api/login");
+
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
+
         http.csrf().disable();
+
         http.headers().frameOptions().disable();
+
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
+
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+
         return http.build();
     }
     private void clearAuthenticationAttributes(HttpServletRequest request) {

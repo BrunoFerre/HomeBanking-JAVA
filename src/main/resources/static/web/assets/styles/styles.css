@@ -1,6 +1,6 @@
 header{
     min-height: 10vh;
-    background: linear-gradient(70deg,#ff9100,#da3725);
+    background-image: url("../images/header.png");
     padding: .5rem .5rem;
     display: flex;
     align-items: center;

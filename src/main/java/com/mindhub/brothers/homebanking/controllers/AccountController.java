@@ -42,7 +42,7 @@ public class AccountController {
     @RequestMapping(path = "/api/clients/current/accounts",method = RequestMethod.POST)
     public ResponseEntity<Object> newAccount(Authentication authentication){
         if (clientRepository.findByEmail(authentication.getName()).getAccounts().size() <=2){
-            int accountNumber = RandomNumberGenerate.getRandomNumber(1000, 9999);
+            String accountNumber = RandomNumberGenerate.accountNumber();
             Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0);
             clientRepository.findByEmail(authentication.getName()).addAccount(newAccount);
             accountsRepository.save(newAccount);

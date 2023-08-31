@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/transfer.css">
+    <link rel="stylesheet" href="../styles/index.css">
     <title>Transfer || MindHub Brothers</title>
 </head>
 <body>
@@ -44,44 +44,81 @@
                     <div class="text">Logout</div>
                   </button> 
         </header>
-  <main>
+  <main class="main">
     <div class="container p-3">
         <div class="d-flex gap-5 align-items-center justify-content-center flex-wrap">
-          <button class="btn btn-danger btn-lg" type="button">TRANSFERENCIA A PROPIA CUENTA</button>
-          <button class="btn btn-danger btn-lg" type="button">TRANSFERENCIA A OTRO BANCO</button>
+          <button class="btn btn-danger btn-lg" type="button" @click.prevent="form2">Own Transfer</button>
+          <button class="btn btn-danger btn-lg" type="button"  @click.prevent="form1">Transfer to third parties</button>
         </div>
       </div>
       <div class="info container bg-dark d-flex  justify-content-evenly gap-2 flex-wrap">
         <div class="d-flex w-100 flex-wrap gap-2 align-items-center justify-content-center">
-        <section class="send  d-flex align-items-center flex-column gap-1">
+        <form class="d-flex flex-column" v-if="showForm1">
+          <div class="d-flex">
+        <section class="send mx-2 d-flex align-items-center flex-column gap-1">
           <h3 class="text-white">SEND</h3>
-          <select class="form-select" multiple aria-label="Multiple select example">
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <select class="form-select " multiple aria-label="Multiple select example" v-model="origin">
+            <template v-for="account of accounts">
+            <option class="m-1" :value="account.number">{{account.number}} || USD {{account.balance}}</option>
+          </template>
           </select>
         </section>
-        <section class="send  d-flex align-items-center flex-column gap-1">
+        <section class="send mx-2 d-flex align-items-center flex-column gap-1">
           <h3 class="text-white">RECEIVE</h3>
-          <select class="form-select" multiple aria-label="Multiple select example">
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <select class="form-select" multiple aria-label="Multiple select example" v-model="destination">
+            <template v-for="account of accounts">
+            <option class="m-1" :value="account.number">{{account.number}} || USD {{account.balance}}</option>
+            </template>
           </select>
         </section>
       </div>
-      <div class="d-flex flex-column w-100 gap-2 align-items-center justify-content-center">
-        <div class="input-group mb-3">
-          <input type="number" placeholder="Amount" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        <div class="d-flex flex-column  gap-2 align-items-center justify-content-center">
+          <div class="input-group mt-3 ">
+            <input type="number" placeholder="Amount" class="form-control" v-model="amount"
+             aria-label="Example text with button addon" aria-describedby="button-addon1">
+          </div>
+          <div class="input-group mt-3">
+            <input type="text" placeholder="Description" v-model="description" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1">
+          </div>
+          <div class="input-group my-3 d-flex justify-content-center align-items-center">
+          <button class="btn btn-success" @click.prevent="newTransfer">SEND </button>
+          </div>
         </div>
-        <div class="input-group mb-3">
-          <input type="text" placeholder="Description" class="form-control"  aria-label="Example text with button addon" aria-describedby="button-addon1">
+        </form>
+        <!-- SECOND FROM -->
+        <form class="d-flex flex-column " v-if="showForm2">
+         <div class="d-flex flex-column">
+        <section class="send mx-2 d-flex align-items-center flex-column gap-1">
+          <h3 class="text-white">SEND</h3>
+          <select class="form-select " multiple aria-label="Multiple select example" v-model="origin">
+            <template v-for="account of accounts">
+            <option class="m-1" :value="account.number">{{account.number}} || USD {{account.balance}}</option>
+          </template>
+          </select>
+        </section>
+        <section class="send mx-2 d-flex align-items-center justify-content-center flex-column gap-1">
+          <h3 class="text-white">RECEIVE</h3>
+          <div class="input-group">
+            <label for="dest"><input type="text" placeholder="Account destination" class="form-control" v-model="destination"
+              aria-label="Example text with button addon" aria-describedby="button-addon1"> Amount </label>
+          </div>
+          <div class="d-flex flex-column ">
+          <div class="input-group">
+            <label for="amount"><input type="number" placeholder="Amount" class="form-control" v-model="amount"
+              aria-label="Example text with button addon" aria-describedby="button-addon1"> Amount </label>
+          </div>
+          <div class="input-group">
+            <label for=""><input type="text" placeholder="Description" v-model="description" class="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1"></label>
+          </div>
+          <div class="input-group my-3 d-flex justify-content-center align-items-center">
+          <button class="btn btn-success" @click.prevent="newTransfer">SEND </button>
+          </div>
         </div>
-        <div class="input-group mb-3 d-flex justify-content-center align-items-center">
-        <button class="btn btn-success">SEND </button>
-        </div>
+        </section>
+        </form>
       </div>
     </div>
+  </form>
   </main>
   <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
     <div class="d-flex align-items-center justify-content-center gap-3">
@@ -97,8 +134,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  
-    <script src="../scripts/transfer.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="../scripts/transfer.js"></script>
 </body>
 </html>

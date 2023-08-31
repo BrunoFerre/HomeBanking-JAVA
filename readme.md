@@ -16,4 +16,4 @@ Significa quien es el usuario que esta ingresando a la aplicacion. Esto sucede p
 #Autorization
 Significa que se le permite hacer al usuario
 Si el inicion de sesion fue correcto, el servidor le da permisos para hacer ciertas acciones
-//Response entity es Una entidad de respuesta contiene un código de estado HTTP y un cuerpo de respuesta para el cliente  y 
+//Response entity es Una entidad de respuesta contiene un código de estado HTTP y un cuerpo de respuesta para el cliente

@@ -41,24 +41,33 @@ public class CardController {
                 .stream().collect(toList());
     }
     @PostMapping("/clients/current/cards")
-    public ResponseEntity<Object> addCard(Authentication authentication,@RequestParam CardType type,
-            @RequestParam CardColor color) {
+    public ResponseEntity<Object> addCard(Authentication authentication, @RequestParam String type,
+            @RequestParam String color) {
         Client client = clientRepository.findByEmail(authentication.getName());
-        if (type == null||color == null) {
-            return new ResponseEntity<>("Missing type or empty type", HttpStatus.FORBIDDEN);
+        if (type.isBlank()) {
+            return new ResponseEntity<>("Missing type ", HttpStatus.FORBIDDEN);
+        }
+        if(color.isBlank()){
+           return new ResponseEntity<>("Missing color", HttpStatus.FORBIDDEN);
         }
         String numberCard;
-        do {numberCard = RandomNumberGenerate.CardNumber();} while (cardRepository.findByNumber(numberCard) != null);
+        do {
+            numberCard = RandomNumberGenerate.cardNumber();
+
+        }while(cardRepository.findByNumber(numberCard) != null);
+
+
         int cardCvv = RandomNumberGenerate.getCardCVV();
         do {cardCvv = RandomNumberGenerate.getCardCVV();} while (cardRepository.findByCvv(cardCvv) != null);
+
         for (Card card : client.getCards()) {
-            if (card.getType().equals(type) && card.getColor().equals(color)) {
+            if (card.getType().equals(CardType.valueOf((type))) && card.getColor().equals(CardColor.valueOf(color))) {
                 return new ResponseEntity<>("Card already exists", HttpStatus.FORBIDDEN);
             }
         }
-        System.out.println(type);
-        System.out.println(color);
-        Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), type, color, numberCard, cardCvv, LocalDate.now(), LocalDate.now().plusYears(5));
+
+        Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), CardType.valueOf(type), CardColor.valueOf(color),
+                numberCard, cardCvv, LocalDate.now(), LocalDate.now().plusYears(5));
         client.addCard(newCard);
         cardRepository.save(newCard);
         return new ResponseEntity<>("Card Created", HttpStatus.CREATED);

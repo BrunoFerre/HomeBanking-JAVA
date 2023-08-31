@@ -52,10 +52,12 @@
         <div class="text">Logout</div>
       </button>
     </header>
-    <main class="main col-12 d-flex gap-4 flex-wrap justify-content-center">
+    <main class="main col-12 d-flex gap-4 flex-wrap flex-column align-items-center">
       <h2 class="text-dark mt-1 text-center fs-1 fw-bolder w-100">Your cards</h2>
-      <a class="btn btn-dark fs-3 text-white fw-bold" id="create" href="./create-cards.html">Create Cards</a>
-      <div class="d-flex justify-content-evenly flex-wrap w-100">
+      <div class="d-flex align-items-center">
+        <a class="btn btn-dark fs-3 text-white fw-bold" href="./create-cards.html">Create Cards</a>
+      </div>
+      <div class="d-flex align-items-center gap-4">
         <section class="credit text-center d mt-4">
           <h2>Credit:</h2>
           <div class="sectionCards d-flex flex-column justify-content-center gap-3 flex-wrap">
@@ -113,9 +115,8 @@
                   </div>
               </template>
               <h2 v-else>You do not have cards</h2>
-          </div>
       </section>
-      <section class="credit text-center d mt-4">
+        <section class="credit text-center d mt-4">
         <h2>Debit:</h2>
         <div class="sectionCards d-flex flex-column justify-content-center gap-3 flex-wrap">
             <template v-if="debit.length > 0" v-for="(card,index) of debit">
