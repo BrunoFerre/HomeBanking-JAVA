@@ -42,50 +42,53 @@ public class LoanController {
     @PostMapping("/loans")
     public ResponseEntity<Object> newLoan(Authentication authentication, @RequestBody LoanAplicationDTO loanAplicationDTO) {
 
-        Client authClient = clientService.findByEmail(authentication.getName());
-        Account destinationAccount = accountService.findByNumber(loanAplicationDTO.getAccountDestiny());
-        Optional<Loan> selectLoan = loanService.findById(loanAplicationDTO.getId());
-        Set<ClientLoan> clientLoans;
-
-        if (selectLoan.isEmpty()){
-            return new ResponseEntity<>("Loan not found", HttpStatus.FORBIDDEN);
-        }else{
-            clientLoans= authClient.getClientLoans().stream().filter(clientLoan -> clientLoan.getLoan().getName()
-                    .equalsIgnoreCase(selectLoan.get().getName())).collect(toSet());
-        }
-        if (!selectLoan.get().getPayments().contains(loanAplicationDTO.getPayments())){
-            return new ResponseEntity<>("Payment not found", HttpStatus.FORBIDDEN);
-        }
         if (loanAplicationDTO.getAmount()<1){
             return new ResponseEntity<>("Amount must be greater than 0", HttpStatus.FORBIDDEN);
         }
-        if (selectLoan.get().getMaxAmount()<loanAplicationDTO.getAmount()){
-            return new ResponseEntity<>("Maximum amount exceeded", HttpStatus.FORBIDDEN);
+
+        if (loanAplicationDTO.getPayments()<=0){
+            return new ResponseEntity<>("Payments must be greater than 0", HttpStatus.FORBIDDEN);
         }
 
-        if(destinationAccount==null){
+        if(loanAplicationDTO.getAccountDestiny().isBlank()){
             return new ResponseEntity<>("Account destination not found", HttpStatus.FORBIDDEN);
         }
+
+        Client authClient = clientService.findByEmail(authentication.getName());
+
+        Account destinationAccount = accountService.findByNumber(loanAplicationDTO.getAccountDestiny());
+
+        Loan loan = loanService.findById(loanAplicationDTO.getId());
+
+        if (destinationAccount.getOwner().getId() != authClient.getId()){
+            return new ResponseEntity<>("Account destiny error", HttpStatus.UNAUTHORIZED);
+        }
+
+        if(clientLoanService.existByClientAndLoan(authClient,loan)){
+            return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
+        }
+        if (!loan.getPayments().contains(loanAplicationDTO.getPayments())){
+            return new ResponseEntity<>("Payment not found", HttpStatus.FORBIDDEN);
+        }
+
         if (!authClient.getAccounts().contains(destinationAccount)){
             return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
         }
-        if (clientLoans.size()>0){
-            return new ResponseEntity<>("Loan already exists", HttpStatus.FORBIDDEN);
-        }
-
-        ClientLoan clientLoan = new ClientLoan((int) (loanAplicationDTO.getAmount()+(loanAplicationDTO.getAmount()*0.2)), loanAplicationDTO.getAmount());
+        ClientLoan clientLoan = new ClientLoan((int) (loanAplicationDTO.getAmount()+(loanAplicationDTO.getAmount()*0.2)),
+                loanAplicationDTO.getAmount());
         clientLoanService.saveClientLoan(clientLoan);
 
-        Transaction transaction = new Transaction(TransactionType.CREDIT, loanAplicationDTO.getAmount(),selectLoan.get().getName()+"Loan aproved", LocalDateTime.now());
+        Transaction transaction = new Transaction(TransactionType.CREDIT, loanAplicationDTO.getAmount(),
+                loan.getName()+"Loan aproved", LocalDateTime.now());
         transactionService.saveTransaction(transaction);
 
         destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount());
         destinationAccount.addTransaction(transaction);
 
-        selectLoan.get().addClientLoan(clientLoan);
+        loan.addClientLoan(clientLoan);
         authClient.addClientLoan(clientLoan);
         clientService.saveClient(authClient);
 
-        return new ResponseEntity<>("Loan Aproved BURRASO",HttpStatus.CREATED);
+        return new ResponseEntity<>("Loan Aproved",HttpStatus.CREATED);
     }
 }

@@ -24,7 +24,6 @@ public class ClientLoan {
         this.payments = payments;
         this.amount = amount;
     }
-
     public long getId() {
         return id;
     }

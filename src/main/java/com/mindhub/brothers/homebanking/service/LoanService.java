@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface LoanService {
     List<LoanDTO> getLoans();
-    Optional<Loan> findById(long id);
+    Loan findById(long id);
 }

@@ -23,7 +23,7 @@ public class LoanServiceImplement implements LoanService  {
     }
 
     @Override
-    public Optional<Loan> findById(long id) {
-        return loanRepository.findById(id);
+    public Loan findById(long id) {
+       return loanRepository.findById(id);
     }
 }
