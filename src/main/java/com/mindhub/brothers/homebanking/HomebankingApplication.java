@@ -71,8 +71,8 @@ public class HomebankingApplication {
 
             client.addCard(cardDebit);
             client.addCard(cardCredit);
-            client.addAccount(account1);
             client.addAccount(account);
+            client.addAccount(account1);
             account1.addTransaction(transaction);
             account1.addTransaction(transaction1);
             client.addClientLoan(clientLoan);

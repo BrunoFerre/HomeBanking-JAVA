@@ -9,7 +9,7 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-image: url("../images/main.png")
+    background-image: url("../images/main.svg")
   }
   
 [v-cloak]{
@@ -711,10 +711,13 @@ linear-gradient(hsl(0, 0%, 100%), hsl(0deg 0% 0%) 15% 55%, hsl(0deg 0% 0%) 70%);
   }
 }
 .form{
-  width: 30rem;
+  min-width: 30rem;
   height: 30rem;
   border: 1px solid black;
-  background-image: linear-gradient(339deg, #158e41, transparent);
+  background-image: linear-gradient(329deg, #15418e, gray);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;

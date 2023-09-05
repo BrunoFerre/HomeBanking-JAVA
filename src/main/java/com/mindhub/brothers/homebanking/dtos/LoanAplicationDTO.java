@@ -9,12 +9,12 @@ public class LoanAplicationDTO {
 
     public LoanAplicationDTO() {
     }
-  /*  public LoanAplicationDTO(long id, Double amount, int payments, String accountDestiny) {
+    public LoanAplicationDTO(long id, Double amount, int payments, String accountDestiny) {
         this.id = id;
         this.amount = amount;
         this.payments = payments;
         this.accountDestiny = accountDestiny;
-    }*/
+    }
 
     public long getId() {
         return id;

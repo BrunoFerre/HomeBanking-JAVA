@@ -87,6 +87,7 @@ public class LoanController {
 
         loan.addClientLoan(clientLoan);
         authClient.addClientLoan(clientLoan);
+        accountService.save(destinationAccount);
         clientService.saveClient(authClient);
 
         return new ResponseEntity<>("Loan Aproved",HttpStatus.CREATED);
