@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.nio.channels.FileChannel;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -90,4 +91,5 @@ public class Account {
                 ", balance=" + balance +
                 '}';
     }
+
 }

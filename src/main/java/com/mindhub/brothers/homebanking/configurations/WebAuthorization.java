@@ -23,12 +23,12 @@ public class WebAuthorization {
                         .antMatchers("/web/index.html","/web/login.html","/web/register.html","/web/images/**").permitAll()
                         .antMatchers("/web/assets/styles/**","/web/assets/images/**").permitAll()
                         .antMatchers("/web/login.js","/web/register.js").permitAll()
-                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/cards",
+                        .antMatchers(HttpMethod.GET,"/api/clients/current/**","/api/cards","/api/loans",
                         "/web/**").hasAuthority("CLIENT")
                         .antMatchers("/api/clients/accounts/{id}").hasAuthority("CLIENT")
                         .antMatchers(HttpMethod.POST,"/api/clients/current/accounts",
                                 "/api/clients/current/cards",
-                                "/api/transactions").hasAuthority("CLIENT")
+                                "/api/transactions","/api/loans").hasAuthority("CLIENT")
                         .antMatchers("/rest/**","/h2-console/**").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.html").hasAnyAuthority("ADMIN")
                         .antMatchers("/web/adminPages/manager.js").hasAnyAuthority("ADMIN")

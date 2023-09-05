@@ -8,6 +8,8 @@ import com.mindhub.brothers.homebanking.models.enums.CardColor;
 import com.mindhub.brothers.homebanking.models.enums.CardType;
 import com.mindhub.brothers.homebanking.repositories.CardRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
+import com.mindhub.brothers.homebanking.service.CardService;
+import com.mindhub.brothers.homebanking.service.ClientService;
 import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,23 +29,22 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class CardController {
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @RequestMapping("/cards")
     public List<CardDTO>getCards(){
-        return cardRepository.findAll().stream().map(CardDTO::new).collect(toList());
+        return cardService.getCards();
     }
     @RequestMapping("/clients/current/cards")
     public List<CardDTO>getCards(Authentication authentication){
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName())).getCards()
-                .stream().collect(toList());
+        return cardService.cardsAuthentication(authentication);
     }
     @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> addCard(Authentication authentication, @RequestParam String type,
             @RequestParam String color) {
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findByEmail(authentication.getName());
         if (type.isBlank()) {
             return new ResponseEntity<>("Missing type ", HttpStatus.FORBIDDEN);
         }
@@ -54,11 +55,11 @@ public class CardController {
         do {
             numberCard = RandomNumberGenerate.cardNumber();
 
-        }while(cardRepository.findByNumber(numberCard) != null);
+        }while(cardService.findByNumber(numberCard) != null);
 
 
         int cardCvv = RandomNumberGenerate.getCardCVV();
-        do {cardCvv = RandomNumberGenerate.getCardCVV();} while (cardRepository.findByCvv(cardCvv) != null);
+        do {cardCvv = RandomNumberGenerate.getCardCVV();} while (cardService.findByCvv(cardCvv) != null);
 
         for (Card card : client.getCards()) {
             if (card.getType().equals(CardType.valueOf((type))) && card.getColor().equals(CardColor.valueOf(color))) {
@@ -69,7 +70,7 @@ public class CardController {
         Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), CardType.valueOf(type), CardColor.valueOf(color),
                 numberCard, cardCvv, LocalDate.now(), LocalDate.now().plusYears(5));
         client.addCard(newCard);
-        cardRepository.save(newCard);
+        cardService.addCard(newCard);
         return new ResponseEntity<>("Card Created", HttpStatus.CREATED);
     }
 }

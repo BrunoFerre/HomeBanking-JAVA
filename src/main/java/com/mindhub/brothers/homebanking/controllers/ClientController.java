@@ -5,6 +5,7 @@ import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
+import com.mindhub.brothers.homebanking.service.ClientService;
 import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,14 +28,15 @@ public class ClientController {
     private ClientRepository clientRepository;
     @Autowired
     private AccountsRepository accountsRepository;
-
+    @Autowired
+    private ClientService clientService;
     @RequestMapping("/clients")
     public List<ClientDTO> getClients(){
-      return  clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
+      return  clientService.getClients();
     }
     @RequestMapping("/clients/{current}")
     public ClientDTO getClient(Authentication authentication ) {
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+        return clientService.getClientAuthentication(authentication);
     }
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
     public ResponseEntity<Object> register(
@@ -57,7 +59,7 @@ public class ClientController {
             return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
         }
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        clientRepository.save(newClient);
+        clientService.saveClient(newClient);
         String accountNumber = RandomNumberGenerate.accountNumber();
         Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0);
         newClient.addAccount(newAccount);

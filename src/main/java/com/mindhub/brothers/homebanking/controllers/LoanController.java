@@ -2,33 +2,90 @@ package com.mindhub.brothers.homebanking.controllers;
 
 import com.mindhub.brothers.homebanking.dtos.LoanAplicationDTO;
 import com.mindhub.brothers.homebanking.dtos.LoanDTO;
-import com.mindhub.brothers.homebanking.models.Account;
-import com.mindhub.brothers.homebanking.models.Client;
+import com.mindhub.brothers.homebanking.models.*;
+import com.mindhub.brothers.homebanking.models.enums.TransactionType;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
+import com.mindhub.brothers.homebanking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 @RestController
 @RequestMapping("/api")
 public class LoanController {
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
-    private AccountsRepository accountRepository;
+    private AccountService accountService;
+    @Autowired
+    private LoanService loanService;
+    @Autowired
+    private ClientLoanService clientLoanService;
+    @Autowired
+    private TransactionService transactionService;
+    @GetMapping("/loans")
+    public List<LoanDTO> getLoans(){
+        return loanService.getLoans();
+    }
     @Transactional
-    @PostMapping("/loan")
-    public ResponseEntity<String> newLoan(Authentication authentication, @RequestBody LoanAplicationDTO loanAplicationDTO) {
-        Client authClient = clientRepository.findByEmail(authentication.getName());
-        Account destinationAccount = accountRepository.findByNumber(loanAplicationDTO.getAccountDestiny());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping("/loans")
+    public ResponseEntity<Object> newLoan(Authentication authentication, @RequestBody LoanAplicationDTO loanAplicationDTO) {
+
+        Client authClient = clientService.findByEmail(authentication.getName());
+        Account destinationAccount = accountService.findByNumber(loanAplicationDTO.getAccountDestiny());
+        Optional<Loan> selectLoan = loanService.findById(loanAplicationDTO.getId());
+        Set<ClientLoan> clientLoans;
+
+        if (selectLoan.isEmpty()){
+            return new ResponseEntity<>("Loan not found", HttpStatus.FORBIDDEN);
+        }else{
+            clientLoans= authClient.getClientLoans().stream().filter(clientLoan -> clientLoan.getLoan().getName()
+                    .equalsIgnoreCase(selectLoan.get().getName())).collect(toSet());
+        }
+        if (!selectLoan.get().getPayments().contains(loanAplicationDTO.getPayments())){
+            return new ResponseEntity<>("Payment not found", HttpStatus.FORBIDDEN);
+        }
+        if (loanAplicationDTO.getAmount()<1){
+            return new ResponseEntity<>("Amount must be greater than 0", HttpStatus.FORBIDDEN);
+        }
+        if (selectLoan.get().getMaxAmount()<loanAplicationDTO.getAmount()){
+            return new ResponseEntity<>("Maximum amount exceeded", HttpStatus.FORBIDDEN);
+        }
+
+        if(destinationAccount==null){
+            return new ResponseEntity<>("Account destination not found", HttpStatus.FORBIDDEN);
+        }
+        if (!authClient.getAccounts().contains(destinationAccount)){
+            return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
+        }
+        if (clientLoans.size()>0){
+            return new ResponseEntity<>("Loan already exists", HttpStatus.FORBIDDEN);
+        }
+
+        ClientLoan clientLoan = new ClientLoan((int) (loanAplicationDTO.getAmount()+(loanAplicationDTO.getAmount()*0.2)), loanAplicationDTO.getAmount());
+        clientLoanService.saveClientLoan(clientLoan);
+
+        Transaction transaction = new Transaction(TransactionType.CREDIT, loanAplicationDTO.getAmount(),selectLoan.get().getName()+"Loan aproved", LocalDateTime.now());
+        transactionService.saveTransaction(transaction);
+
+        destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount());
+        destinationAccount.addTransaction(transaction);
+
+        selectLoan.get().addClientLoan(clientLoan);
+        authClient.addClientLoan(clientLoan);
+        clientService.saveClient(authClient);
+
+        return new ResponseEntity<>("Loan Aproved BURRASO",HttpStatus.CREATED);
     }
 }

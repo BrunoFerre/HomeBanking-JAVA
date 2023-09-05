@@ -98,8 +98,10 @@ public class HomebankingApplication {
                     "Ferreira",
                     "fbrunomarcos@gmail.com",
                     passwordEncoder.encode("pass123"));
-            Account accountBruno1 = new Account("VIN-"+RandomNumberGenerate.accountNumber(),this.date.plusDays(5),15000);
-            Account accountBruno2 = new Account("VIN-"+ RandomNumberGenerate.accountNumber(),this.date.plusDays(6),15000);
+            Account accountBruno1 = new Account("VIN-"+RandomNumberGenerate.accountNumber(),
+                    this.date.plusDays(5),15000);
+            Account accountBruno2 = new Account("VIN-"+ RandomNumberGenerate.accountNumber(),
+                    this.date.plusDays(6),15000);
             Transaction transactionBruno = new Transaction(TransactionType.CREDIT,2500,
                     "nose que poner je",
                     this.date1.plusDays(1));
