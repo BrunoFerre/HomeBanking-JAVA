@@ -44,7 +44,7 @@ public class HomebankingApplication {
                                       CardRepository cardRepository) {
         return (args) -> {
 
-            Account account = new Account("VIN-001", this.date, 5000);
+           /* Account account = new Account("VIN-001", this.date, 5000);
             Account account1 = new Account("VIN-002", this.date, 7500);
             Transaction transaction = new Transaction(TransactionType.CREDIT,
                     1700, "DESCRIPTION ", this.date1);
@@ -126,7 +126,7 @@ public class HomebankingApplication {
             accountsRepository.save(accountBruno2);
             transactionRepository.save(transactionBruno);
             clientLoanRepository.save(loanBruno);
-            cardRepository.save(cardBruno);
+            cardRepository.save(cardBruno);*/
         };
     }
 }
