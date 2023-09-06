@@ -3,7 +3,7 @@ import { logout } from './logout.js'
 const app = createApp({
     data() {
         return {
-            client: [],
+            clients: [],
             accounts: [],
             loans: [],
             payment: [],
@@ -24,15 +24,33 @@ const app = createApp({
                 "payments": this.payment,
                 "accountDestiny": this.accountDest
             }
-            console.log(newLoan);
-            axios.post('http://localhost:8080/api/loans', newLoan)
-                .then(response => {
-                    window.reload()
-                })
+            Swal.fire({
+                title: 'Add a new loan?',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                showLoaderOnConfirm: true,
+                buttonColor: '#32a852',
+                preConfirm: login => {
+                return axios.post('http://localhost:8080/api/loans', newLoan)
+                    .then(response => {
+                        window.location.reload()
+                    }).catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            text: error.response.data,
+                            confirmButtonColor: '#5b31be93',
+                        })
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading(),
+            })
 
         },
         loadData() {
-            this.client = JSON.parse(localStorage.getItem('client')) ?? []
+            this.clients = JSON.parse(localStorage.getItem('client')) ?? []
             axios.get(`http://localhost:8080/api/clients/current/accounts`)
                 .then(response => {
                     this.accounts = response.data
@@ -40,8 +58,11 @@ const app = createApp({
                         .then(response => {
                             this.loans = response.data
                             console.log(this.loans);
-
+                        }).catch(error => {
+                            console.log(error);
                         })
+                }).catch(error => {
+                    console.log(error);
                 })
         },
         payments() {

@@ -50,9 +50,7 @@ const app = createApp({
                                 text: error.response.data,
                                 confirmButtonColor: '#5b31be93',
                             })
-                
-                        
-                 })
+                })
                 }
             })
         }

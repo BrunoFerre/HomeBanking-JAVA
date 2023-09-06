@@ -47,12 +47,14 @@ const app = createApp({
                         `amount=${this.amount}&description=${this.description}&accountOrigin=${this.origin}&accountDestination=${this.destination}`,)
                         .then(response => {
                             setTimeout(() => {
-                                location.href = '../pages/transfer.html';
+                                location.reload()
                             }, 2000)
                         })
                         .catch(error => {
+                            console.log(error);
                             Swal.fire({
                                 icon: 'error',
+                                title: 'Oops...'+ error.response.data,
                             })
                         })
                 }

@@ -60,7 +60,7 @@
                 </p>
                 <p class="property d-flex align-items-center justify-content-center gap-2">
                   <span class="color-2">Balance : </span>
-                  <span class="color-1">{{account.balance}}</span>
+                  <span class="color-1">$ {{account.balance.toLocaleString(1)}}</span>
                 </p>
                 <a :href="'./account.html?id=' + account.id" class="btn btn-dark fs-3 text-white fw-bold"> Go transactions</a>
               </div>
@@ -85,7 +85,7 @@
               <template v-for="loan of loans">
                 <tr class="fs-6">
                   <td>{{loan.loan}}</td>
-                  <td>{{loan.amount}}</td>
+                  <td>$ {{loan.amount.toLocaleString(1)}}</td>
                   <td>{{loan.payments}}</td>
                 </template>
               </tr>

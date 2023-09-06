@@ -74,15 +74,16 @@ public class LoanController {
         if (!authClient.getAccounts().contains(destinationAccount)){
             return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
         }
-        ClientLoan clientLoan = new ClientLoan((int) (loanAplicationDTO.getAmount()+(loanAplicationDTO.getAmount()*0.2)),
-                loanAplicationDTO.getAmount());
+
+        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getPayments(),loanAplicationDTO.getAmount()*1.2);
+        clientLoan.setClient(authClient);
         clientLoanService.saveClientLoan(clientLoan);
 
         Transaction transaction = new Transaction(TransactionType.CREDIT, loanAplicationDTO.getAmount(),
                 loan.getName()+"Loan aproved", LocalDateTime.now());
         transactionService.saveTransaction(transaction);
 
-        destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount());
+        destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount()*0.2);
         destinationAccount.addTransaction(transaction);
 
         loan.addClientLoan(clientLoan);

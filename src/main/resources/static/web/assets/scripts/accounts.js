@@ -18,9 +18,7 @@ createApp({
             this.client= JSON.parse(localStorage.getItem('client'))??[]
             axios.get(`http://localhost:8080/api/clients/current`)
                 .then(response => {
-                    console.log(response);
                     this.clients = response.data
-                    console.log(this.clients);
                     this.clients_accounts = this.clients.accounts
                     this.loans= this.clients.loans
                     for (const account of this.clients_accounts) {
@@ -53,7 +51,7 @@ createApp({
 						.post('/api/clients/current/accounts')
 						.then(response => {
                             setTimeout(() =>{
-							location.href = '../pages/accounts.html';
+							location.reload()
                             },2000)
 						})
 						.catch(error => {
@@ -63,13 +61,12 @@ createApp({
 								confirmButtonColor: '#5b31be93',
 							});
                             setTimeout(() => {
-                            location.href = '../pages/accounts.html';
+                                location.reload()
                             },2000)
 						});
 				},
 				allowOutsideClick: () => !Swal.isLoading(),
 			});
         },
-       
     }
 }).mount("#app")

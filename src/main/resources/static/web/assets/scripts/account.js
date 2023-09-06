@@ -7,7 +7,8 @@ createApp({
             account: [],
             id_account: Number,
             transaction:[],
-            error:''
+            error:'',
+            nuevoArray:[]
         }
     },
     created() {
@@ -17,12 +18,12 @@ createApp({
         loadData() {
             
             this.client= JSON.parse(localStorage.getItem('client'))??[]
-           const parameter = location.search
-           const parameterUrl = new URLSearchParams(parameter)
+            const parameter = location.search
+            const parameterUrl = new URLSearchParams(parameter)
             this.id_account = parameterUrl.get("id")
             axios.get(`http://localhost:8080/api/clients/accounts/${this.id_account}`)
                 .then(response => {
-                    this.account = response.data
+                    this.account = response.data        
                     for(let transaction of this.account.transactions){
                         this.transaction.push(transaction)
                     }
