@@ -6,11 +6,11 @@ const app = createApp({
             clients: [],
             accounts: [],
             loans: [],
-            payment: [],
-            selectLoan: {},
+            payment: "",
+            selectLoan: '',
             paymentFilter:[],
-            amount: 0,
-            accountDest:''
+            amount: "",
+            accountDest:'',
         }
     },
     created() {
@@ -19,11 +19,12 @@ const app = createApp({
     methods: {
         newLoans() {
             let newLoan = {
-                "id":this.selectLoan,
+                "id":this.selectLoan.id,
                 "amount": Number(this.amount),
                 "payments": this.payment,
                 "accountDestiny": this.accountDest
             }
+            console.log(newLoan);
             Swal.fire({
                 title: 'Add a new loan?',
                 inputAttributes: {
@@ -38,6 +39,7 @@ const app = createApp({
                     .then(response => {
                         window.location.reload()
                     }).catch(error => {
+                        console.log(error);
                         Swal.fire({
                             icon: 'error',
                             text: error.response.data,
@@ -58,6 +60,7 @@ const app = createApp({
                         .then(response => {
                             this.loans = response.data
                             console.log(this.loans);
+                            this.amount.toLocaleString(1)
                         }).catch(error => {
                             console.log(error);
                         })
@@ -67,7 +70,7 @@ const app = createApp({
         },
         payments() {
                 this.paymentFilter = this.loans.filter(loan => {
-                return this.selectLoan == (loan.id)  
+                return this.selectLoan.id == (loan.id)  
             })[0]
         },
         logOut() {

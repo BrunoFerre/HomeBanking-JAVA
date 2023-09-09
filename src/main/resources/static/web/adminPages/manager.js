@@ -1,6 +1,6 @@
 const {createApp} = Vue
 
-const url = `http://localhost:8080/api/clients`
+const url = `http://localhost:8080/rest/clients`
 console.log(url)
 createApp({
     data(){
@@ -20,7 +20,8 @@ createApp({
         loadData(){
             axios.get(url)
             .then(response =>{
-                this.clients = response.data;
+                this.clients = response.data._embedded.clients;
+                console.log(this.clients);
                 this.jsonRest = JSON.stringify(response.data,null,1)
             })
             .catch(error => console.error(error));

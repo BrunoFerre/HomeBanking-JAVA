@@ -42,21 +42,22 @@
                 <div class="text">Logout</div>
               </button> 
     </header>
-    <main class="main  d-flex align-items-center justify-content-center">
+    <main class="main d-flex align-items-center justify-content-evenly flex-wrap gap-2">
+      <picture>
+        <img src="../images/loans.png" alt="Loans" id="loans-img">
+    </picture>
         <form class="form form-horizontal">
             <fieldset>
-            
             <!-- Form Name -->
             <legend class="text-center">Loans Request</legend>
-          
             <!-- Select Basic -->
             <div class="form-group">
               <label class="control-label" for="selectbasic">Select Loan</label>
               <div class="">
                 <select @Change="payments" id="selectbasic" name="selectbasic" class="form-control" v-model="selectLoan">
-                  <option selected value="">Select Loan</option>
+                  <option value="">Select</option>
                   <template v-for="loan of loans">
-                  <option :value="loan.id">{{loan.name}}</option>
+                  <option :value="loan">{{loan.name}}</option>
                 </template>
                 </select>
               </div>
@@ -66,7 +67,7 @@
               <label class=" control-label" for="selectbasic">Account Destiny</label>
               <div class="">
                 <select id="selectbasic" name="selectbasic" class="form-control" v-model="accountDest">
-                  <option value="all">Account Origin</option>
+                  <option value="">Account Origin</option>
                   <template v-for="account of accounts">
                   <option :value="account.number">{{account.number}}</option>
                 </template>
@@ -86,24 +87,33 @@
               <div class="">
                 <select id="paymentbasic" name="paymentbasic" class="form-control" v-model="payment">
                   <option selected value="">Select Payment</option>
-                  <template v-for="pay of paymentFilter.payments">
+                  <template v-for="(pay,index) of paymentFilter.payments">
                   <option :value="pay">{{pay}}</option>
                 </template>
                 </select>
               </div>
             </div>
             <!-- Button -->
-            <div class="form-group">
+            <div class="form-group footerForm" >
               <label class=" control-label" for="singlebutton"></label>
-              <div class="">
-                <button id="singlebutton" @click.prevent="newLoans" name="singlebutton" class="btn btn-primary">Request Loan?</button>
               </div>
-            </div>
             </fieldset>
             </form>
-        <picture>
-            <!-- <img src="../images/bank.png" alt=""> -->
-        </picture>
+            <div class="card text-bg-dark mb-3 " style="max-width: 18rem;">
+              <div class="card-header text-center fw-bolder fs-4">Loans Request Resume</div>
+              <div class="card-body">
+                <h5 class="card-title fw-bolder">Type of Loan: <span>{{selectLoan.name}}</span></h5>
+                <p class="card-text fw-bolder">Account Destiny: <span> {{accountDest}}</span>.</p>
+                <p class="card-text fw-bolder">Amount Finally: <span> $ {{(amount*1.2).toLocaleString(1)}}</span>.</p>
+                <p class="card-text fw-bolder">Payments: <span> {{payment}}</span>.</p>
+              </div>
+              <div class="">
+                <div class="form-group d-flex justify-content-center p-2">
+                  <label class=" control-label" for="singlebutton"></label>
+                  <button  id="singlebutton" @click.prevent="newLoans" name="singlebutton" :class="{'btn btn-success':(payment && accountDest && amount), 'btn btn-disable':(!payment || !accountDest || !amount)}">Request Loan?</button>
+                </div>
+                </div>
+            </div>
     </main>
     <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
         <div class="d-flex align-items-center justify-content-center gap-3">

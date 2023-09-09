@@ -2,194 +2,112 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="../images/bank-banking-finance-icon_112235.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link rel="stylesheet" href="../styles/index.css">
-  <title>Cards</title>
+    <link rel="stylesheet" href="../styles/cardsNuevo.css">
+    <link rel="shortcut icon" href="../images/bank-banking-finance-icon_112235.ico" type="image/x-icon">
+    <title>Cards || MindHub Brothers</title>
 </head>
 
 <body>
-  <div id="app">
-    <header class="header">
-      <img src="../images/bank.png" alt="Logo Home Banking" id="logo">
-      <nav class="navbar navbar-expand-lg fs-4">
-        <div class="container-fluid" id="nav">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-4">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./accounts.html">Accounts</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Cards</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./loan-aplication.html">Loans</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./transfer.html">Transacionts</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  {{clients.firstName}} {{clients.lastName}}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <button class="Btn" @click.prevent="logOut">
-        <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>        
-        <div class="text">Logout</div>
-      </button>
+    <div id="app">
+    <header>
+        <a class="navbar-brand" href="#"><img src="../images/bank.png" alt="Logo" id="logo"></a>
+        <nav class="navbar navbar-expand-lg text-center fs-3 fw-bold">
+            <div class="container-fluid d-flex gap-5 justify-content-center">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav d-flex gap-5">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="./accounts.html">Accounts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Cards</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./loan-aplication.html">Loans</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./transfer.html">Transactions</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">{{client.firstName}} {{client.lastName}}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <button class="Btn" @click.prevent="logOut">
+            <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>   
+            <div class="text">Logout</div>
+          </button>                
+          
     </header>
-    <main class="main col-12 d-flex gap-4 flex-wrap flex-column align-items-center">
-      <h2 class="text-dark mt-1 text-center fs-1 fw-bolder w-100">Your cards</h2>
-      <div class="d-flex align-items-center">
-        <a class="btn btn-dark fs-3 text-white fw-bold" href="./create-cards.html">Create Cards</a>
-      </div>
-      <div class="d-flex align-items-center gap-4">
-        <section class="credit text-center d mt-4">
-          <h2>Credit:</h2>
-          <div class="sectionCards d-flex flex-column justify-content-center gap-3 flex-wrap">
-              <template v-if="credit.length > 0" v-for="(card,index) of credit">
-                      <div
-                          :class="{'cards cardGold':card.color == 'GOLD','cards cardTitanium':card.color == 'TITANIUM','cards cardSilver':card.color == 'SILVER'}">
-                          <div class="card__info">
-                              <div class="card__logo">MINDHUB BROTHERS</div>
-                              <div class="card__chip">
-                                  <svg class="card__chip-lines" role="img" width="20px" height="20px"
-                                      viewBox="0 0 100 100" aria-label="Chip">
-                                      <g opacity="0.8">
-                                          <polyline points="0,50 35,50" fill="none" stroke="#000"
-                                              stroke-width="2">
-                                          </polyline>
-                                          <polyline points="0,20 20,20 35,35" fill="none" stroke="#000"
-                                              stroke-width="2"></polyline>
-                                          <polyline points="50,0 50,35" fill="none" stroke="#000"
-                                              stroke-width="2">
-                                          </polyline>
-                                          <polyline points="65,35 80,20 100,20" fill="none" stroke="#000"
-                                              stroke-width="2"></polyline>
-                                          <polyline points="100,50 65,50" fill="none" stroke="#000"
-                                              stroke-width="2">
-                                          </polyline>
-                                          <polyline points="35,35 65,35 65,65 35,65 35,35" fill="none"
-                                              stroke="#000" stroke-width="2"></polyline>
-                                          <polyline points="0,80 20,80 35,65" fill="none" stroke="#000"
-                                              stroke-width="2"></polyline>
-                                          <polyline points="50,100 50,65" fill="none" stroke="#000"
-                                              stroke-width="2">
-                                          </polyline>
-                                          <polyline points="65,65 80,80 100,80" fill="none" stroke="#000"
-                                              stroke-width="2"></polyline>
-                                      </g>
-                                  </svg>
-                                  <div class="card__chip-texture"></div>
-                              </div>
-                              <div class="card__type">{{card.type}} <br> cvv: {{card.cvv}}</div>
-                              <div class="card__number">
-                                  <p class="numberOfCard">{{card.cardHolder}}</p>
-                              </div>
-                              <div class="card__valid-thru" aria-label="Valid thru">Valid<br>from</div>
-                              <div class="card__exp-date w-50">{{fromDateCredit[index]}}</div>
-                              <div class="card__valid-thru w-25" aria-label="Valid thru">Valid<br>thru</div>
-                              <div class="card__exp-date">{{thruDateCredit[index]}}</div>
-                              <div class="card__exp-number card__number">{{card.number}}</div>
-                              <div class="card__name" aria-label="Dee Stroyer">{{card.color}}</div>
-                              <div class="card__vendor" role="img" aria-labelledby="card-vendor">
-                                  <span id="card-vendor" class="card__vendor-sr">Mastercard</span>
-                              </div>
-                              <div class="card__texture"></div>
-                          </div>
-                      </div>
-                  </div>
-              </template>
-              <h2 v-else>You do not have cards</h2>
-      </section>
-        <section class="credit text-center d mt-4">
-        <h2>Debit:</h2>
-        <div class="sectionCards d-flex flex-column justify-content-center gap-3 flex-wrap">
-            <template v-if="debit.length > 0" v-for="(card,index) of debit">
-                <div>
-                    <div
-                        :class="{'cards cardGold':card.color == 'GOLD','cards cardTitanium':card.color == 'TITANIUM','cards cardSilver':card.color == 'SILVER'}">
-                        <div class="card__info">
-                            <div class="card__logo">MINDHUB BROTHERS</div>
-                            <div class="card__chip">
-                                <svg class="card__chip-lines" role="img" width="20px" height="20px"
-                                    viewBox="0 0 100 100" aria-label="Chip">
-                                    <g opacity="0.8">
-                                        <polyline points="0,50 35,50" fill="none" stroke="#000"
-                                            stroke-width="2">
-                                        </polyline>
-                                        <polyline points="0,20 20,20 35,35" fill="none" stroke="#000"
-                                            stroke-width="2"></polyline>
-                                        <polyline points="50,0 50,35" fill="none" stroke="#000"
-                                            stroke-width="2">
-                                        </polyline>
-                                        <polyline points="65,35 80,20 100,20" fill="none" stroke="#000"
-                                            stroke-width="2"></polyline>
-                                        <polyline points="100,50 65,50" fill="none" stroke="#000"
-                                            stroke-width="2">
-                                        </polyline>
-                                        <polyline points="35,35 65,35 65,65 35,65 35,35" fill="none"
-                                            stroke="#000" stroke-width="2"></polyline>
-                                        <polyline points="0,80 20,80 35,65" fill="none" stroke="#000"
-                                            stroke-width="2"></polyline>
-                                        <polyline points="50,100 50,65" fill="none" stroke="#000"
-                                            stroke-width="2">
-                                        </polyline>
-                                        <polyline points="65,65 80,80 100,80" fill="none" stroke="#000"
-                                            stroke-width="2"></polyline>
-                                    </g>
-                                </svg>
-                                <div class="card__chip-texture"></div>
-                            </div>
-                            <div class="card__type">{{card.type}} <br> cvv: {{card.cvv}}</div>
-                            <div class="card__number">
-                                <p class="numberOfCard">{{card.cardHolder}}</p>
-                            </div>
-                            <div class="card__valid-thru" aria-label="Valid thru">Valid<br>from</div>
-                            <div class="card__exp-date w-50">{{fromDateDebit[index]}}</div>
-                            <div class="card__valid-thru w-25" aria-label="Valid thru">Valid<br>thru</div>
-                            <div class="card__exp-date">{{thruDateDebit[index]}}</div>
-                            <div class="card__exp-number card__number">{{card.number}}</div>
-                            <div class="card__name" aria-label="Dee Stroyer">{{card.color}}</div>
-                            <div class="card__vendor" role="img" aria-labelledby="card-vendor">
-                                <span id="card-vendor" class="card__vendor-sr">Mastercard</span>
-                            </div>
-                            <div class="card__texture"></div>
-                        </div>
-                    </div>
+    <main id="main-cards">
+        <h2>Debit Cards</h2>
+        <div id="debitCards">
+            <template v-if="debit.length > 0 " v-for="(card,index) of debit">
+            <div :class="{'card card-gold':card.color=='GOLD', 'card card-titanium':card.color=='TITANIUM', 'card card-silver':card.color=='SILVER' }">
+                <span class="logo d-flex flex-column"><svg viewBox="0 0 256 83" height="83" width="256" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient y2="100%" y1="-2.006%" x2="54.877%" x1="45.974%" id="logosVisa0">
+                                <stop stop-color="#222357" offset="0%"></stop>
+                                <stop stop-color="#254AA5" offset="100%"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path transform="matrix(1 0 0 -1 0 82.668)"
+                            d="M132.397 56.24c-.146-11.516 10.263-17.942 18.104-21.763c8.056-3.92 10.762-6.434 10.73-9.94c-.06-5.365-6.426-7.733-12.383-7.825c-10.393-.161-16.436 2.806-21.24 5.05l-3.744-17.519c4.82-2.221 13.745-4.158 23-4.243c21.725 0 35.938 10.724 36.015 27.351c.085 21.102-29.188 22.27-28.988 31.702c.069 2.86 2.798 5.912 8.778 6.688c2.96.392 11.131.692 20.395-3.574l3.636 16.95c-4.982 1.814-11.385 3.551-19.357 3.551c-20.448 0-34.83-10.87-34.946-26.428m89.241 24.968c-3.967 0-7.31-2.314-8.802-5.865L181.803 1.245h21.709l4.32 11.939h26.528l2.506-11.939H256l-16.697 79.963h-17.665m3.037-21.601l6.265-30.027h-17.158l10.893 30.027m-118.599 21.6L88.964 1.246h20.687l17.104 79.963h-20.679m-30.603 0L53.941 26.782l-8.71 46.277c-1.022 5.166-5.058 8.149-9.54 8.149H.493L0 78.886c7.226-1.568 15.436-4.097 20.41-6.803c3.044-1.653 3.912-3.098 4.912-7.026L41.819 1.245H63.68l33.516 79.963H75.473"
+                            fill="url(#logosVisa0)"></path>
+                    </svg><span class="fs-6 ">{{fromDateDebit[index]}}</span></span>
+
+                <span class="remove"><svg viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" height="16"
+                        width="16" xmlns="http://www.w3.org/2000/svg">
+                        <p>Thru Date: {{thruDateDebit[index]}}</p> 
+                        <p>CVV: {{card.cvv}}</p> 
+                    </svg></span>
+
+                <span class="number">{{card.number}}</span>
+                <span class="owner">{{card.cardHolder}} <span>{{card.color}}</span></span>
+            </div>
+        </template>
+        </div>
+        <h2 class="algo">Credit Cards</h2>
+        <div id="debitCards">
+            <template v-if="credit.length > 0 " v-for="(card,index) of credit">
+                <div :class="{'card card-gold':card.color=='GOLD', 'card card-titanium':card.color=='TITANIUM', 'card card-silver':card.color=='SILVER' }">
+                    <span class="logo"><svg viewBox="0 0 256 83" height="83" width="256" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient y2="100%" y1="-2.006%" x2="54.877%" x1="45.974%" id="logosVisa0">
+                                    <stop stop-color="#222357" offset="0%"></stop>
+                                    <stop stop-color="#254AA5" offset="100%"></stop>
+                                </linearGradient>
+                            </defs>
+                            <path transform="matrix(1 0 0 -1 0 82.668)"
+                                d="M132.397 56.24c-.146-11.516 10.263-17.942 18.104-21.763c8.056-3.92 10.762-6.434 10.73-9.94c-.06-5.365-6.426-7.733-12.383-7.825c-10.393-.161-16.436 2.806-21.24 5.05l-3.744-17.519c4.82-2.221 13.745-4.158 23-4.243c21.725 0 35.938 10.724 36.015 27.351c.085 21.102-29.188 22.27-28.988 31.702c.069 2.86 2.798 5.912 8.778 6.688c2.96.392 11.131.692 20.395-3.574l3.636 16.95c-4.982 1.814-11.385 3.551-19.357 3.551c-20.448 0-34.83-10.87-34.946-26.428m89.241 24.968c-3.967 0-7.31-2.314-8.802-5.865L181.803 1.245h21.709l4.32 11.939h26.528l2.506-11.939H256l-16.697 79.963h-17.665m3.037-21.601l6.265-30.027h-17.158l10.893 30.027m-118.599 21.6L88.964 1.246h20.687l17.104 79.963h-20.679m-30.603 0L53.941 26.782l-8.71 46.277c-1.022 5.166-5.058 8.149-9.54 8.149H.493L0 78.886c7.226-1.568 15.436-4.097 20.41-6.803c3.044-1.653 3.912-3.098 4.912-7.026L41.819 1.245H63.68l33.516 79.963H75.473"
+                                fill="url(#logosVisa0)"></path>
+                        </svg></span>
+                    <span class="remove"><svg viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" height="16"
+                            width="16" xmlns="http://www.w3.org/2000/svg">
+                        <p>Thru Date: {{thruDateCredit[index]}}</p> 
+                        <p>CVV: {{card.cvv}}</p>
+                        </svg></span>
+    
+                    <span class="number">{{card.number}}</span>
+                    <span class="owner">{{card.cardHolder}} <span>{{card.color}}</span></span>
                 </div>
             </template>
-            <h2 v-else>You do not have cards</h2>
         </div>
-    </section>
-      </div>
     </main>
-    <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
-      <div class="d-flex align-items-center justify-content-center gap-3">
-        <i class="bi bi-bank2 fs-1 text-white"></i>
-        <span class="text-white fs-5"> Mind Hub Brother &#169 </span>
-      </div>
-      <div class="d-flex gap-5 flex-wrap ">
-        <a href="tel:+3743614796" class="d-flex gap-2 text-white fs-5"><i class="bi bi-telephone-inbound-fill "></i>Call</a>
-        <a href="mailto:fbrunomarcos@gmail.com" class="d-flex gap-2 fs-5 text-white"><i class="bi bi-envelope-at"></i>Email</a>
-      </div>
+    <footer>
+
     </footer>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

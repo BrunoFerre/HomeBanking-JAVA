@@ -48,7 +48,7 @@ body{
     background-size: contain;
 }
 .code-editor {
-    max-width: 27rem;
+    min-width: 28rem;
     min-height: 25rem;
     background-color: #3883c5;
     color: #ffffff !important;
@@ -62,9 +62,7 @@ body{
     color:black !important;
   }
   .buttonBro{
-    background-color: #110a05 !important;
     color: white !important;
-    font-weight: bold; 
   }
   .bi .bi-bank2{
     font-size: 5px !important;
@@ -719,7 +717,24 @@ linear-gradient(hsl(0, 0%, 100%), hsl(0deg 0% 0%) 15% 55%, hsl(0deg 0% 0%) 70%);
   font-weight: bold;
   font-size: 18px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 3rem;
+}
+#loans-img{
+  max-width: 18rem ;
+}
+.footerForm{
+background-image: url("../images/Piggy\ bank-bro.svg");
+background-repeat: no-repeat;
+height: 10rem;
+}
+.table{
+  height: 12rem;
+}
+tr{
+  height: 20% auto ;
+}
+.logo-acc{
+  width: 20rem !important;
 }
