@@ -213,3 +213,12 @@ header{
   background-image: url("");
   background-position: bottom;
 }
+footer {
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  background-color: #2c3038;
+}
+footer a{
+  text-decoration: none;
+}

@@ -10,6 +10,9 @@ body {
     rgb(60, 143, 90)
   );
 }
+[v-cloak] {
+  display: none;
+}
 header {
   min-height: 10vh;
   background: url("../images/header.png");
@@ -18,31 +21,31 @@ header {
   align-items: center;
   justify-content: space-around;
 }
-
+.nav-item{
+  font-size: 20px;
+  font-weight: bold;
+}
 #main-cards{
+    min-height: 80vh;
     background-image: url("../images/Wallet-pana-right.svg");
     background-size: 36rem;
     background-repeat: no-repeat;
     background-position: right;
-    position: relative;
-    z-index: -1;
-    display: grid;
-    grid-template-columns: repeat(4, 200px,2fr);
-    grid-auto-flow: row;
-    text-align: center;
+   display: flex;
+   flex-wrap: wrap;
+   align-content: flex-start ;
+   justify-content: space-evenly;
 }
-#main-cards::after{
-    content: "";
-    background-image: url("../images/Wallet-pana-left.svg");
-    background-size: 36rem;
-    background-repeat: no-repeat;
-    position: absolute;
-    background-position: left;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    transform:matrix(-1,0,0,1,-1345,0);
+
+
+#debitCards{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 47%;
+  align-items: center;
 }
+
 #logo {
   height: 5rem;
 }
@@ -112,14 +115,7 @@ header {
 .Btn:active {
   transform: translate(2px, 2px);
 }
-#debitCards {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding-top: 10px;
-}
+
  h2 {
   color: white;
   text-align: center;
@@ -173,7 +169,7 @@ h2:nth-child(1) {
 }
 
 .card .remove:hover {
-  color: #c21300;
+  color: #000000;
 }
 
 .card .logo {
@@ -229,4 +225,23 @@ h2:nth-child(1) {
   border-radius: 20px;
   position: relative;
   box-shadow: 3px 3px 17px 0px rgba(0, 0, 0, 0.55);
+}
+footer {
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  background-color: #2c3038;
+}
+.btn{
+  height: 3rem !important;
+}
+.container-cards{
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.footer a{
+  text-decoration: none;
 }
