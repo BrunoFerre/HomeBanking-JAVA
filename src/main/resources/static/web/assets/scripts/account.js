@@ -8,7 +8,8 @@ createApp({
             id_account: Number,
             transaction:[],
             error:'',
-            nuevoArray:[]
+            nuevoArray:[],
+            dateAsherter:[],
         }
     },
     created() {
@@ -27,8 +28,9 @@ createApp({
                     for(let transaction of this.account.transactions){
                         this.transaction.push(transaction)
                     }
+                    this.dateAsherter=this.transaction.map(transaction=>transaction.date.slice(2,-3).replace(/-/g, '/'))
+                    
                     this.transaction.sort((a,b)=> a.id - b.id)
-                    console.log(this.transaction)
             }).catch(error => {
                 this.error= error.message
                 console.log(this.error);

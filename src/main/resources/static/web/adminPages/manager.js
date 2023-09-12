@@ -29,22 +29,22 @@ createApp({
         clientVerify(){
             if (this.firstName && this.lastName && this.email) {
                 this.addClient();
-               } else {
-                 window.alert('Please fill in all required fields.');
-              }
+            } else {
+                window.alert('Please fill in all required fields.');
+            }
         },
         addClient(){
         let newClient={
             id:this.id,
             firstName:this.firstName,
             lastName: this.lastName,
-            email:this.email
+            email:this.email,
         }
         axios.post(url,newClient)
         .then(response =>{
             this.firstName='',
             this.lastName='',
-            this.email=''
+            this.email='',
             this.loadData()
         })
         .catch(error => console.error(error))

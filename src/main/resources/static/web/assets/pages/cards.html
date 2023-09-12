@@ -14,8 +14,8 @@
 
 <body>
     <div id="app" v-cloak>
-      <header>
-      <a class="navbar-brand" href="#"><img src="../images/bank.png" alt="Logo" id="logo"></a>
+  <header>
+      <a class="navbar-brand p-2" href="#"><img src="../images/bank.png" alt="Logo" id="logo"></a>
       <nav class="navbar navbar-expand-lg text-center">
           <div class="container-fluid d-flex gap-5 justify-content-center">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,10 +24,10 @@
             <div class="collapse navbar-collapse " id="navbarNav">
               <ul class="navbar-nav d-flex gap-5">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="./accounts.html">Accounts</a>
+                  <a class="nav-link " aria-current="page" href="./accounts.html">Accounts</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Cards</a>
+                  <a class="nav-link active" href="#">Cards</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="./loan-aplication.html">Loans</a>
@@ -47,11 +47,12 @@
           <div class="text">Logout</div>
         </button>                
   </header>
-    <main id="main-cards">
+    <main class="p-3" id="main-cards">
       <h1 class="text-center fw-bolder w-100 m-3 text-white">Your cards</h1>
-      <section  class="container-cards">
-        <div id="debitCards">
+      <div class="d-flex flex-wrap justify-content-center align-items-center gap-5">
+      <section class="section ">
         <h2 class="text-center">Debit Cards</h2>
+        <div id="debitCards">
             <template v-if="debit.length > 0 " v-for="(card,index) of debit">
             <div :class="{'card card-gold':card.color=='GOLD', 'card card-titanium':card.color=='TITANIUM', 'card card-silver':card.color=='SILVER' }">
                 <span class="logo d-flex flex-column"><svg viewBox="0 0 256 83" height="83" width="256" xmlns="http://www.w3.org/2000/svg">
@@ -77,8 +78,10 @@
             </div>
         </template>
         </div>
-        <div id="debitCards">
+    </section>
+    <section class="section">
         <h2 class="text-center">Credit Cards</h2>
+        <div id="debitCards">
             <template v-if="credit.length > 0 " v-for="(card,index) of credit">
                 <div :class="{'card card-gold':card.color=='GOLD', 'card card-titanium':card.color=='TITANIUM', 'card card-silver':card.color=='SILVER' }">
                     <span class="logo"><svg viewBox="0 0 256 83" height="83" width="256" xmlns="http://www.w3.org/2000/svg">
@@ -103,12 +106,10 @@
                 </div>
             </template>
         </div>
-    <a href="./create-cards.html" class="btn btn-success fs-3 text-white fw-bold"> Add Card</a>
-
       </section>
+      <a href="./create-cards.html" class="btn btn-success fs-3 text-white fw-bold"> Add Card</a>
+    </div>
     </main>
-
-
     <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
       <div class="d-flex align-items-center justify-content-center gap-3">
         <i class="bi bi-bank2 fs-5 text-white"></i>

@@ -6,6 +6,9 @@
 body{
     background-image: linear-gradient(to right, rgb(64, 66, 185), rgb(60, 143, 90));
 }
+[v-cloak]{
+    display: none;
+}
 header{
     min-height: 10vh;
     background: url("../images/header.png");
@@ -14,7 +17,10 @@ header{
     align-items: center;
     justify-content: space-around;
 }
-
+.nav-item{
+  font-size: 20px;
+  font-weight: bold;
+}
 .logo{
     height: 5rem;
 }
@@ -208,7 +214,8 @@ header{
   }
   th,tr,td{
     border: 1px solid black;
-}
+    width: 12rem;
+  }
 #main-account{
   background-image: url("");
   background-position: bottom;
@@ -221,4 +228,7 @@ footer {
 }
 footer a{
   text-decoration: none;
+}
+.text00{
+  word-wrap: break-word;
 }

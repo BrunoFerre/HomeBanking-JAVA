@@ -14,49 +14,40 @@
 
 <body>
   <div id="app" v-cloak>
-    <header class="header d-flex gap-5  ">
-      <img src="../images/bank.png" alt="Logo Home Banking" class="logo">
-      <nav class="navbar navbar-expand-lg fs-4 ">
-        <div class="container-fluid" id="nav">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-4">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./accounts.html">Accounts</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./cards.html">Cards</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./loan-aplication.html">Loans</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./transfer.html">Transacionts</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{client.firstName}} {{client.lastName}}
-                </a>
-              </li>
-            </ul>
+    <header>
+      <a class="navbar-brand" href="#"><img src="../images/bank.png" alt="Logo" class="logo p-2"></a>
+      <nav class="navbar navbar-expand-lg text-center">
+          <div class="container-fluid d-flex gap-5 justify-content-center">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+              <ul class="navbar-nav d-flex gap-5">
+                <li class="nav-item">
+                  <a class="nav-link " aria-current="page" href="./accounts.html">Accounts</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./cards.html">Cards</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./loan-aplication.html">Loans</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./transfer.html">Transactions</a>
+                </li> <li class="nav-item">
+                  <a class="nav-link" href="#">{{client.firstName}} {{client.lastName}}</a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
-      <button class="Btn" @click.prevent="logOut">
-        <div class="sign"><svg viewBox="0 0 512 512">
-            <path
-              d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
-            </path>
-          </svg></div>
-        <div class="text">Logout</div>
-      </button>
-    </header>
-    <main class="main" id="main-account">
-      <h4 class="text-center">{{client.firstName}} {{client.lastName}} transactions
+        </nav>
+        <button class="Btn" @click.prevent="logOut">
+          <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>   
+          <div class="text">Logout</div>
+        </button>                
+  </header>
+    <main class="main p-2" id="main-account">
+      <h4 class="text-center m-3">{{client.firstName}} {{client.lastName}} transactions
       </h4>
       <div  class="container">
       <div class="conts">
@@ -64,12 +55,13 @@
           <div id="content">
             <p id="heading">Account Number: <span>{{account.number}}</span></p>
             <p id="para">Creation Date: <span>{{account.creationDate}}</span></p>
-            <p id="para"> Balance: <span>${{Number(account.balance).toLocaleString(1)}}</span></p>
+            <p id="para"> Balance: <span>${{account.balance}}</span></p>
           </div>
         </div>
       </div>
+      <div class="table-responsive">
       <template v-if="transaction.length > 0 ">
-        <table id="table">
+        <table id="table" >
           <thead>
             <tr class="fs-3">
               <th>Type</th>
@@ -78,13 +70,13 @@
               <th> Date</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="fs-4 text00">
             <template v-for="(transaction,index) of transaction">
-              <tr class="fs-4">
+              <tr >
                 <td :class="transaction.type == 'DEBIT' ? 'text-danger' : 'text-success'">{{transaction.type}}</td>
                 <td>{{transaction.amount}}</td>
-                <td>{{transaction.description}}</td>
-                <td>{{transaction.date}}</td>
+                <td >{{transaction.description}}</td>
+                <td class="p-2" >{{ dateAsherter[index]}}</td>
               </tr>
             </template>
           </tbody>
@@ -96,6 +88,8 @@
           <img src="../images/payment.png" alt="Logo-1" class="logo-t">
         </article>
       </section>
+    </div>
+      
     </div>
     </main>
     <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
@@ -116,5 +110,4 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script type="module" src="../scripts/account.js"></script>
 </body>
-
 </html>

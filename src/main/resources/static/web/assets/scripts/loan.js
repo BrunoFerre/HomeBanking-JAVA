@@ -17,7 +17,8 @@ const app = createApp({
         this.loadData()
     },
     methods: {
-        newLoans() {
+        newLoans(event) {
+            event.preventDefault()
             let newLoan = {
                 "id":this.selectLoan.id,
                 "amount": Number(this.amount),
@@ -49,7 +50,6 @@ const app = createApp({
                 },
                 allowOutsideClick: () => !Swal.isLoading(),
             })
-
         },
         loadData() {
             this.client = JSON.parse(localStorage.getItem('client')) ?? []

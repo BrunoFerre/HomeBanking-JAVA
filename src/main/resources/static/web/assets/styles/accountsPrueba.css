@@ -6,6 +6,9 @@
 body{
     background-image: linear-gradient(to right, rgb(64, 66, 185), rgb(60, 143, 90));
 }
+[v-cloak]{
+    display: none;
+}
 header{
     min-height: 10vh;
     background: url("../images/header.png");

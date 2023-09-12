@@ -4,18 +4,23 @@
     padding: 0;
     box-sizing: border-box;
 }
+body {
+  background-image: linear-gradient(
+    to right,
+    rgb(64, 66, 185),
+    rgb(60, 143, 90)
+  );
+}
 [v-cloak] {
     display: none;
 }
-
-.header{
-  background: linear-gradient(69deg,#ff9100,#c46055);
-    filter: contrast(200%);
-    min-height: 15vh;
-    display: flex;
-    align-items: center;
-    padding: 0 3rem 0 3rem;
-    justify-content: space-around;
+header {
+  min-height: 10vh;
+  background: url("../images/header.png");
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 .nav-link{
   font-weight: bolder !important;
@@ -96,12 +101,11 @@
     display: flex;
     flex-direction: column;
     align-content: flex-start;
-    min-height: 75vh;
+    min-height: 80vh;
     gap: 3rem;
     filter: brightness(1.5);
   }
 .form{
-  background-color: #c85000;
   width: 40rem;
   height: 20rem;
   display: flex;

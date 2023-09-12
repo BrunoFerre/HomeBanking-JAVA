@@ -16,6 +16,8 @@ import static java.util.stream.Collectors.toList;
 public class LoanServiceImplement implements LoanService  {
     @Autowired
     private LoanRepository loanRepository;
+//    @Autowired
+//    private LoanService loanService;
 
     @Override
     public List<LoanDTO> getLoans() {
@@ -24,6 +26,6 @@ public class LoanServiceImplement implements LoanService  {
 
     @Override
     public Loan findById(long id) {
-       return loanRepository.findById(id);
+       return loanRepository.findById(id).orElse(null);
     }
 }
