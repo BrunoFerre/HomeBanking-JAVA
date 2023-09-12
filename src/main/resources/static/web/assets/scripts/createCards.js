@@ -37,7 +37,7 @@ const app = createApp({
                 preConfirm: login => {
                     return axios
                         .post('/api/clients/current/cards',`type=${this.type}&color=${this.color}`
-                        ,{headers:{'content-type': 'application/x-www-form-urlencoded'}})
+                        ,{headers:{'accept': 'application/xml'}})
                         .then(response => {
                             setTimeout(() =>{
                             location.href = "../pages/cards.html";  

@@ -30,15 +30,15 @@ public class ClientController {
     private AccountsRepository accountsRepository;
     @Autowired
     private ClientService clientService;
-    @RequestMapping("/clients")
+    @GetMapping("/clients")
     public List<ClientDTO> getClients(){
       return  clientService.getClients();
     }
-    @RequestMapping("/clients/{current}")
+    @GetMapping("/clients/{current}")
     public ClientDTO getClient(Authentication authentication ) {
         return clientService.getClientAuthentication(authentication);
     }
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping(path = "/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {

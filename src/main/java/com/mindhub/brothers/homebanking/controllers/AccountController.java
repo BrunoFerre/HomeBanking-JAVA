@@ -13,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,17 +29,17 @@ public class    AccountController {
     @Autowired
     private ClientService clientService;
 
-    @RequestMapping("/api/accounts")
+    @GetMapping("/api/accounts")
     public List<AccountDTO> getAccounts(){
         return accountService.getAccounts();
     }
 
-    @RequestMapping("/api/clients/current/accounts")
+    @GetMapping("/api/clients/current/accounts")
     public List<AccountDTO> getAcccount(Authentication authentication){
         return accountService.getAcccount(authentication);
     }
 
-    @RequestMapping(path = "/api/clients/current/accounts",method = RequestMethod.POST)
+    @PostMapping(path = "/api/clients/current/accounts")
     public ResponseEntity<Object> newAccount(Authentication authentication){
         if (clientService.findByEmail(authentication.getName()).getAccounts().size() <=2){
             String accountNumber = RandomNumberGenerate.accountNumber();
@@ -54,7 +51,7 @@ public class    AccountController {
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @RequestMapping("/api/clients/accounts/{id}")
+    @GetMapping("/api/clients/accounts/{id}")
     public ResponseEntity<Object> getAccount(@PathVariable Long id, Authentication authentication){
         Client client = clientService.findByEmail(authentication.getName());
         Account acc = accountService.accountId(id);
