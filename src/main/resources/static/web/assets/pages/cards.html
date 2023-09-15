@@ -9,6 +9,8 @@
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/cardsNuevo.css">
     <link rel="shortcut icon" href="../images/bank-banking-finance-icon_112235.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css">
+
     <title>Cards || MindHub Brothers</title>
 </head>
 
@@ -54,6 +56,8 @@
         <h2 class="text-center">Debit Cards</h2>
         <div id="debitCards">
             <template v-if="debit.length > 0 " v-for="(card,index) of debit">
+              <i class="bi bi-trash" @click.prevent="removeCard(card.number)"></i>
+
             <div :class="{'card card-gold':card.color=='GOLD', 'card card-titanium':card.color=='TITANIUM', 'card card-silver':card.color=='SILVER' }">
                 <span class="logo d-flex flex-column"><svg viewBox="0 0 256 83" height="83" width="256" xmlns="http://www.w3.org/2000/svg">
                         <defs>
@@ -83,6 +87,7 @@
         <h2 class="text-center">Credit Cards</h2>
         <div id="debitCards">
             <template v-if="credit.length > 0 " v-for="(card,index) of credit">
+              <i class="bi bi-trash" @click.prevent="removeCard(card.number)"></i>
                 <div :class="{'card card-gold':card.color=='GOLD', 'card card-titanium':card.color=='TITANIUM', 'card card-silver':card.color=='SILVER' }">
                     <span class="logo"><svg viewBox="0 0 256 83" height="83" width="256" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -100,7 +105,7 @@
                         <p>Thru Date: {{thruDateCredit[index]}}</p> 
                         <p>CVV: {{card.cvv}}</p>
                         </svg></span>
-    
+                    
                     <span class="number">{{card.number}}</span>
                     <span class="owner">{{card.cardHolder}} <span>{{card.color}}</span></span>
                 </div>
@@ -123,6 +128,7 @@
       </div>
     </footer>
     </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>

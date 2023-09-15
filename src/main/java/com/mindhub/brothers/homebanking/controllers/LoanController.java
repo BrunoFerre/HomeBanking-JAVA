@@ -1,5 +1,6 @@
 package com.mindhub.brothers.homebanking.controllers;
 
+import com.mindhub.brothers.homebanking.dtos.AccountDTO;
 import com.mindhub.brothers.homebanking.dtos.LoanAplicationDTO;
 import com.mindhub.brothers.homebanking.dtos.LoanDTO;
 import com.mindhub.brothers.homebanking.models.*;
@@ -38,6 +39,7 @@ public class LoanController {
     public List<LoanDTO> getLoans(){
         return loanService.getLoans();
     }
+
     @Transactional
     @PostMapping("/loans")
     public ResponseEntity<Object> newLoan(Authentication authentication, @RequestBody LoanAplicationDTO loanAplicationDTO) {
@@ -80,7 +82,7 @@ public class LoanController {
         clientLoanService.saveClientLoan(clientLoan);
 
         Transaction transaction = new Transaction(TransactionType.CREDIT, loanAplicationDTO.getAmount(),
-                loan.getName()+"Loan aproved", LocalDateTime.now());
+                loan.getName()+"Loan aproved", LocalDateTime.now(), loanAplicationDTO.getAmount()*0.2);
         transactionService.saveTransaction(transaction);
 
         destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount()*0.2);

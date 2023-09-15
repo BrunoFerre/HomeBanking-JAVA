@@ -11,13 +11,6 @@ createApp({
         }
     },
     methods:{
-        loadData(){
-            axios.get('/api/clients/current')
-            .then(response=>{
-                this.client=response.data
-            })
-            .catch(error=> console.error(error.message))
-        },
         logIn(){
             axios.post('/api/login','email='+ this.email + '&password='+this.password)
             .then((response)=>{
@@ -28,8 +21,7 @@ createApp({
                 }
                 this.client=response.data
                 localStorage.setItem('client',JSON.stringify(this.client))
-            })
-            .catch(error =>  {
+            })  .catch(error =>  {
                 console.log(error);
                 Swal.fire({
                   title: 'Error!',

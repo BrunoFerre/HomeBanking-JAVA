@@ -1,10 +1,15 @@
 package com.mindhub.brothers.homebanking.service.implement;
 
+import com.mindhub.brothers.homebanking.dtos.ClientDTO;
 import com.mindhub.brothers.homebanking.dtos.LoanDTO;
+import com.mindhub.brothers.homebanking.models.Account;
+import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.models.Loan;
+import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.repositories.LoanRepository;
 import com.mindhub.brothers.homebanking.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +21,8 @@ import static java.util.stream.Collectors.toList;
 public class LoanServiceImplement implements LoanService  {
     @Autowired
     private LoanRepository loanRepository;
-//    @Autowired
-//    private LoanService loanService;
+   @Autowired
+    private ClientRepository clientRepository;
 
     @Override
     public List<LoanDTO> getLoans() {
@@ -28,4 +33,6 @@ public class LoanServiceImplement implements LoanService  {
     public Loan findById(long id) {
        return loanRepository.findById(id).orElse(null);
     }
+
+
 }

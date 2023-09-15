@@ -11,7 +11,8 @@ createApp({
             fromDateDebit:[],
             thruDateDebit:[],
             fromDateCredit:[],
-            thruDateCredit:[]
+            thruDateCredit:[],
+            number:'',
         }
     },
     created() {
@@ -23,20 +24,48 @@ createApp({
             axios.get(`http://localhost:8080/api/clients/current`)
                 .then(response => {
                     this.clients = response.data
-                    console.log(this.clients);
-                    this.cards = this.clients.cards
+                    const cards = this.clients.cards
+                    this.cards = cards.filter(card=> card.status == true)
                     this.debit= this.cards.filter(card=> card.type == "DEBIT")
                     this.credit= this.cards.filter(card=> card.type == "CREDIT")
-                    console.log(this.debit);
                     this.fromDateDebit = this.debit.map(date => date.fromDate.slice(2,7))
                     this.thruDateDebit = this.debit.map(date => date.thruDate.slice(2,7))
                     this.fromDateCredit = this.credit.map(date => date.fromDate.slice(2,7))
                     this.thruDateCredit= this.credit.map(date => date.thruDate.slice(2,7))
+                   
                     localStorage.setItem('client',JSON.stringify(this.clients)) 
                 })
         },
         logOut(){
             logout()
         },
+        removeCard(number){ {
+            Swal.fire({
+                title: 'Delete this Card?',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                showLoaderOnConfirm: true,
+                preConfirm: login => {
+                    return axios.put(`http://localhost:8080/api/clients/current/cards`,`number=${number}`)
+                        .then(response => {
+                            setTimeout(() =>{
+                            location.reload()
+                            },200)
+                        }).catch(error => {
+                            console.log(error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: error.response.data,
+                                confirmButtonColor: '#5b31be93',
+                            })
+                })
+                }
+            })
+        }
+    }
     }
 }).mount("#app")

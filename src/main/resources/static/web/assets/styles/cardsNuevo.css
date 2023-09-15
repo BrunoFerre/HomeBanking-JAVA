@@ -46,10 +46,16 @@ header {
 #debitCards{
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  width: 50%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
-
+#debitCards .bi-trash{
+  align-self: flex-end;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bolder;
+}
 #logo {
   height: 5rem;
 }

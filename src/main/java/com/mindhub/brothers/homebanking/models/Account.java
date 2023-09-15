@@ -1,6 +1,7 @@
 package com.mindhub.brothers.homebanking.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mindhub.brothers.homebanking.models.enums.AccountType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,19 +19,24 @@ public class Account {
     private String number;
     private LocalDate creationDate;
     private double balance;
+    private AccountType type;
+    private Boolean status;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
-    private Client owner;
+    @JoinColumn(name = "client_id")
+    private Client client;
     @OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
     private Set<Transaction> transactions = new HashSet<>();
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, double balance) {
+    public Account(String number, LocalDate creationDate, double balance,AccountType type, Boolean status){
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
+        this.type = type;
+        this.status = status;
     }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -60,13 +66,30 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
+    public AccountType getType() {
+        return type;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @JsonIgnore
     public Client getOwner() {
-        return owner;
+        return client;
     }
 
     public void setOwner(Client owner) {
-        this.owner = owner;
+        this.client = owner;
     }
 
     public Set<Transaction> getTransactions() {
@@ -80,7 +103,6 @@ public class Account {
     public void addTransaction(Transaction transaction){
         transaction.setAccount(this);
         this.transactions.add(transaction);
-
     }
     @Override
     public String toString() {
@@ -91,5 +113,4 @@ public class Account {
                 ", balance=" + balance +
                 '}';
     }
-
 }

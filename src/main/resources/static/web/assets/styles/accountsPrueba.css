@@ -36,7 +36,7 @@ main h1, main h2{
     color: white;    
 }
 
-main .grid, main table{
+main .grid, main section{
     grid-column: 1;
 }
 .grid{

@@ -51,4 +51,14 @@ public class AccountServiceImplement implements AccountService {
     public void save(Account account) {
         accountRepository.save(account);
     }
+
+    @Override
+    public void deleteAccount(Account account) {
+        accountRepository.delete(account);
+    }
+
+  /*  @Override
+    public boolean existsByNumber(String number) {
+        return accountRepository.existsByNumber(number);
+    }*/
 }

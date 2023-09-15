@@ -55,11 +55,11 @@ const app = createApp({
             this.client = JSON.parse(localStorage.getItem('client')) ?? []
             axios.get(`http://localhost:8080/api/clients/current/accounts`)
                 .then(response => {
-                    this.accounts = response.data
+                    const accounts = response.data
+                    this.accounts = accounts.filter(account => account.status == true)
                     axios.get(`http://localhost:8080/api/loans`)
                         .then(response => {
                             this.loans = response.data
-                            console.log(this.loans);
                             this.amount.toLocaleString(1)
                         }).catch(error => {
                             console.log(error);

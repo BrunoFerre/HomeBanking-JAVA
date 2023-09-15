@@ -4,6 +4,7 @@ import com.mindhub.brothers.homebanking.dtos.AccountDTO;
 import com.mindhub.brothers.homebanking.dtos.ClientDTO;
 import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Client;
+import com.mindhub.brothers.homebanking.models.enums.AccountType;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.service.AccountService;
@@ -27,6 +28,8 @@ public class    AccountController {
 //    @Autowired
 //    private ClientRepository clientRepository;
     @Autowired
+    private AccountsRepository accountsRepository;
+    @Autowired
     private ClientService clientService;
 
     @GetMapping("/api/accounts")
@@ -39,11 +42,14 @@ public class    AccountController {
         return accountService.getAcccount(authentication);
     }
 
-    @PostMapping(path = "/api/clients/current/accounts")
+    @PostMapping("/api/clients/current/accounts")
     public ResponseEntity<Object> newAccount(Authentication authentication){
-        if (clientService.findByEmail(authentication.getName()).getAccounts().size() <=2){
+        Client client = clientService.findByEmail(authentication.getName());
+        List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
+        System.out.println(acounts);
+        if (acounts.size()<=2){
             String accountNumber = RandomNumberGenerate.accountNumber();
-            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0);
+            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0, AccountType.CURRENT,true);
             clientService.findByEmail(authentication.getName()).addAccount(newAccount);
             accountService.save(newAccount);
         }else{
@@ -60,6 +66,22 @@ public class    AccountController {
         }else{
             return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
     }
+    }
+    @PutMapping("/api/clients/current/accounts/{id}")
+    public ResponseEntity<Object> deleteAccount(Authentication authentication,@PathVariable Long id){
+        Client client = clientService.findByEmail(authentication.getName());
+        Account acc = accountService.accountId(id);
+        List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
+        if (acounts.size()==1){
+            return new ResponseEntity<>("You cannot delete your only account", HttpStatus.NOT_ACCEPTABLE);
+        }
+        if (client.getId() == acc.getOwner().getId()){
+            acc.setStatus(false);
+            accountService.save(acc);
+            return new ResponseEntity<>("Account deleted",HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
+        }
     }
 }
 

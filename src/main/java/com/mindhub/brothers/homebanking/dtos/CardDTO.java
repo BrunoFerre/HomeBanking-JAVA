@@ -15,7 +15,7 @@ public class CardDTO {
     private int cvv;
     private LocalDate thruDate;
     private LocalDate fromDate;
-
+    private Boolean status;
     public CardDTO() {
     }
     public  CardDTO(Card card){
@@ -26,6 +26,7 @@ public class CardDTO {
         this.cvv = card.getCvv();
         this.thruDate = card.getThruDate();
         this.fromDate = card.getFromDate();
+        this.status = card.getStatus();
     }
 
 
@@ -55,5 +56,9 @@ public class CardDTO {
 
     public String getCardHolder() {
         return cardHolder;
+    }
+
+    public Boolean getStatus() {
+        return status;
     }
 }

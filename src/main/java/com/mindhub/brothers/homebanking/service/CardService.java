@@ -5,6 +5,7 @@ import com.mindhub.brothers.homebanking.models.Card;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CardService {
     List<CardDTO> getCards();
@@ -12,4 +13,6 @@ public interface CardService {
     void addCard(Card card);
     Card findByNumber(String number);
     Card findByCvv(int cvv);
+    void delete(Card card);
+    Optional<Card> findById(long id);
 }

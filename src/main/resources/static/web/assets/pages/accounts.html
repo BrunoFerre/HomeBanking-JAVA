@@ -44,7 +44,7 @@
           </button>                
     </header>
     <main>
-        <h1 class="text-center">Accounts Resume</h1>
+    <h1 class="text-center">Accounts Resume</h1>
     <div class="grid">
       <template v-if="accounts.length > 0" v-for="(account,index) of accounts">
         <div id="card">
@@ -52,7 +52,8 @@
             <p id="heading">Account Number: <span>{{account.number}}</span></p>
             <p id="para">Creation Date: <span>{{account.creationDate}}</span></p>
            <p id="para"> Balance: <span>${{account.balance.toLocaleString(1)}}</span></p>
-           <a :href="'./account.html?id=' + account.id" class="btn"> Go transactions</a>
+           <p id="para">Type: <span>{{account.type}}</span></p>
+           <a :href="'./account.html?id=' + account.id" class="btn">More Details</a>
           </div>
         </div>
       </template>
@@ -61,7 +62,9 @@
         <a href="#" @click.prevent="createAccount" class="btn gg">ADD ACCOUNTS</a>
       </article>
     </div>
+    <section class="d-flex flex-column">
     <h2>Loans Resume</h2>
+    <template v-if="loans.length>0" v-for="(loan,index) of loans">
     <table id="table">
         <thead>
           <tr class="">
@@ -72,19 +75,16 @@
         </thead>
         <tbody>
           <tr class="">
-            <td>Mortgage</td>
-            <td>$ 50.000</td>
-            <td>12</td>
-          </tr>
-          <tr class="">
-            <td>Personal</td>
-            <td>$ 1.200</td>
-            <td>6</td>
+            <td>{{loan.loan}}</td>
+            <td>{{loan.amount.toLocaleString(1)}}</td>
+            <td>{{loan.payments}}</td>
           </tr>
         </tbody>
+      </template>
     </table>
+    <p v-else>No Loans</p></p>
+  </section>
     </main>
-   
     <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
       <div class="d-flex align-items-center justify-content-center gap-3">
         <i class="bi bi-bank2 fs-5 text-white"></i>

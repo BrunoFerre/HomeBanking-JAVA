@@ -2,6 +2,7 @@ package com.mindhub.brothers.homebanking.dtos;
 
 import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Transaction;
+import com.mindhub.brothers.homebanking.models.enums.AccountType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -15,6 +16,8 @@ public class AccountDTO {
     private String number;
     private LocalDate creationDate;
     private double balance;
+    private AccountType type;
+    private Boolean status;
     private Set<TransactionDTO> transactions = new HashSet<>();
 
     public AccountDTO() {
@@ -29,6 +32,8 @@ public class AccountDTO {
                 .stream()
                 .map(TransactionDTO::new)
                 .collect(Collectors.toSet());
+        this.type = acounnt.getType();
+        this.status = acounnt.getStatus();
         }
     public long getId() {
         return id;
@@ -45,6 +50,15 @@ public class AccountDTO {
     public Set<TransactionDTO> getTransactions() {
         return transactions;
     }
+
+    public AccountType getType() {
+        return type;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
     @Override
     public String toString() {
         return "AccountDTO{" +

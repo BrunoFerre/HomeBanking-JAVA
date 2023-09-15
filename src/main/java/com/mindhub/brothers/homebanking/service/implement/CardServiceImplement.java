@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -44,5 +45,15 @@ public class CardServiceImplement implements CardService {
     @Override
     public Card findByCvv(int cvv) {
         return cardRepository.findByCvv(cvv);
+    }
+
+    @Override
+    public void delete(Card card) {
+        cardRepository.delete(card);
+    }
+
+    @Override
+    public Optional<Card> findById(long id) {
+        return cardRepository.findById(id);
     }
 }

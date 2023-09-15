@@ -23,8 +23,8 @@ const app = createApp({
             this.client = JSON.parse(localStorage.getItem('client'))
             axios.get(`/api/clients/current/accounts`)
                 .then(response => {
-                    this.accounts = response.data
-
+                    const accounts = response.data
+                    this.accounts = accounts.filter(account => account.status == true)
                 })
         },
         logOut() {

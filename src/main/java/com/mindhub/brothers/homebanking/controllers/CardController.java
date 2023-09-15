@@ -29,6 +29,8 @@ public class CardController {
     private CardService cardService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private CardRepository cardRepository;
 
     @GetMapping("/cards")
     public List<CardDTO>getCards(){
@@ -42,6 +44,7 @@ public class CardController {
     public ResponseEntity<Object> addCard(Authentication authentication, @RequestParam String type,
             @RequestParam String color) {
         Client client = clientService.findByEmail(authentication.getName());
+        List <Card> filterCard = cardRepository.findAllByClientAndStatusTrue(client);
         if (type.isBlank()) {
             return new ResponseEntity<>("Missing type ", HttpStatus.FORBIDDEN);
         }
@@ -58,16 +61,36 @@ public class CardController {
         int cardCvv = RandomNumberGenerate.getCardCVV();
         do {cardCvv = RandomNumberGenerate.getCardCVV();} while (cardService.findByCvv(cardCvv) != null);
 
-        for (Card card : client.getCards()) {
+        for (Card card : filterCard) {
             if (card.getType().equals(CardType.valueOf((type))) && card.getColor().equals(CardColor.valueOf(color))) {
                 return new ResponseEntity<>("Card already exists", HttpStatus.FORBIDDEN);
             }
         }
-
         Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), CardType.valueOf(type), CardColor.valueOf(color),
-                numberCard, cardCvv, LocalDate.now(), LocalDate.now().plusYears(5));
+                numberCard, cardCvv, LocalDate.now(), LocalDate.now().plusYears(5), true);
         client.addCard(newCard);
         cardService.addCard(newCard);
         return new ResponseEntity<>("Card Created", HttpStatus.CREATED);
+    }
+    @PutMapping("/clients/current/cards")
+    public ResponseEntity<Object> deleteCard(Authentication authentication, @RequestParam String number){
+        Client client = clientService.findByEmail(authentication.getName());
+        Card card = cardService.findByNumber(number);
+        boolean exist = client.getCards().contains(card);
+        if (number.isBlank()) {
+            return new ResponseEntity<>("Missing number", HttpStatus.FORBIDDEN);
+        }
+        if (card == null){
+            return new ResponseEntity<>("Card not found", HttpStatus.FORBIDDEN);
+        }
+        if (exist){
+            return new ResponseEntity<>("This card does not exist", HttpStatus.FORBIDDEN);
+        }
+        if (card.getStatus() == false) {
+            return new ResponseEntity<>("Card already deleted", HttpStatus.FORBIDDEN);
+        }
+        card.setStatus(false);
+        cardService.addCard(card);
+        return new ResponseEntity<>("Card deleted", HttpStatus.OK);
     }
 }
