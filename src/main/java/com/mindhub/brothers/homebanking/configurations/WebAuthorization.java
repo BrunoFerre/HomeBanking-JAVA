@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,8 +19,9 @@ import javax.servlet.http.HttpSession;
 public class WebAuthorization {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors();
         http.authorizeRequests()
-         .antMatchers(HttpMethod.POST,"/api/clients","/api/login","/api/logout").permitAll()
+         .antMatchers(HttpMethod.POST,"/api/clients","/api/login","/api/logout","/api/payments").permitAll()
                         .antMatchers("/web/index.html","/web/login.html","/web/register.html","/web/images/**").permitAll()
                         .antMatchers("/web/assets/styles/**","/web/assets/images/**").permitAll()
                         .antMatchers("/web/login.js","/web/register.js").permitAll()
@@ -34,7 +36,8 @@ public class WebAuthorization {
                         .antMatchers("/api/clients/accounts/{id}").hasAuthority("CLIENT")
                         .antMatchers(HttpMethod.POST,"/api/clients/current/accounts","/api/clients/current/cards","/api/transactions","/api/loans").hasAuthority("CLIENT")
                         .antMatchers(HttpMethod.PUT,"/api/clients/current/accounts/{id}","/api/clients/current/cards").hasAuthority("CLIENT")
-                        .anyRequest().denyAll();
+                .anyRequest().denyAll();
+
         http.formLogin().usernameParameter("email").passwordParameter("password").loginPage("/api/login");
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
         http.csrf().disable();

@@ -42,7 +42,7 @@ public class ClientController {
     @PostMapping(path = "/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password, @RequestParam AccountType type) {
+            @RequestParam String email, @RequestParam String password) {
         if (firstName.isBlank()) {
             return new ResponseEntity<>("First name cannot be empty", HttpStatus.FORBIDDEN);
         }
@@ -62,7 +62,7 @@ public class ClientController {
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientService.saveClient(newClient);
         String accountNumber = RandomNumberGenerate.accountNumber();
-        Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0, type,true);
+        Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0, AccountType.CURRENT,true);
         newClient.addAccount(newAccount);
         accountsRepository.save(newAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);

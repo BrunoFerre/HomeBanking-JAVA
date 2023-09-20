@@ -7,6 +7,8 @@ createApp({
             accounts: [],
             loans:[],
             client:[],
+            show:false,
+            type:'',
              
         }
     },
@@ -24,6 +26,9 @@ createApp({
                 localStorage.setItem('client',JSON.stringify(this.clients))
                 })
         },
+        showOption(){
+            this.show=!this.show
+        },
         logOut(){
             logout()
         },
@@ -39,7 +44,7 @@ createApp({
                 buttonColor: '#32a852',
 				preConfirm: login => {
 					return axios
-						.post('/api/clients/current/accounts')
+						.post('/api/clients/current/accounts',`type=${this.type}`,{headers:{'accept': 'application/xml'}})
 						.then(response => {
                             setTimeout(() =>{
 							location.reload()

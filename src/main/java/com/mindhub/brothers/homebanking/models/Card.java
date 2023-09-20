@@ -26,7 +26,6 @@ public class Card {
 
     public Card() {
     }
-
     public Card(String cardHolder, CardType type,
                 CardColor color, String number, int cvv,
                 LocalDate thruDate, LocalDate fromDate,Boolean status) {

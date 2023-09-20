@@ -3,7 +3,6 @@ package com.mindhub.brothers.homebanking.controllers;
 import com.lowagie.text.*;
 import com.lowagie.text.Image;
 import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Client;
@@ -22,15 +21,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.transaction.Transactional;
-import java.awt.*;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -49,7 +44,6 @@ public class TransactionController {
     public ResponseEntity<Object> newTransaction(Authentication authentication,
               @RequestParam Double amount,@RequestParam String description,@RequestParam String accountOrigin,
               @RequestParam String accountDestination) {
-
         if (amount.isNaN() || amount < 0) {
             return new ResponseEntity<>("Invalid amount", HttpStatus.FORBIDDEN);
         }
@@ -79,12 +73,12 @@ public class TransactionController {
             originalAccount.setBalance(originalAccount.getBalance()-amount);
             destAccount.setBalance(destAccount.getBalance()+amount);
             Transaction debit= new Transaction(TransactionType.DEBIT,amount*-1,description,LocalDateTime.now(),originalAccount.getBalance());
-            Transaction credit= new Transaction(TransactionType.CREDIT,amount,description,LocalDateTime.now(), originalAccount.getBalance());
             originalAccount.addTransaction(debit);
+            transactionRepository.save(debit);
+            Transaction credit= new Transaction(TransactionType.CREDIT,amount,description,LocalDateTime.now(), destAccount.getBalance());
             destAccount.addTransaction(credit);
             accountsRepository.save(originalAccount);
             accountsRepository.save(destAccount);
-            transactionRepository.save(debit);
             transactionRepository.save(credit);
         }else{
             return new ResponseEntity<>("Insufficient funds", HttpStatus.FORBIDDEN);
@@ -93,9 +87,7 @@ public class TransactionController {
     }
 
     @GetMapping("/transactions/findDate")
-    public ResponseEntity<Object> getTransactionsbyDateTime(@RequestParam String dateInit,
-                                                            @RequestParam String dateEnd,
-                                                            @RequestParam String numberAcc,
+    public ResponseEntity<Object> getTransactionsbyDateTime(@RequestParam String dateInit,@RequestParam String dateEnd,@RequestParam String numberAcc,
                                                             Authentication authentication) throws DocumentException, IOException {
         Client current = clientService.findByEmail(authentication.getName());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -124,8 +116,7 @@ public class TransactionController {
         doc.open();
         Image logo = Image.getInstance("/home/bruno/IdeaProjects/HomeBanking-JAVA/src/main/resources/static/web/bank.png");
         logo.scaleToFit(100, 100);
-        logo.setAlignment(Image.LEFT | Image.TEXTWRAP);
-
+        logo.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP);
         PdfPTable table = new PdfPTable(4);
         table.addCell("Type");
         table.addCell("Description");

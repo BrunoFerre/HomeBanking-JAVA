@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
-
 @RestController
 @RequestMapping("/api")
 public class CardController {
@@ -54,7 +51,6 @@ public class CardController {
         String numberCard;
         do {
             numberCard = RandomNumberGenerate.cardNumber();
-
         }while(cardService.findByNumber(numberCard) != null);
 
 
@@ -75,11 +71,12 @@ public class CardController {
     @PutMapping("/clients/current/cards")
     public ResponseEntity<Object> deleteCard(Authentication authentication, @RequestParam String number){
         Client client = clientService.findByEmail(authentication.getName());
-        Card card = cardService.findByNumber(number);
-        boolean exist = client.getCards().contains(card);
         if (number.isBlank()) {
             return new ResponseEntity<>("Missing number", HttpStatus.FORBIDDEN);
         }
+        Card card = cardService.findByNumber(number);
+        boolean exist = client.getCards().contains(card);
+
         if (card == null){
             return new ResponseEntity<>("Card not found", HttpStatus.FORBIDDEN);
         }

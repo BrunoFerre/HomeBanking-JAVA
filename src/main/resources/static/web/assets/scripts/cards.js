@@ -3,8 +3,8 @@ import { logout } from './logout.js'
 createApp({
     data() {
         return {
-            client:[],
-            clients: [],
+            clients:[],
+            client: [],
             cards:[],
             debit:[],
             credit:[],
@@ -13,6 +13,7 @@ createApp({
             fromDateCredit:[],
             thruDateCredit:[],
             number:'',
+            dateNew: new Date().toISOString().slice(2, 7)
         }
     },
     created() {
@@ -30,9 +31,11 @@ createApp({
                     this.credit= this.cards.filter(card=> card.type == "CREDIT")
                     this.fromDateDebit = this.debit.map(date => date.fromDate.slice(2,7))
                     this.thruDateDebit = this.debit.map(date => date.thruDate.slice(2,7))
+                    
                     this.fromDateCredit = this.credit.map(date => date.fromDate.slice(2,7))
                     this.thruDateCredit= this.credit.map(date => date.thruDate.slice(2,7))
-                   
+                    console.log(this.thruDateCredit);
+                    console.log(this.dateNew);
                     localStorage.setItem('client',JSON.stringify(this.clients)) 
                 })
         },

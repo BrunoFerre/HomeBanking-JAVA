@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -75,4 +76,10 @@ public class RepositoriesTest {
         List<Account> s = accountRepository.findByClientAndStatusIsTrue(client);
         assertThat(s,is(not(empty())));
     }
+ /*   @Test
+    public void findAccountWithMaxBalanceAndClientId(){
+        long id =14;
+        Account account = accountRepository.findAccountWithMaxBalanceAndClient(id);
+        assertThat(account, is(not(nullValue())));
+    }*/
 }

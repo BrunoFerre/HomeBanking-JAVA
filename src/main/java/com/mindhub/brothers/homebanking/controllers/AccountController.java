@@ -43,13 +43,14 @@ public class    AccountController {
     }
 
     @PostMapping("/api/clients/current/accounts")
-    public ResponseEntity<Object> newAccount(Authentication authentication){
+    public ResponseEntity<Object> newAccount(Authentication authentication, @RequestParam AccountType type){
         Client client = clientService.findByEmail(authentication.getName());
         List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
+
         System.out.println(acounts);
         if (acounts.size()<=2){
             String accountNumber = RandomNumberGenerate.accountNumber();
-            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0, AccountType.CURRENT,true);
+            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0, type,true);
             clientService.findByEmail(authentication.getName()).addAccount(newAccount);
             accountService.save(newAccount);
         }else{

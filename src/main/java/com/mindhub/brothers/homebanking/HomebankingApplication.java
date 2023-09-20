@@ -21,7 +21,7 @@ import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
-  /*  private LocalDate date = LocalDate.now();
+    private LocalDate date = LocalDate.now();
     private LocalDate goldTime = LocalDate.now();
     private LocalDate titaniumTime = LocalDate.now();
     private LocalDateTime date1 = LocalDateTime.now().withNano(0);
@@ -29,14 +29,14 @@ public class HomebankingApplication {
     private final List<Integer> hipotecario = List.of(12, 24, 36, 48, 60);
     private final List<Integer> personal = List.of(6, 12, 24);
     private final List<Integer> automotriz = List.of(6, 12, 24, 36);
-    @Autowired
+   /* @Autowired
     private PasswordEncoder passwordEncoder;*/
 
     public static void main(String[] args) {
         SpringApplication.run(HomebankingApplication.class, args);
     }
 
-   /*@Bean
+  /* @Bean
     public CommandLineRunner initData(ClientRepository repositoryClient,
                                       AccountsRepository accountsRepository,
                                       TransactionRepository transactionRepository,
@@ -48,7 +48,7 @@ public class HomebankingApplication {
             Account account = new Account("VIN-001", this.date, 5000, AccountType.CURRENT,true);
             Account account1 = new Account("VIN-002", this.date, 7500, AccountType.SAVINGS,true);
             Transaction transaction = new Transaction(TransactionType.CREDIT,
-                    1700, "DESCRIPTION ", this.date1,account1.getBalance());
+                    1700, "DESCRIPTION ", this.date1,account.getBalance());
             Transaction transaction1 = new Transaction(TransactionType.DEBIT,
                     -1500, "DESCRIPTION2", this.date2,account1.getBalance());
             Client client = new Client("Melba",

@@ -245,6 +245,9 @@ tr td {
   background-color: beige;
   font-size: 15px;
 }
+.gg{
+  margin: 1rem;
+}
 .gg:hover{
   color: white;
   font-weight: bolder;
