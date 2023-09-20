@@ -39,7 +39,7 @@ public class PaymentController {
     @Autowired
     private TransactionRepository transactionRepository;
     @Transactional
-        @PostMapping("/payments")
+    @PostMapping("/payments")
     public ResponseEntity<Object> newPayment(@RequestBody CardPaymentDTO cardPaymentDTO){
         String cardNumber = cardPaymentDTO.getCardNumber();
         if (cardNumber.isBlank()){
@@ -66,7 +66,6 @@ public class PaymentController {
             transactionRepository.save(transaction);
             accountsRepository.save(maxBalanceAccount);
         }
-
         return new ResponseEntity<>("Payment successful", HttpStatus.OK);
     }
 }

@@ -6,7 +6,11 @@ import com.mindhub.brothers.homebanking.models.Loan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.List;
+
 @RepositoryRestResource
 public interface ClientLoanRepository extends JpaRepository<ClientLoan,Long> {
     boolean existsByClientAndLoan(Client client, Loan loan);
+    List<ClientLoan> findAllByClient(Client client);
+    ClientLoan getClientLoan(long id);
 }

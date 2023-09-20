@@ -6,7 +6,9 @@ import com.mindhub.brothers.homebanking.dtos.LoanDTO;
 import com.mindhub.brothers.homebanking.models.*;
 import com.mindhub.brothers.homebanking.models.enums.TransactionType;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
+import com.mindhub.brothers.homebanking.repositories.ClientLoanRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
+import com.mindhub.brothers.homebanking.repositories.LoanRepository;
 import com.mindhub.brothers.homebanking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +34,11 @@ public class LoanController {
     @Autowired
     private LoanService loanService;
     @Autowired
+    private LoanRepository loanRepository;
+    @Autowired
     private ClientLoanService clientLoanService;
+    @Autowired
+    private ClientLoanRepository clientLoanRepository;
     @Autowired
     private TransactionService transactionService;
     @GetMapping("/loans")
@@ -77,7 +83,7 @@ public class LoanController {
             return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getPayments(),loanAplicationDTO.getAmount()*1.2);
+        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getAmount()*1.2,loanAplicationDTO.getPayments(),loanAplicationDTO.getAmount()*0.2);
         clientLoan.setClient(authClient);
         clientLoanService.saveClientLoan(clientLoan);
 
@@ -94,4 +100,39 @@ public class LoanController {
 
         return new ResponseEntity<>("Loan Aproved",HttpStatus.CREATED);
     }
+
+
+    @Transactional
+    @PostMapping("/loans/pay")
+    public ResponseEntity<Object> payLoan(Authentication authentication, @RequestParam String numberAccount,
+                                          @RequestParam Double amount) {
+     Client authClient = clientService.findByEmail(authentication.getName());
+     ClientLoan clientLoan = clientLoanRepository.getClientLoan(authClient.getId());
+     if (numberAccount.isBlank()){
+         return new ResponseEntity<>("Account number not found", HttpStatus.FORBIDDEN);
+     }
+     if (amount.isNaN() || amount < 0){
+         return new ResponseEntity<>("Invalid amount", HttpStatus.FORBIDDEN);
+     }
+     if (clientLoan == null){
+         return new ResponseEntity<>("Loan not exists", HttpStatus.FORBIDDEN);
+     }
+    if (clientLoan.getClient().getId() != authClient.getId()){
+        return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
+    }
+    Account account = accountService.findByNumber(numberAccount);
+    if (account == null){
+        return new ResponseEntity<>("This account does not exist", HttpStatus.FORBIDDEN);
+    }
+    if (account.getBalance() < amount){
+        return new ResponseEntity<>("This account does not have enough balance", HttpStatus.FORBIDDEN);
+    }
+    account.setBalance(account.getBalance()-amount);
+    accountService.save(account);
+    clientLoan.setPayments(clientLoan.getPayments()-1);
+    clientLoan.setTotalAmount(clientLoan.getTotalAmount()-amount);
+    clientLoanRepository.save(clientLoan);
+     return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

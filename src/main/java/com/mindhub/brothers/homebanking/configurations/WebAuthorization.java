@@ -37,7 +37,6 @@ public class WebAuthorization {
                         .antMatchers(HttpMethod.POST,"/api/clients/current/accounts","/api/clients/current/cards","/api/transactions","/api/loans").hasAuthority("CLIENT")
                         .antMatchers(HttpMethod.PUT,"/api/clients/current/accounts/{id}","/api/clients/current/cards").hasAuthority("CLIENT")
                 .anyRequest().denyAll();
-
         http.formLogin().usernameParameter("email").passwordParameter("password").loginPage("/api/login");
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
         http.csrf().disable();

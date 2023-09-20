@@ -76,6 +76,7 @@ public class RepositoriesTest {
         List<Account> s = accountRepository.findByClientAndStatusIsTrue(client);
         assertThat(s,is(not(empty())));
     }
+
  /*   @Test
     public void findAccountWithMaxBalanceAndClientId(){
         long id =14;

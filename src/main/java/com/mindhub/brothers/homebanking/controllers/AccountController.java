@@ -1,12 +1,10 @@
 package com.mindhub.brothers.homebanking.controllers;
 
 import com.mindhub.brothers.homebanking.dtos.AccountDTO;
-import com.mindhub.brothers.homebanking.dtos.ClientDTO;
 import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.models.enums.AccountType;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
-import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.service.AccountService;
 import com.mindhub.brothers.homebanking.service.ClientService;
 import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
@@ -19,38 +17,31 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 @RestController
 public class    AccountController {
-
     @Autowired
     private AccountService accountService;
-//    @Autowired
-//    private ClientRepository clientRepository;
     @Autowired
     private AccountsRepository accountsRepository;
     @Autowired
     private ClientService clientService;
-
     @GetMapping("/api/accounts")
     public List<AccountDTO> getAccounts(){
         return accountService.getAccounts();
     }
-
     @GetMapping("/api/clients/current/accounts")
     public List<AccountDTO> getAcccount(Authentication authentication){
         return accountService.getAcccount(authentication);
     }
-
     @PostMapping("/api/clients/current/accounts")
     public ResponseEntity<Object> newAccount(Authentication authentication, @RequestParam AccountType type){
         Client client = clientService.findByEmail(authentication.getName());
         List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
-
         System.out.println(acounts);
         if (acounts.size()<=2){
             String accountNumber = RandomNumberGenerate.accountNumber();
-            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0, type,true);
+            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),
+                    0.0, type,true);
             clientService.findByEmail(authentication.getName()).addAccount(newAccount);
             accountService.save(newAccount);
         }else{
@@ -70,6 +61,9 @@ public class    AccountController {
     }
     @PutMapping("/api/clients/current/accounts/{id}")
     public ResponseEntity<Object> deleteAccount(Authentication authentication,@PathVariable Long id){
+        if (id == null){
+            return new ResponseEntity<>("Missing id", HttpStatus.FORBIDDEN);
+        }
         Client client = clientService.findByEmail(authentication.getName());
         Account acc = accountService.accountId(id);
         List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
@@ -85,4 +79,3 @@ public class    AccountController {
         }
     }
 }
-
