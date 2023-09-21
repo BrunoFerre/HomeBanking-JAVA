@@ -26,10 +26,11 @@ public class Loan {
     private Double interest;
     public Loan() {
     }
-    public Loan(String name, double maxAmount, List<Integer> payments) {
+    public Loan(String name, double maxAmount, List<Integer> payments, Double interest) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+        this.interest = interest;
     }
 
     public Double getInterest() {
@@ -77,5 +78,6 @@ public class Loan {
     public void setClientLoan(Set<ClientLoan> clientLoan) {
         this.clientLoan = clientLoan;
     }
+
 
 }

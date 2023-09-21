@@ -12,5 +12,5 @@ import java.util.List;
 public interface ClientLoanRepository extends JpaRepository<ClientLoan,Long> {
     boolean existsByClientAndLoan(Client client, Loan loan);
     List<ClientLoan> findAllByClient(Client client);
-    ClientLoan getClientLoan(long id);
+
 }

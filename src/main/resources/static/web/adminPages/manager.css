@@ -13,12 +13,14 @@ header{
     justify-content: space-around;
     background-color: rgb(108, 89, 233);
     padding: 1rem;
+    gap: 1rem;
 }
-header > img{
+.logo{
     height: 5rem;
 }
-nav{
+.navbar-nav{
     display: flex;
+    justify-content: space-between ;
     gap:1rem;
 }
 nav a{

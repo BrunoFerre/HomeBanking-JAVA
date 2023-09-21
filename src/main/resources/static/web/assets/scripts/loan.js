@@ -23,7 +23,7 @@ const app = createApp({
                 "id":this.selectLoan.id,
                 "amount": Number(this.amount),
                 "payments": this.payment,
-                "accountDestiny": this.accountDest
+                "accountDestiny": this.accountDest,
             }
             console.log(newLoan);
             Swal.fire({

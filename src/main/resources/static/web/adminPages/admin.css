@@ -1,0 +1,50 @@
+header{
+    display: flex;
+    min-height: 10vh;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(108, 89, 233);
+    padding: 1rem;
+    gap: 1rem;
+}
+.logo{
+    height: 5rem;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+}
+
+fieldset{
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+}
+.navbar-nav{
+    display: flex;
+    justify-content: space-between ;
+    gap:1rem;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+}
+.control-label{
+    color:black;
+}
+footer{
+    min-height: 9vh;
+    background-color: rgb(93, 83, 83);
+}
+.checkbox{
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 10px;
+font-size: 20px;
+font-weight: bolder;
+}
+.payments{
+    align-self: flex-start;
+}

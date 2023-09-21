@@ -75,7 +75,7 @@ public class LoanController {
         if(clientLoanService.existByClientAndLoan(authClient,loan)){
             return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
         }
-        if (!loan.getPayments().contains(loanAplicationDTO.getPayments())){
+        if (loan.getPayments().contains(loanAplicationDTO.getPayments())){
             return new ResponseEntity<>("Payment not found", HttpStatus.FORBIDDEN);
         }
 
@@ -83,10 +83,7 @@ public class LoanController {
             return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getAmount()*1.2,loanAplicationDTO.getPayments(),loanAplicationDTO.getAmount()*0.2);
-        clientLoan.setClient(authClient);
-        clientLoanService.saveClientLoan(clientLoan);
-
+        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getAmount()*1.2,loanAplicationDTO.getPayments());
         destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount()*0.2);
 
         Transaction transaction = new Transaction(TransactionType.CREDIT, loanAplicationDTO.getAmount(),
@@ -97,12 +94,26 @@ public class LoanController {
         authClient.addClientLoan(clientLoan);
         accountService.save(destinationAccount);
         clientService.saveClient(authClient);
+        clientLoanService.saveClientLoan(clientLoan);
 
         return new ResponseEntity<>("Loan Aproved",HttpStatus.CREATED);
     }
+    @PostMapping("/loans/create")
+    public ResponseEntity<Object> createLoan(Authentication authentication, @RequestBody LoanDTO loanDTO) {
+        Client authClient = clientService.findByEmail(authentication.getName());
+    if (!authClient.getEmail().contains("admin.com")){
+        return new ResponseEntity<>("You are not an admin", HttpStatus.FORBIDDEN);
+    }
+    boolean exist = loanRepository.existsByName(loanDTO.getName());
+    if (exist){
+        return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
+    }
+    Loan loan = new Loan(loanDTO.getName(),loanDTO.getMaxAmount(),loanDTO.getPayments(),2.0);
+    loanRepository.save(loan);
+    return new ResponseEntity<>("Loan created successfu",HttpStatus.OK);
+    }
 
-
-    @Transactional
+   /* @Transactional
     @PostMapping("/loans/pay")
     public ResponseEntity<Object> payLoan(Authentication authentication, @RequestParam String numberAccount,
                                           @RequestParam Double amount) {
@@ -133,6 +144,6 @@ public class LoanController {
     clientLoan.setTotalAmount(clientLoan.getTotalAmount()-amount);
     clientLoanRepository.save(clientLoan);
      return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
 
 }

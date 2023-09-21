@@ -55,7 +55,6 @@ public class ClientController {
         if (password.isBlank()) {
             return new ResponseEntity<>("Password cannot be empty", HttpStatus.FORBIDDEN);
         }
-
         if (clientRepository.findByEmail(email) !=  null) {
             return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
         }
