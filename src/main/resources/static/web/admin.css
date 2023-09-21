@@ -1,0 +1,38 @@
+header{
+    min-height: 10vh;
+    background-color: antiquewhite;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+}
+
+fieldset{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:15px;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+}
+.control-label{
+    color: white;
+}
+footer{
+    min-height: 10vh;
+    background-color: rgb(93, 83, 83);
+}
+.checkbox{
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 10px;
+font-size: 20px;
+font-weight: bolder;
+}
+.payments{
+    align-self: flex-start;
+}

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -56,7 +57,15 @@ public class PaymentController {
         long idClient = exist.getClient().getId();
         Client client = clientRepository.findById(idClient).orElse(null);
         Set<Account> accountList = client.getAccounts();
-        Account maxBalanceAccount = accountList.stream().reduce((ac2, ac3) -> ac2.getBalance() > ac3.getBalance() ? ac2 : ac3).orElse(null);
+        List<Account> maxBalanceAccountList = new ArrayList<>();
+        for (Account account : accountList) {
+            if (account.getStatus()==true){
+                maxBalanceAccountList.add(account);
+                System.out.println(maxBalanceAccountList);
+            }
+        }
+        Account maxBalanceAccount = maxBalanceAccountList.stream().reduce((ac2, ac3) -> ac2.getBalance() > ac3.getBalance() ? ac2 : ac3).orElse(null);
+        System.out.println(maxBalanceAccount);
         if (maxBalanceAccount.getBalance() < cardPaymentDTO.getAmount()){
             return new ResponseEntity<>("Insufficient funds", HttpStatus.BAD_GATEWAY);
         }else{
