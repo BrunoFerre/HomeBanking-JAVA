@@ -112,6 +112,7 @@ header{
     border-radius: 10px ;
     transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
     background-image: linear-gradient(to right, rgb(59, 39, 151), rgb(18, 121, 56));
+    gap: 10px;
   }
 
   #content {

@@ -29,14 +29,14 @@ public class HomebankingApplication {
     private final List<Integer> hipotecario = List.of(12, 24, 36, 48, 60);
     private final List<Integer> personal = List.of(6, 12, 24);
     private final List<Integer> automotriz = List.of(6, 12, 24, 36);
-/*   @Autowired
-    private PasswordEncoder passwordEncoder;*/
+  @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(HomebankingApplication.class, args);
     }
 
-  /*@Bean
+  @Bean
     public CommandLineRunner initData(ClientRepository repositoryClient,
                                       AccountsRepository accountsRepository,
                                       TransactionRepository transactionRepository,
@@ -58,8 +58,8 @@ public class HomebankingApplication {
             Loan loan2 = new Loan("Personal", 100.000, this.personal,.5);
             Loan loan3 = new Loan("Automotive", 300.000, this.automotriz,.5);
 
-            ClientLoan clientLoan = new ClientLoan(400.000,60);
-            ClientLoan clientLoan1 = new ClientLoan( 50.000,12);
+            ClientLoan clientLoan = new ClientLoan(60,400.000);
+            ClientLoan clientLoan1 = new ClientLoan( 12,50.00);
 
             Card cardDebit = new Card(client.getLastName()+client.getFirstName(),
                     CardType.DEBIT, CardColor.GOLD,"1234-1234-1234-1234",
@@ -106,7 +106,7 @@ public class HomebankingApplication {
             Transaction transactionBruno = new Transaction(TransactionType.CREDIT,2500,
                     "nose que poner je",
                     this.date1.plusDays(1), accountBruno1.getBalance());
-            ClientLoan loanBruno = new ClientLoan(50.000,12);
+            ClientLoan loanBruno = new ClientLoan(12,50.000);
 
             Card cardBruno = new Card(bruno.getLastName()+ bruno.getFirstName(),
                     CardType.CREDIT,CardColor.TITANIUM,
@@ -129,6 +129,6 @@ public class HomebankingApplication {
             clientLoanRepository.save(loanBruno);
             cardRepository.save(cardBruno);
         };
-    }*/
+    }
 }
 

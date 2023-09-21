@@ -7,7 +7,7 @@ const app = createApp({
             accounts: [],
             loans: [],
             payment: "",
-            selectLoan: '',
+            selectLoan: [],
             paymentFilter:[],
             amount: "",
             accountDest:'',
@@ -20,12 +20,10 @@ const app = createApp({
         newLoans(event) {
             event.preventDefault()
             let newLoan = {
-                "id":this.selectLoan.id,
                 "amount": Number(this.amount),
                 "payments": this.payment,
                 "accountDestiny": this.accountDest,
             }
-            console.log(newLoan);
             Swal.fire({
                 title: 'Add a new loan?',
                 inputAttributes: {
@@ -52,6 +50,7 @@ const app = createApp({
             })
         },
         loadData() {
+            
             this.client = JSON.parse(localStorage.getItem('client')) ?? []
             axios.get(`http://localhost:8080/api/clients/current/accounts`)
                 .then(response => {
@@ -60,21 +59,47 @@ const app = createApp({
                     axios.get(`http://localhost:8080/api/loans`)
                         .then(response => {
                             this.loans = response.data
-                            this.amount.toLocaleString(1)
                         }).catch(error => {
                             console.log(error);
                         })
                 }).catch(error => {
                     console.log(error);
                 })
-        },
-        payments() {
-                this.paymentFilter = this.loans.filter(loan => {
-                return this.selectLoan.id == (loan.id)  
-            })[0]
-        },
+            },
         logOut() {
             logout()
+        }
+    },
+    computed: {
+        calculateInterest() {
+            if (this.payment == 3) {
+                this.finalAmount = this.amount + (this.amount * (0.005 + (this.selectLoan.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payment == 6) {
+                this.finalAmount = this.amount + (this.amount * (0.010 + (this.selectLoan.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payment == 12) {
+                this.finalAmount = this.amount + (this.amount * (0.020 + (this.selectLoan.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payment == 24) {
+                this.finalAmount = this.amount + (this.amount * (0.045 + (this.selectLoan.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payment == 36) {
+                this.finalAmount = this.amount + (this.amount * (0.065 + (this.selectLoan.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payment == 48) {
+                this.finalAmount = this.amount + (this.amount * (0.070 + (this.selectLoan.interest / 100)))
+                return this.finalAmount;
+            }
+            else if (this.payment == 60) {
+                this.finalAmount = this.amount + (this.amount * (0.075 + (this.selectLoan.interest / 100)))
+                return this.finalAmount;
+            } else { return 0 };
         }
     }
 }).mount('#app')

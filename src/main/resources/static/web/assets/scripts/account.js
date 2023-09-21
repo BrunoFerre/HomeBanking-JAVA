@@ -10,6 +10,10 @@ createApp({
             error:'',
             nuevoArray:[],
             dateAsherter:[],
+            dateInit:'',
+            dateEnd:'',
+            numberAcc:'',
+            showForm: false
         }
     },
     created() {
@@ -34,6 +38,7 @@ createApp({
                     this.dateAsherter=this.transaction.map(transaction=>transaction.date.slice(2,-3).replace(/-/g, '/'))
                     
                     this.transaction.sort((a,b)=> a.id - b.id)
+                    console.log(this.transaction);
             }).catch(error => {
                 this.error= error.message
                 console.log(this.error);
@@ -71,6 +76,28 @@ createApp({
                 }
             })
         }
+    },
+    searchTransactions() {
+        const url = `http://localhost:8080/api/transactions/findDate?dateInit=${this.dateInit}:00&dateEnd=${this.dateEnd}:00&numberAcc=${this.account.number}`;
+        axios
+            .get(url, { responseType: 'blob' })
+            .then((response) => {
+                console.log(response);
+                const blob = new Blob([response.data], { type: 'application/pdf' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'transactions-Table.pdf';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error =>
+                console.error(error)
+            );
+    },
+    showOption(){
+        this.showForm=!this.showForm
     }
+
 }
 }).mount("#app")

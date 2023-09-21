@@ -60,8 +60,20 @@
             <p id="para"> Balance: <span>${{account.balance}}</span></p>
           </div>
           <button type="button" class="btn btn-danger text-center" @click.prevent="deleteAccount"> Delete Account</button>
+          <button type="button" class="btn btn-success" @click.prevent="showOption">Search Transactions</button>
         </div>
       </div>
+      <div class="container">
+      <article>
+        <form v-if="showForm" action="">
+            <label for="date1">Put the date from:</label>
+            <input type="datetime-local" id="date1" v-model="dateInit">
+            <label for="date1">Put the date to:</label>
+            <input type="datetime-local" id="date2" v-model="dateEnd">
+            <button @click.prevent="searchTransactions">Search</button>
+        </form>
+    </article>
+  </div>
       <div class="table-responsive">
       <template v-if="transaction.length > 0 ">
         <table id="table" >

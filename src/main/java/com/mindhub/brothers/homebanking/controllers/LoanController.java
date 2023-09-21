@@ -10,6 +10,7 @@ import com.mindhub.brothers.homebanking.repositories.ClientLoanRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.repositories.LoanRepository;
 import com.mindhub.brothers.homebanking.service.*;
+import com.mindhub.brothers.homebanking.utils.InterestRate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,26 +76,20 @@ public class LoanController {
         if(clientLoanService.existByClientAndLoan(authClient,loan)){
             return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
         }
-        if (!loan.getPayments().contains(loanAplicationDTO.getPayments())){
-            return new ResponseEntity<>("Payment not found", HttpStatus.FORBIDDEN);
-        }
-
         if (!authClient.getAccounts().contains(destinationAccount)){
             return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
         }
-
-        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getPayments(),loanAplicationDTO.getAmount()*1.2);
-        destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount()*0.2);
-
-        Transaction transaction = new Transaction(TransactionType.CREDIT, loanAplicationDTO.getAmount(),
-                loan.getName()+"Loan aproved", LocalDateTime.now());
-        transactionService.saveTransaction(transaction);
-        destinationAccount.addTransaction(transaction);
-        loan.addClientLoan(clientLoan);
+        double totalAmount = InterestRate.calculateInterest(loanAplicationDTO,loan);
+        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getPayments(),totalAmount);
         authClient.addClientLoan(clientLoan);
+        loan.addClientLoan(clientLoan);
+        destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount());
+        Transaction transaction = new Transaction(TransactionType.CREDIT,loanAplicationDTO.getAmount(),loan.getName(),LocalDateTime.now(),destinationAccount.getBalance());
+        destinationAccount.addTransaction(transaction);
+        transactionService.saveTransaction(transaction);
         accountService.save(destinationAccount);
-        clientService.saveClient(authClient);
         clientLoanService.saveClientLoan(clientLoan);
+        clientService.saveClient(authClient);
 
         return new ResponseEntity<>("Loan Aproved",HttpStatus.CREATED);
     }
@@ -108,7 +103,7 @@ public class LoanController {
     if (exist){
         return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
     }
-    Loan loan = new Loan(loanDTO.getName(),loanDTO.getMaxAmount(),loanDTO.getPayments());
+    Loan loan = new Loan(loanDTO.getName(),loanDTO.getMaxAmount(),loanDTO.getPayments(),loanDTO.getInterest());
     loanRepository.save(loan);
     return new ResponseEntity<>("Loan created successfu",HttpStatus.OK);
     }

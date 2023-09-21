@@ -1,31 +1,33 @@
 package com.mindhub.brothers.homebanking.utils;
 
 import com.mindhub.brothers.homebanking.dtos.LoanAplicationDTO;
+import com.mindhub.brothers.homebanking.models.Loan;
 
 public class InterestRate {
-    public static double totalAmount(LoanAplicationDTO loanApp){
-        int[] interest = {10,20,45,65,70};
+    public static double calculateInterest(LoanAplicationDTO loanApplicationDTO, Loan loan) {
+        int[] interestPayments = {5, 10, 20, 45, 65, 70, 75};
         int interestIndex = 0;
-        int payments = loanApp.getPayments();
-        double amount = loanApp.getAmount();
+        int payments = loanApplicationDTO.getPayments();
+        double amount = loanApplicationDTO.getAmount();
+        double interest = loan.getInterest();
 
-        if (payments == 6) {
+       if (payments == 6) {
             interestIndex = 0;
         } else if (payments == 12) {
             interestIndex = 1;
-        } else if (payments== 24) {
+        } else if (payments == 24) {
             interestIndex = 2;
         } else if (payments == 36) {
             interestIndex = 3;
         } else if (payments == 48) {
             interestIndex = 4;
+        } else if (payments == 60) {
+            interestIndex = 5;
         } else {
             throw new IllegalArgumentException("This payments is not available.");
         }
-        double interestRate = (double) interest[interestIndex] / 100;
-
+        double interestRate = (interest + (double) interestPayments[interestIndex]) / 100;
         double totalAmountWithInterest = amount * (1 + interestRate);
-
         return totalAmountWithInterest;
     }
 }

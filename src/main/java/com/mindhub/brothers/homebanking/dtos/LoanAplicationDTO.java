@@ -4,13 +4,12 @@ public class LoanAplicationDTO {
 
     private long id;
     private Double amount;
-    private int payments;
+    private Integer payments;
     private String accountDestiny;
 
     public LoanAplicationDTO() {
     }
-    public LoanAplicationDTO(long id, Double amount, int payments, String accountDestiny) {
-        this.id = id;
+    public LoanAplicationDTO(Double amount, Integer payments, String accountDestiny) {
         this.amount = amount;
         this.payments = payments;
         this.accountDestiny = accountDestiny;
@@ -24,7 +23,7 @@ public class LoanAplicationDTO {
         return amount;
     }
 
-    public int getPayments() {
+    public Integer getPayments() {
         return payments;
     }
 
