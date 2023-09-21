@@ -21,7 +21,6 @@ public class TransactionDTO {
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
         this.date= transaction.getDate();
-        this.balance = transaction.getBalance();
     }
 
     public long getId() {

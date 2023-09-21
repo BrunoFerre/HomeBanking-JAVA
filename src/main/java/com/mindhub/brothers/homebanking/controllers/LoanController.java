@@ -75,7 +75,7 @@ public class LoanController {
         if(clientLoanService.existByClientAndLoan(authClient,loan)){
             return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
         }
-        if (loan.getPayments().contains(loanAplicationDTO.getPayments())){
+        if (!loan.getPayments().contains(loanAplicationDTO.getPayments())){
             return new ResponseEntity<>("Payment not found", HttpStatus.FORBIDDEN);
         }
 
@@ -83,11 +83,11 @@ public class LoanController {
             return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getAmount()*1.2,loanAplicationDTO.getPayments());
+        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getPayments(),loanAplicationDTO.getAmount()*1.2);
         destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount()*0.2);
 
         Transaction transaction = new Transaction(TransactionType.CREDIT, loanAplicationDTO.getAmount(),
-                loan.getName()+"Loan aproved", LocalDateTime.now(), loanAplicationDTO.getAmount()*0.2);
+                loan.getName()+"Loan aproved", LocalDateTime.now());
         transactionService.saveTransaction(transaction);
         destinationAccount.addTransaction(transaction);
         loan.addClientLoan(clientLoan);
@@ -108,7 +108,7 @@ public class LoanController {
     if (exist){
         return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
     }
-    Loan loan = new Loan(loanDTO.getName(),loanDTO.getMaxAmount(),loanDTO.getPayments(),2.0);
+    Loan loan = new Loan(loanDTO.getName(),loanDTO.getMaxAmount(),loanDTO.getPayments());
     loanRepository.save(loan);
     return new ResponseEntity<>("Loan created successfu",HttpStatus.OK);
     }

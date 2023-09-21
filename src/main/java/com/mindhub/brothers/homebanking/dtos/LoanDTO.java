@@ -20,7 +20,6 @@ public class LoanDTO {
         this.name = loan.getName();
         this.maxAmount = loan.getMaxAmount();
         this.payments = loan.getPayments();
-        this.interest = loan.getInterest();
     }
     public long getId() {
         return id;

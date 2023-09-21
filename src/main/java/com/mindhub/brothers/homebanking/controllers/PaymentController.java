@@ -61,7 +61,7 @@ public class PaymentController {
             return new ResponseEntity<>("Insufficient funds", HttpStatus.BAD_GATEWAY);
         }else{
             maxBalanceAccount.setBalance(maxBalanceAccount.getBalance() - cardPaymentDTO.getAmount());
-            Transaction transaction = new Transaction(TransactionType.DEBIT, cardPaymentDTO.getAmount(), cardPaymentDTO.getDescription(), LocalDateTime.now(),maxBalanceAccount.getBalance());
+            Transaction transaction = new Transaction(TransactionType.DEBIT, cardPaymentDTO.getAmount(), cardPaymentDTO.getDescription(), LocalDateTime.now());
             maxBalanceAccount.addTransaction(transaction);
             transactionRepository.save(transaction);
             accountsRepository.save(maxBalanceAccount);
