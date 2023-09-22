@@ -1,10 +1,13 @@
 package com.mindhub.brothers.homebanking.controllers;
 
 import com.mindhub.brothers.homebanking.dtos.ClientDTO;
+import com.mindhub.brothers.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Client;
+import com.mindhub.brothers.homebanking.models.ClientLoan;
 import com.mindhub.brothers.homebanking.models.enums.AccountType;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
+import com.mindhub.brothers.homebanking.repositories.ClientLoanRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.service.ClientService;
 import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
@@ -30,14 +33,16 @@ public class ClientController {
     @Autowired
     private AccountsRepository accountsRepository;
     @Autowired
+    private ClientLoanRepository clientLoanRepository;
+    @Autowired
     private ClientService clientService;
     @GetMapping("/clients")
     public List<ClientDTO> getClients(){
       return  clientService.getClients();
     }
-    @GetMapping("/clients/{current}")
+    @GetMapping("/clients/current")
     public ClientDTO getClient(Authentication authentication ) {
-        return clientService.getClientAuthentication(authentication);
+        return new ClientDTO(clientService.findByEmail(authentication.getName()));
     }
     @PostMapping(path = "/clients")
     public ResponseEntity<Object> register(
@@ -65,5 +70,12 @@ public class ClientController {
         newClient.addAccount(newAccount);
         accountsRepository.save(newAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
+
+    @GetMapping("/clients/current/loans")
+    public List<ClientLoanDTO> getLoans(Authentication authentication){
+       return clientLoanRepository.findAllByClient(clientService.findByEmail(authentication.getName())).stream().map(ClientLoanDTO::new).collect(toList());
     }
 }

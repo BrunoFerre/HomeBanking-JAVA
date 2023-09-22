@@ -66,7 +66,7 @@
           <div class="form-group">
             <label class="control-label" for="selectbasic">Select Loan</label>
             <div class="">
-              <select @Change="payments" id="selectbasic" name="selectbasic" class="form-control" v-model="selectLoan">
+              <select id="selectbasic" name="selectbasic" class="form-control" v-model="selectLoan">
                 <option value="">Select</option>
                 <template v-for="loan of loans">
                   <option :value="loan">{{loan.name}}</option>
@@ -90,7 +90,7 @@
           <div class="form-group">
             <label class=" control-label" for="amountinput">Amount</label>
             <div class="">
-              <input id="amountinput" name="amountinput" type="text" v-model="amount" placeholder="Example:10.000"
+              <input id="amountinput" name="amountinput" type="number" v-model="amount" placeholder="Example:10.000"
                 class="form-control input-md" required="">
             </div>
           </div>

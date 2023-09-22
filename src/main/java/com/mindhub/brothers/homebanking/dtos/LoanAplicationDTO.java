@@ -9,20 +9,18 @@ public class LoanAplicationDTO {
 
     public LoanAplicationDTO() {
     }
-    public LoanAplicationDTO(Double amount, Integer payments, String accountDestiny) {
+    public LoanAplicationDTO(long id,Double amount, Integer payments, String accountDestiny) {
+        this.id = id;
         this.amount = amount;
         this.payments = payments;
         this.accountDestiny = accountDestiny;
     }
-
     public long getId() {
         return id;
     }
-
     public Double getAmount() {
         return amount;
     }
-
     public Integer getPayments() {
         return payments;
     }

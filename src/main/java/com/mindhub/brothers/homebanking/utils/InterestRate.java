@@ -5,11 +5,11 @@ import com.mindhub.brothers.homebanking.models.Loan;
 
 public class InterestRate {
     public static double calculateInterest(LoanAplicationDTO loanApplicationDTO, Loan loan) {
-        int[] interestPayments = {5, 10, 20, 45, 65, 70, 75};
+        int[] interestPayments = {5, 10, 20, 45, 65, 70};
         int interestIndex = 0;
         int payments = loanApplicationDTO.getPayments();
-        double amount = loanApplicationDTO.getAmount();
-        double interest = loan.getInterest();
+        Double amount = loanApplicationDTO.getAmount();
+        Double interest = loan.getInterest();
 
        if (payments == 6) {
             interestIndex = 0;
@@ -26,8 +26,8 @@ public class InterestRate {
         } else {
             throw new IllegalArgumentException("This payments is not available.");
         }
-        double interestRate = (interest + (double) interestPayments[interestIndex]) / 100;
-        double totalAmountWithInterest = amount * (1 + interestRate);
+        Double interestRate = (interest + (double)interestPayments[interestIndex]) / 100;
+        Double totalAmountWithInterest = amount * (1 + interestRate);
         return totalAmountWithInterest;
     }
 }

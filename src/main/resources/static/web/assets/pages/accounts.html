@@ -73,7 +73,7 @@
     </div>
     <section class="d-flex flex-column">
     <h2>Loans Resume</h2>
-    <template v-if="loans.length>0" v-for="(loan,index) of loans">
+    <template v-if="loans.length>0" >
     <table id="table">
         <thead>
           <tr class="">
@@ -83,11 +83,13 @@
           </tr>
         </thead>
         <tbody>
+          <template v-for="(loan,index) of loans">
           <tr class="">
             <td>{{loan.loan}}</td>
             <td>{{loan.amount.toLocaleString(1)}}</td>
             <td>{{loan.payments}}</td>
           </tr>
+        </template>
         </tbody>
       </template>
     </table>

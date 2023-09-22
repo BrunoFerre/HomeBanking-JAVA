@@ -113,7 +113,7 @@
       </div>
   </section>
 
-      <a href="./create-cards.html" class="btn btn-success fs-3 text-white fw-bold"> Add Card</a>
+      <a v-if="cards.length <6" href="./create-cards.html" class="btn btn-success fs-3 text-white fw-bold"> Add Card</a>
     </div>
     </main>
     <footer class="footer d-flex align-items-center justify-content-around fs-2 ">

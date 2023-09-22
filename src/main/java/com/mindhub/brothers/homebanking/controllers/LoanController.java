@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.mindhub.brothers.homebanking.utils.InterestRate.calculateInterest;
 import static java.util.stream.Collectors.toSet;
 
 @RestController
@@ -51,8 +52,8 @@ public class LoanController {
     @PostMapping("/loans")
     public ResponseEntity<Object> newLoan(Authentication authentication, @RequestBody LoanAplicationDTO loanAplicationDTO) {
 
-        if (loanAplicationDTO.getAmount()<1){
-            return new ResponseEntity<>("Amount must be greater than 0", HttpStatus.FORBIDDEN);
+        if (loanAplicationDTO.getAmount()<1000){
+            return new ResponseEntity<>("Amount must be greater than 1000", HttpStatus.FORBIDDEN);
         }
 
         if (loanAplicationDTO.getPayments()<=0){
@@ -62,11 +63,12 @@ public class LoanController {
         if(loanAplicationDTO.getAccountDestiny().isBlank()){
             return new ResponseEntity<>("Account destination not found", HttpStatus.FORBIDDEN);
         }
+        if(loanAplicationDTO.getId() == 0) {
+            return new ResponseEntity<>("Loan id not found", HttpStatus.FORBIDDEN);
+        }
 
         Client authClient = clientService.findByEmail(authentication.getName());
-
         Account destinationAccount = accountService.findByNumber(loanAplicationDTO.getAccountDestiny());
-
         Loan loan = loanService.findById(loanAplicationDTO.getId());
 
         if (destinationAccount.getOwner().getId() != authClient.getId()){
@@ -79,66 +81,77 @@ public class LoanController {
         if (!authClient.getAccounts().contains(destinationAccount)){
             return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
         }
-        double totalAmount = InterestRate.calculateInterest(loanAplicationDTO,loan);
-        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getPayments(),totalAmount);
-        authClient.addClientLoan(clientLoan);
-        loan.addClientLoan(clientLoan);
+        double totalAmount = calculateInterest(loanAplicationDTO,loan);
         destinationAccount.setBalance(destinationAccount.getBalance()+loanAplicationDTO.getAmount());
+
+        ClientLoan clientLoan = new ClientLoan(loanAplicationDTO.getPayments(),totalAmount);
+        clientLoan.setClient(authClient);
+        clientLoan.setLoan(loan);
+        clientLoanService.saveClientLoan(clientLoan);
         Transaction transaction = new Transaction(TransactionType.CREDIT,loanAplicationDTO.getAmount(),loan.getName(),LocalDateTime.now(),destinationAccount.getBalance());
         destinationAccount.addTransaction(transaction);
         transactionService.saveTransaction(transaction);
         accountService.save(destinationAccount);
-        clientLoanService.saveClientLoan(clientLoan);
         clientService.saveClient(authClient);
-
         return new ResponseEntity<>("Loan Aproved",HttpStatus.CREATED);
+
     }
     @PostMapping("/loans/create")
-    public ResponseEntity<Object> createLoan(Authentication authentication, @RequestBody LoanDTO loanDTO) {
+    public ResponseEntity<Object> createLoan (Authentication authentication, @RequestBody LoanDTO loanDTO) {
         Client authClient = clientService.findByEmail(authentication.getName());
-    if (!authClient.getEmail().contains("admin.com")){
+        if (loanDTO.getName().isBlank()){
+            return new ResponseEntity<>("Loan name not found", HttpStatus.FORBIDDEN);
+        }
+        if (loanDTO.getMaxAmount()<1000){
+            return new ResponseEntity<>("Max amount must be greater than 1000", HttpStatus.FORBIDDEN);
+        }
+        if (loanDTO.getPayments().size() ==0 || loanDTO.getPayments().isEmpty()){
+            return new ResponseEntity<>("Payments must be greater than 0", HttpStatus.FORBIDDEN);
+        }
+        if (loanDTO.getInterest()<0){
+            return new ResponseEntity<>("Interest must be greater than 0", HttpStatus.FORBIDDEN);
+        }
+        if (!authClient.getEmail().contains("admin.com")){
         return new ResponseEntity<>("You are not an admin", HttpStatus.FORBIDDEN);
-    }
-    boolean exist = loanRepository.existsByName(loanDTO.getName());
-    if (exist){
+        }
+        boolean exist = loanRepository.existsByName(loanDTO.getName());
+        if (exist){
         return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
-    }
-    Loan loan = new Loan(loanDTO.getName(),loanDTO.getMaxAmount(),loanDTO.getPayments(),loanDTO.getInterest());
-    loanRepository.save(loan);
-    return new ResponseEntity<>("Loan created successfu",HttpStatus.OK);
+        }
+        Loan loan = new Loan(loanDTO.getName(),loanDTO.getMaxAmount(),loanDTO.getPayments(),loanDTO.getInterest());
+        loanRepository.save(loan);
+        return new ResponseEntity<>("Loan created successfu",HttpStatus.OK);
     }
 
-   /* @Transactional
-    @PostMapping("/loans/pay")
-    public ResponseEntity<Object> payLoan(Authentication authentication, @RequestParam String numberAccount,
-                                          @RequestParam Double amount) {
-     Client authClient = clientService.findByEmail(authentication.getName());
-     ClientLoan clientLoan = clientLoanRepository.getClientLoan(authClient.getId());
-     if (numberAccount.isBlank()){
-         return new ResponseEntity<>("Account number not found", HttpStatus.FORBIDDEN);
-     }
-     if (amount.isNaN() || amount < 0){
-         return new ResponseEntity<>("Invalid amount", HttpStatus.FORBIDDEN);
-     }
-     if (clientLoan == null){
-         return new ResponseEntity<>("Loan not exists", HttpStatus.FORBIDDEN);
-     }
-    if (clientLoan.getClient().getId() != authClient.getId()){
-        return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
-    }
-    Account account = accountService.findByNumber(numberAccount);
-    if (account == null){
-        return new ResponseEntity<>("This account does not exist", HttpStatus.FORBIDDEN);
-    }
-    if (account.getBalance() < amount){
-        return new ResponseEntity<>("This account does not have enough balance", HttpStatus.FORBIDDEN);
-    }
-    account.setBalance(account.getBalance()-amount);
-    accountService.save(account);
-    clientLoan.setPayments(clientLoan.getPayments()-1);
-    clientLoan.setTotalAmount(clientLoan.getTotalAmount()-amount);
-    clientLoanRepository.save(clientLoan);
-     return new ResponseEntity<>(HttpStatus.OK);
-    }*/
-
+//     @Transactional
+//    @PostMapping("/loans/pay")
+//    public ResponseEntity<Object> payLoan(Authentication authentication, @RequestParam String numberAccount,
+//                                          @RequestParam Double amount) {
+//     Client authClient = clientService.findByEmail(authentication.getName());
+//     if (numberAccount.isBlank()){
+//         return new ResponseEntity<>("Account number not found", HttpStatus.FORBIDDEN);
+//     }
+//     if (amount.isNaN() || amount < 0){
+//         return new ResponseEntity<>("Invalid amount", HttpStatus.FORBIDDEN);
+//     }
+//     if (clientLoan == null){
+//         return new ResponseEntity<>("Loan not exists", HttpStatus.FORBIDDEN);
+//     }
+//    if (clientLoan.getClient().getId() != authClient.getId()){
+//        return new ResponseEntity<>("This account does not belong to an authenticated client", HttpStatus.FORBIDDEN);
+//    }
+//    Account account = accountService.findByNumber(numberAccount);
+//    if (account == null){
+//        return new ResponseEntity<>("This account does not exist", HttpStatus.FORBIDDEN);
+//    }
+//    if (account.getBalance() < amount){
+//        return new ResponseEntity<>("This account does not have enough balance", HttpStatus.FORBIDDEN);
+//    }
+//    account.setBalance(account.getBalance()-amount);
+//    accountService.save(account);
+//    clientLoan.setPayments(clientLoan.getPayments()-1);
+//    clientLoan.setAmount(clientLoan.getAmount()-amount);
+//    clientLoanRepository.save(clientLoan);
+//     return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

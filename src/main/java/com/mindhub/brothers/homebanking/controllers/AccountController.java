@@ -35,6 +35,8 @@ public class    AccountController {
     }
     @PostMapping("/api/clients/current/accounts")
     public ResponseEntity<Object> newAccount(Authentication authentication, @RequestParam AccountType type){
+        if (type.toString().isBlank()){return new ResponseEntity<>("Missing type", HttpStatus.FORBIDDEN);
+        }
         Client client = clientService.findByEmail(authentication.getName());
         List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
         System.out.println(acounts);

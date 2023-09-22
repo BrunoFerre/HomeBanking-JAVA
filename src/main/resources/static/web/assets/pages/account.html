@@ -65,12 +65,12 @@
       </div>
       <div class="container">
       <article>
-        <form v-if="showForm" action="">
+        <form v-if="showForm" action="" class="d-flex align-items-center gap-2">
             <label for="date1">Put the date from:</label>
             <input type="datetime-local" id="date1" v-model="dateInit">
             <label for="date1">Put the date to:</label>
             <input type="datetime-local" id="date2" v-model="dateEnd">
-            <button @click.prevent="searchTransactions">Search</button>
+            <button @click.prevent="searchTransactions" type="button" class="btn btn-success">Search</button>
         </form>
     </article>
   </div>

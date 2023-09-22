@@ -18,8 +18,10 @@ const app = createApp({
     },
     methods: {
         newLoans(event) {
+            console.log(this.selectLoan);
             event.preventDefault()
             let newLoan = {
+                "id": this.selectLoan.id,
                 "amount": Number(this.amount),
                 "payments": this.payment,
                 "accountDestiny": this.accountDest,
@@ -34,6 +36,7 @@ const app = createApp({
                 showLoaderOnConfirm: true,
                 buttonColor: '#32a852',
                 preConfirm: login => {
+                    console.log(newLoan);
                 return axios.post('http://localhost:8080/api/loans', newLoan)
                     .then(response => {
                         window.location.reload()
@@ -59,6 +62,7 @@ const app = createApp({
                     axios.get(`http://localhost:8080/api/loans`)
                         .then(response => {
                             this.loans = response.data
+                            console.log(this.loans);
                         }).catch(error => {
                             console.log(error);
                         })
@@ -72,34 +76,30 @@ const app = createApp({
     },
     computed: {
         calculateInterest() {
-            if (this.payment == 3) {
-                this.finalAmount = this.amount + (this.amount * (0.005 + (this.selectLoan.interest / 100)))
-                return this.finalAmount;
-            }
-            else if (this.payment == 6) {
-                this.finalAmount = this.amount + (this.amount * (0.010 + (this.selectLoan.interest / 100)))
+            if (this.payment == 6) {
+                this.finalAmount = this.amount + (this.amount * (0.10 + (this.selectLoan.interest / 100)))
                 return this.finalAmount;
             }
             else if (this.payment == 12) {
-                this.finalAmount = this.amount + (this.amount * (0.020 + (this.selectLoan.interest / 100)))
+                this.finalAmount = this.amount + (this.amount * (0.20 + (this.selectLoan.interest / 100)))
                 return this.finalAmount;
             }
             else if (this.payment == 24) {
-                this.finalAmount = this.amount + (this.amount * (0.045 + (this.selectLoan.interest / 100)))
+                this.finalAmount = this.amount + (this.amount * (0.047 + (this.selectLoan.interest / 100)))
                 return this.finalAmount;
             }
             else if (this.payment == 36) {
-                this.finalAmount = this.amount + (this.amount * (0.065 + (this.selectLoan.interest / 100)))
+                this.finalAmount = this.amount + (this.amount * (0.65 + (this.selectLoan.interest / 100)))
                 return this.finalAmount;
             }
             else if (this.payment == 48) {
-                this.finalAmount = this.amount + (this.amount * (0.070 + (this.selectLoan.interest / 100)))
+                this.finalAmount = this.amount + (this.amount * (0.70 + (this.selectLoan.interest / 100)))
                 return this.finalAmount;
             }
             else if (this.payment == 60) {
-                this.finalAmount = this.amount + (this.amount * (0.075 + (this.selectLoan.interest / 100)))
+                this.finalAmount = this.amount + (this.amount * (0.75 + (this.selectLoan.interest / 100)))
                 return this.finalAmount;
             } else { return 0 };
-        }
+        },
     }
 }).mount('#app')

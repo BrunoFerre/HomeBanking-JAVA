@@ -78,11 +78,10 @@ createApp({
         }
     },
     searchTransactions() {
-        const url = `http://localhost:8080/api/transactions/findDate?dateInit=${this.dateInit}:00&dateEnd=${this.dateEnd}:00&numberAcc=${this.account.number}`;
+        const url = `/api/transactions/findDate?dateInit=${this.dateInit}:00&dateEnd=${this.dateEnd}:00&numberAcc=${this.account.number}`;
         axios
             .get(url, { responseType: 'blob' })
             .then((response) => {
-                console.log(response);
                 const blob = new Blob([response.data], { type: 'application/pdf' });
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -90,9 +89,12 @@ createApp({
                 a.download = 'transactions-Table.pdf';
                 a.click();
                 window.URL.revokeObjectURL(url);
-            })
-            .catch(error =>
-                console.error(error)
+            }).catch(error =>{
+                console.log(error.response.data.text()
+                .then(res=>{
+                    console.log(res);
+                }));
+            }
             );
     },
     showOption(){

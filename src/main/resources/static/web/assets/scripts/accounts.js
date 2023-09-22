@@ -23,6 +23,10 @@ createApp({
                     const accounts= response.data
                     this.accounts = accounts.filter(account => account.status == true);
                     console.log(this.accounts);
+                    axios.get(`http://localhost:8080/api/clients/current/loans`)
+                        .then(response => {
+                            this.loans = response.data
+                        })
                 localStorage.setItem('client',JSON.stringify(this.clients))
                 })
         },
@@ -56,9 +60,9 @@ createApp({
 								text: error.response.data,
 								confirmButtonColor: '#5b31be93',
 							});
-                            setTimeout(() => {
-                                location.reload()
-                            },2000)
+                            // setTimeout(() => {
+                            //     location.reload()
+                            // },2000)
 						});
 				},
 				allowOutsideClick: () => !Swal.isLoading(),

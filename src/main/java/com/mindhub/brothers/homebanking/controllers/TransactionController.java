@@ -93,23 +93,25 @@ public class TransactionController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 //@param nada mas
         if (!accountsRepository.existsByNumber(numberAcc)){
-            return new ResponseEntity<>("this account dont exist", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("this account dont exist", HttpStatus.NOT_FOUND);
         }
         if (current == null){
             return new ResponseEntity<>("you are not allowed to see this", HttpStatus.FORBIDDEN);
         }
         if (dateInit == null){
-            return new ResponseEntity<>("Please, fill the date requeriment", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Please, fill the date requeriment", HttpStatus.NOT_EXTENDED);
         }else if (dateEnd == null){
-            new ResponseEntity<>("Please, fill the date end requeriment", HttpStatus.BAD_REQUEST);
+            new ResponseEntity<>("Please, fill the date end requeriment", HttpStatus.NOT_FOUND);
         }
         if (dateInit.equals(dateEnd)){
-            return new ResponseEntity<>("you cannot do this", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("you cannot do this", HttpStatus.BAD_GATEWAY);
         }
         LocalDateTime localDateTime = LocalDateTime.parse(dateInit, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(dateEnd, formatter);
         List<Transaction> transf = transactionRepository.findByDateBetweenAndAccountNumber(localDateTime, localDateTime2, numberAcc);
-
+        if (transf.isEmpty() || transf.size()<=0){
+        return new ResponseEntity<>("No transactions found", HttpStatus.CONFLICT);
+        }
         Document doc = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfWriter.getInstance(doc, out);
