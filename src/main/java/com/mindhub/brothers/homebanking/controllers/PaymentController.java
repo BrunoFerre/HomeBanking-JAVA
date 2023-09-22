@@ -65,7 +65,6 @@ public class PaymentController {
             }
         }
         Account maxBalanceAccount = maxBalanceAccountList.stream().reduce((ac2, ac3) -> ac2.getBalance() > ac3.getBalance() ? ac2 : ac3).orElse(null);
-        System.out.println(maxBalanceAccount);
         if (maxBalanceAccount.getBalance() < cardPaymentDTO.getAmount()){
             return new ResponseEntity<>("Insufficient funds", HttpStatus.BAD_GATEWAY);
         }else{

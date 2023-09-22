@@ -29,7 +29,7 @@ createApp({
                     confirmButtonText: 'Yes',
                     showLoaderOnConfirm: true,
                     preConfirm: login => {
-                        return axios.post("http://localhost:8080/api/payments",data)
+                        return axios.post("/api/payments",data)
                             .then(response => {
                                 return Swal.fire({
                                     icon: 'success',

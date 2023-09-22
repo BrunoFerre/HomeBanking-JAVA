@@ -37,7 +37,7 @@ const app = createApp({
                 buttonColor: '#32a852',
                 preConfirm: login => {
                     console.log(newLoan);
-                return axios.post('http://localhost:8080/api/loans', newLoan)
+                return axios.post('/api/loans', newLoan)
                     .then(response => {
                         window.location.reload()
                     }).catch(error => {
@@ -55,11 +55,11 @@ const app = createApp({
         loadData() {
             
             this.client = JSON.parse(localStorage.getItem('client')) ?? []
-            axios.get(`http://localhost:8080/api/clients/current/accounts`)
+            axios.get(`/api/clients/current/accounts`)
                 .then(response => {
                     const accounts = response.data
                     this.accounts = accounts.filter(account => account.status == true)
-                    axios.get(`http://localhost:8080/api/loans`)
+                    axios.get(`/api/loans`)
                         .then(response => {
                             this.loans = response.data
                             console.log(this.loans);

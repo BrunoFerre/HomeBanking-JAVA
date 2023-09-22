@@ -26,7 +26,7 @@ createApp({
             const parameter = location.search
             const parameterUrl = new URLSearchParams(parameter)
             this.id_account = parameterUrl.get("id")
-            axios.get(`http://localhost:8080/api/clients/accounts/${this.id_account}`)
+            axios.get(`/api/clients/accounts/${this.id_account}`)
                 .then(response => {
                     this.account = response.data
                     if(this.account.status == false){
