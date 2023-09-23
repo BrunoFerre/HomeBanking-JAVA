@@ -16,17 +16,20 @@ createApp({
     },
     methods: {
         loadData() {
-            this.client = JSON.parse(localStorage.getItem('client')) ?? []
-            axios.get(`/api/clients/current/accounts`)
+            axios.get(`/api/clients/current`)
                 .then(response => {
-                    const accounts = response.data
-                    this.accounts = accounts.filter(account => account.status == true);
-                    console.log(this.accounts);
-                    axios.get(`/api/clients/current/loans`)
-                        .then(response => {
-                            this.loans = response.data
-                        })
+                    this.clients = response.data
                     localStorage.setItem('client', JSON.stringify(this.clients))
+                    axios.get(`/api/clients/current/accounts`)
+                    .then(response => {
+                        const accounts = response.data
+                        this.accounts = accounts.filter(account => account.status == true);
+                        console.log(this.accounts);
+                        axios.get(`/api/clients/current/loans`)
+                            .then(response => {
+                                this.loans = response.data
+                            })
+                    })
                 })
         },
         showOption() {

@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api")
-public class ClientController {
+public class ClientController{
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -71,11 +71,14 @@ public class ClientController {
         accountsRepository.save(newAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-
-
     @GetMapping("/clients/current/loans")
     public List<ClientLoanDTO> getLoans(Authentication authentication){
        return clientLoanRepository.findAllByClient(clientService.findByEmail(authentication.getName())).stream().map(ClientLoanDTO::new).collect(toList());
+    }
+
+    @GetMapping("/clients/{id}")
+    public ClientDTO getClient(@PathVariable Long id){
+        Client client = clientRepository.findById(id).orElse(null);
+        return new ClientDTO(client);
     }
 }

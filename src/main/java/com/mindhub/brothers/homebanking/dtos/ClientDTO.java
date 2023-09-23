@@ -16,9 +16,7 @@ public class ClientDTO {
     private Set<AccountDTO> accounts;
     private Set<CardDTO> cards;
 
-    public ClientDTO() {
-    }
-
+    public ClientDTO(){}
     public ClientDTO(Client client){
      this.id=client.getId();
      this.firstName= client.getFirstName();
@@ -37,7 +35,6 @@ public class ClientDTO {
                 .stream()
                 .map(CardDTO::new)
                 .collect(Collectors.toSet());
-
     }
 
     public long getId() {

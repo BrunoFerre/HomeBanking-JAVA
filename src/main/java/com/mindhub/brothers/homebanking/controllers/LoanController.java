@@ -51,7 +51,6 @@ public class LoanController {
     @Transactional
     @PostMapping("/loans")
     public ResponseEntity<Object> newLoan(Authentication authentication, @RequestBody LoanAplicationDTO loanAplicationDTO) {
-
         if (loanAplicationDTO.getAmount()<1000){
             return new ResponseEntity<>("Amount must be greater than 1000", HttpStatus.FORBIDDEN);
         }
@@ -66,7 +65,6 @@ public class LoanController {
         if(loanAplicationDTO.getId() == 0) {
             return new ResponseEntity<>("Loan id not found", HttpStatus.FORBIDDEN);
         }
-
         Client authClient = clientService.findByEmail(authentication.getName());
         Account destinationAccount = accountService.findByNumber(loanAplicationDTO.getAccountDestiny());
         Loan loan = loanService.findById(loanAplicationDTO.getId());

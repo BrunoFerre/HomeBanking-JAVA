@@ -29,14 +29,14 @@ public class HomebankingApplication {
     private final List<Integer> hipotecario = List.of(12, 24, 36, 48, 60);
     private final List<Integer> personal = List.of(6, 12, 24);
     private final List<Integer> automotriz = List.of(6, 12, 24, 36);
-  @Autowired
-    private PasswordEncoder passwordEncoder;
+  /*@Autowired
+    private PasswordEncoder passwordEncoder;*/
 
     public static void main(String[] args) {
         SpringApplication.run(HomebankingApplication.class, args);
     }
 
-  @Bean
+ /* @Bean
     public CommandLineRunner initData(ClientRepository repositoryClient,
                                       AccountsRepository accountsRepository,
                                       TransactionRepository transactionRepository,
@@ -128,7 +128,7 @@ public class HomebankingApplication {
             transactionRepository.save(transactionBruno);
             clientLoanRepository.save(loanBruno);
             cardRepository.save(cardBruno);
-        };
-    }
+        };*/
+
 }
 

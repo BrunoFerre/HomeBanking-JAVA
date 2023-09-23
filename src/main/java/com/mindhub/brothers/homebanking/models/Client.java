@@ -26,7 +26,7 @@ public class Client {
     private Set<Card> cards = new HashSet<>();
 
     public Client() {}
-
+//    polimorfismo, abstranccion, encapsulacion herencia
     public Client(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;

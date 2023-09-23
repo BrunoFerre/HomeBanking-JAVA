@@ -15,9 +15,9 @@ createApp({
             axios.post('/api/login','email='+ this.email + '&password='+this.password)
             .then((response)=>{
                 if (this.email.includes("@admin.com")) {
-                   location.href = "./adminPages/manager.html"
+                   location.href = "../adminPages/manager.html"
                 }else{
-                    location.href='./assets/pages/accounts.html'
+                    location.href='../assets/pages/accounts.html'
                 }
                 this.client=response.data
                 localStorage.setItem('client',JSON.stringify(this.client))
