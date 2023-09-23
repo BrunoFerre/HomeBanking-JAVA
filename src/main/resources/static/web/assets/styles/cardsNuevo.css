@@ -1,0 +1,257 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-image: linear-gradient(
+    to right,
+    rgb(64, 66, 185),
+    rgb(60, 143, 90)
+  );
+}
+[v-cloak] {
+  display: none;
+}
+header {
+  min-height: 10vh;
+  background: url("../images/header.png");
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.nav-item{
+  font-size: 20px;
+  font-weight: bold;
+}
+#main-cards{
+    min-height: 80vh;
+    background-image: url("../images/Wallet-pana-right.svg");
+    background-size: 36rem;
+    background-repeat: no-repeat;
+    background-position: right;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+}
+.section{
+  display: flex;
+  width: 45%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+#debitCards{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+#debitCards .bi-trash{
+  align-self: flex-start;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bolder;
+}
+#logo {
+  height: 5rem;
+}
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(5, 65, 65);
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign svg {
+  width: 17px;
+}
+
+.sign svg path {
+  fill: white;
+}
+/* text */
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: 0.3s;
+}
+/* hover effect on button width */
+.Btn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: 0.3s;
+}
+
+.Btn:hover .sign {
+  width: 30%;
+  transition-duration: 0.3s;
+  padding-left: 20px;
+}
+/* hover effect button's text */
+.Btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: 0.3s;
+  padding-right: 10px;
+}
+/* button click effect*/
+.Btn:active {
+  transform: translate(2px, 2px);
+}
+
+ h2 {
+  color: white;
+  text-align: center;
+  width: 100%;
+  font-size: 30px;
+  font-weight: bold;
+}
+h2:nth-child(1) {
+  margin-top: 20px;
+}
+.algo{
+    margin-top: 40px;
+  }
+.logo svg {
+  height: 48px;
+  width: 54px;
+}
+
+::selection {
+  background-color: rgb(67, 58, 58);
+  color: white;
+}
+
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card {
+  background: radial-gradient(circle, rgb(255, 255, 255) 0%, #d5d5d5 100%);
+  width: 350px;
+  height: 200px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 3px 3px 17px 0px rgba(0, 0, 0, 0.55);
+}
+.card .remove,
+.card .logo {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.card .remove {
+  top: 6px;
+  right: 30px;
+  opacity: 0.9;
+  color: black;
+}
+
+.card .remove:hover {
+  color: #000000;
+}
+
+.card .logo {
+  top: 20px;
+  left: 30px;
+  font-size: 3em;
+  opacity: 1;
+}
+
+.card .number,
+.card .owner {
+  display: flex;
+  gap: 2rem;
+  position: absolute;
+  left: 30px;
+  cursor: default;
+  color: black;
+  opacity: 0.9;
+  transition: color 0.7s ease-out;
+}
+
+.card .number {
+  bottom: 60px;
+  letter-spacing: 4px;
+}
+
+.card .owner {
+  bottom: 30px;
+  letter-spacing: 1px;
+}
+.card-gold {
+  background: linear-gradient(
+    1deg,
+    rgb(213, 210, 120) 10%,
+    rgb(255, 218, 5) 100%
+  );
+  filter: brightness(1);
+  width: 350px;
+  height: 200px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 3px 3px 17px 0px rgba(0, 0, 0, 0.55);
+}
+.card-titanium {
+  background: linear-gradient(
+    90deg,
+    rgb(87, 83, 83) 0%,
+    rgb(114, 111, 111) 100%
+  );
+  filter: brightness(1.9);
+  width: 350px;
+  height: 200px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 3px 3px 17px 0px rgba(0, 0, 0, 0.55);
+}
+footer {
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  background-color: #2c3038;
+}
+.btn{
+  height: 3rem !important;
+}
+.container-cards{
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.footer a{
+  text-decoration: none;
+}

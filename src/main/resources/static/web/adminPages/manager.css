@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    min-height: 100vh;
+}
+header{
+    display: flex;
+    min-height: 10vh;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(108, 89, 233);
+    padding: 1rem;
+    gap: 1rem;
+}
+.logo{
+    height: 5rem;
+}
+.navbar-nav{
+    display: flex;
+    justify-content: space-between ;
+    gap:1rem;
+}
+nav a{
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bolder;
+    color: white;
+}

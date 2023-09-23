@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../images/bank-banking-finance-icon_112235.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/accountsPrueba.css" />
+    <title>Accounts Page || MindHub Brothers</title>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <header>
+        <a class="navbar-brand" href="#"><img src="../images/bank.png" alt="Logo" class="logo p-2"></a>
+        <nav class="navbar navbar-expand-lg text-center">
+            <div class="container-fluid d-flex gap-5 justify-content-center">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav d-flex gap-5">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Accounts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./cards.html">Cards</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./loan-aplication.html">Loans</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./transfer.html">Transactions</a>
+                  </li> <li class="nav-item">
+                    <a class="nav-link" href="#">{{clients.firstName}} {{clients.lastName}}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <button class="Btn" @click.prevent="logOut">
+            <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>   
+            <div class="text">Logout</div>
+          </button>                
+    </header>
+    <main>
+    <h1 class="text-center">Accounts Resume</h1>
+    <div class="grid">
+      <template v-if="accounts.length > 0" v-for="(account,index) of accounts">
+        <div id="card">
+          <div id="content">
+            <p id="heading">Account Number: <span>{{account.number}}</span></p>
+            <p id="para">Creation Date: <span>{{account.creationDate}}</span></p>
+           <p id="para"> Balance: <span>${{account.balance.toLocaleString(1)}}</span></p>
+           <p id="para">Type: <span>{{account.type}}</span></p>
+           <a :href="'./account.html?id=' + account.id" class="btn">More Details</a>
+          </div>
+        </div>
+      </template>
+      <article v-if="accounts.length < 3" class="d-flex flex-column align-items-center">
+        <h3 class="text-center text-white fs-5">Do you want to add accounts?</h3>
+        <button type="button" @click.prevent="showOption" class="btn gg">ADD ACCOUNTS</button>
+        <div class="" v-if="show">
+          <div class="d-flex gap-2">
+          <label class="d-flex gap-1"><input type="radio" name="Saving" id="Savings" value="SAVINGS" v-model="type">Saving</label>
+          <label class="d-flex gap-1"><input type="radio" name="Saving" id="Savings" value="CURRENT" v-model="type">Current</label>
+        </div>
+
+          <button class="btn gg " @click.prevent="createAccount">Create Account</button>
+        </div>
+      
+      </article>
+    </div>
+    <section class="d-flex flex-column">
+    <h2>Loans Resume</h2>
+    <template v-if="loans.length>0" >
+    <table id="table">
+        <thead>
+          <tr class="">
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Payments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="(loan,index) of loans">
+          <tr class="">
+            <td>{{loan.loan}}</td>
+            <td>{{loan.amount.toLocaleString(1)}}</td>
+            <td>{{loan.payments}}</td>
+          </tr>
+        </template>
+        </tbody>
+      </template>
+    </table>
+    <p v-else>No Loans</p></p>
+  </section>
+    </main>
+    <footer class="footer d-flex align-items-center justify-content-around fs-2 ">
+      <div class="d-flex align-items-center justify-content-center gap-3">
+        <i class="bi bi-bank2 fs-5 text-white"></i>
+        <span class="text-white fs-5"> Mind Hub Brothers &#169 </span>
+      </div>
+      <div class="d-flex gap-5 flex-wrap ">
+        <a href="tel:+3743614796" class="d-flex gap-2 text-white fs-5"><i
+            class="bi bi-telephone-inbound-fill "></i>Call</a>
+        <a href="mailto:fbrunomarcos@gmail.com" class="d-flex gap-2 text-white fs-5"><i
+            class="bi bi-envelope-at"></i>Email</a>
+      </div>
+    </footer>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="module" src="../scripts/accounts.js"></script>
+</html>

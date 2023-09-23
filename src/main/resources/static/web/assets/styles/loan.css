@@ -1,0 +1,135 @@
+header {
+  min-height: 10vh;
+  background: url("../images/header.png");
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+body {
+  background-image: linear-gradient(
+    to right,
+    rgb(64, 66, 185),
+    rgb(60, 143, 90)
+  );
+}
+[v-cloak] {
+  display: none;
+}
+.logo {
+  height: 5rem;
+}
+.nav-item{
+  font-size: 20px;
+  font-weight: bold;
+}
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(5, 65, 65);
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign svg {
+  width: 17px;
+}
+
+.sign svg path {
+  fill: white;
+}
+/* text */
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: 0.3s;
+}
+/* hover effect on button width */
+.Btn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: 0.3s;
+}
+
+.Btn:hover .sign {
+  width: 30%;
+  transition-duration: 0.3s;
+  padding-left: 20px;
+}
+/* hover effect button's text */
+.Btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: 0.3s;
+  padding-right: 10px;
+}
+/* button click effect*/
+.Btn:active {
+  transform: translate(2px, 2px);
+}
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  align-content: flex-start;
+  padding: 10px;
+  flex-wrap: wrap;
+  min-height: 80vh;
+  background-image: url("../images/loan.svg");
+  background-repeat: no-repeat;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 24rem;
+  min-height: 20rem;
+  background-image: linear-gradient(to right, rgb(59, 39, 151), rgb(18, 121, 56));
+  color: white;
+  border-radius: 5px  ;
+  border: 1px solid black;
+  margin-top: 1rem;
+}
+.form-group{
+  margin: 10px;
+}
+.footer {
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  background-color: #2c3038;
+}
+.footer a{
+  text-decoration: none;
+}
+.flojera{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2rem;
+
+}

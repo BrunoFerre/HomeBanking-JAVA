@@ -1,10 +1,14 @@
 package com.mindhub.brothers.homebanking.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mindhub.brothers.homebanking.models.enums.AccountType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.nio.channels.FileChannel;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Account {
@@ -14,20 +18,28 @@ public class Account {
     private long id;
     private String number;
     private LocalDate creationDate;
-    double balance;
-
+    private double balance;
+    private AccountType type;
+    private Boolean status;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
-    private Client owner;
+    @JoinColumn(name = "client_id")
+    private Client client;
+    @OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
+    private Set<Transaction> transactions = new HashSet<>();
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, double balance) {
+    public Account(String number, LocalDate creationDate, double balance,AccountType type, Boolean status){
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
+        this.type = type;
+        this.status = status;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
     public long getId() {
         return id;
     }
@@ -54,15 +66,44 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
+    public AccountType getType() {
+        return type;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @JsonIgnore
     public Client getOwner() {
-        return owner;
+        return client;
     }
 
     public void setOwner(Client owner) {
-        this.owner = owner;
+        this.client = owner;
     }
 
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public void addTransaction(Transaction transaction){
+        transaction.setAccount(this);
+        this.transactions.add(transaction);
+    }
     @Override
     public String toString() {
         return "Account{" +
@@ -72,4 +113,6 @@ public class Account {
                 ", balance=" + balance +
                 '}';
     }
+
+
 }
