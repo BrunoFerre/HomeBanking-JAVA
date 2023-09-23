@@ -25,33 +25,15 @@ public class    AccountController {
     private AccountsRepository accountsRepository;
     @Autowired
     private ClientService clientService;
-    @GetMapping("/api/accounts")
+   /* @GetMapping("/api/accounts")
     public List<AccountDTO> getAccounts(){
         return accountService.getAccounts();
-    }
+    }*/
     @GetMapping("/api/clients/current/accounts")
     public List<AccountDTO> getAcccount(Authentication authentication){
         return accountService.getAcccount(authentication);
     }
-    @PostMapping("/api/clients/current/accounts")
-    public ResponseEntity<Object> newAccount(Authentication authentication, @RequestParam AccountType type){
-        if (type.toString().isBlank()){return new ResponseEntity<>("Missing type", HttpStatus.FORBIDDEN);
-        }
-        Client client = clientService.findByEmail(authentication.getName());
-        List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
-        System.out.println(acounts);
-        if (acounts.size()<=2){
-            String accountNumber = RandomNumberGenerate.accountNumber();
-            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),
-                    0.0, type,true);
-            clientService.findByEmail(authentication.getName()).addAccount(newAccount);
-            accountService.save(newAccount);
-        }else{
-            return new ResponseEntity<>("Maximum of accounts made", HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-    @GetMapping("/api/clients/accounts/{id}")
+    @GetMapping("/api/clients/current/accounts/{id}")
     public ResponseEntity<Object> getAccount(@PathVariable Long id, Authentication authentication){
         Client client = clientService.findByEmail(authentication.getName());
         Account acc = accountService.accountId(id);
@@ -59,7 +41,27 @@ public class    AccountController {
             return new ResponseEntity<>(new AccountDTO(acc),HttpStatus.OK);
         }else{
             return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
+        }
     }
+
+    @PostMapping("/api/clients/current/accounts")
+    public ResponseEntity<Object> newAccount(Authentication authentication, @RequestParam String type){
+        if (type.isBlank()) {
+            return new ResponseEntity<>("Missing type", HttpStatus.FORBIDDEN);
+        }
+        Client client = clientService.findByEmail(authentication.getName());
+        List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
+        System.out.println(acounts);
+        if (acounts.size()<=2){
+            String accountNumber = RandomNumberGenerate.accountNumber();
+            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),
+                    0.0, AccountType.valueOf(type),true);
+            clientService.findByEmail(authentication.getName()).addAccount(newAccount);
+            accountService.save(newAccount);
+        }else{
+            return new ResponseEntity<>("Maximum of accounts made", HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/api/clients/current/accounts/{id}")
     public ResponseEntity<Object> deleteAccount(Authentication authentication,@PathVariable Long id){
@@ -72,12 +74,14 @@ public class    AccountController {
         if (acounts.size()==1){
             return new ResponseEntity<>("You cannot delete your only account", HttpStatus.NOT_ACCEPTABLE);
         }
-        if (client.getId() == acc.getOwner().getId()){
-            acc.setStatus(false);
-            accountService.save(acc);
-            return new ResponseEntity<>("Account deleted",HttpStatus.OK);
-        }else{
+        if (client.getId() != acc.getOwner().getId()){
             return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
         }
+        if(acc.getBalance() > 0){
+            return new ResponseEntity<>("You cannot delete an account with a balance", HttpStatus.NOT_ACCEPTABLE);
+        }
+        acc.setStatus(false);
+        accountService.save(acc);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

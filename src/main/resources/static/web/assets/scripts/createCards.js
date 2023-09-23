@@ -3,22 +3,20 @@ import { logout } from './logout.js'
 const app = createApp({
     data() {
         return {
-            client: [],
+            clients: [],
             type: '',
             color: '',
         }
     },
     created() {
         this.loadData()
+        this.getData()
     },
     methods: {
         loadData() {
-            this.client= JSON.parse(localStorage.getItem('client'))??[]
-            axios.get(`/api/clients/current/cards`)
+            axios.get('/api/clients/current')
                 .then(response => {
                     this.clients = response.data
-                }).catch(error => {
-
                 })
         },
         logOut() {
@@ -53,6 +51,13 @@ const app = createApp({
                 })
                 }
             })
-        }
+        },
+        getData(){
+            axios.get(`/api/clients/current`)
+                .then(response => {
+                    this.client = response.data
+                    console.log(this.clients);
+                })
+        },
     }
 }).mount("#app")

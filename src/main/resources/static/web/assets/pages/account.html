@@ -57,7 +57,7 @@
           <div id="content">
             <p id="heading">Account Number: <span>{{account.number}}</span></p>
             <p id="para">Creation Date: <span>{{account.creationDate}}</span></p>
-            <p id="para"> Balance: <span>${{account.balance}}</span></p>
+            <p id="para"> Balance: <span>$USD ${{account.balance}}</span></p>
           </div>
           <button type="button" class="btn btn-danger text-center" @click.prevent="deleteAccount"> Delete Account</button>
           <button type="button" class="btn btn-success" @click.prevent="showOption">Search Transactions</button>
@@ -90,10 +90,10 @@
             <template v-for="(transaction,index) of transaction">
               <tr >
                 <td :class="transaction.type == 'DEBIT' ? 'text-danger' : 'text-success'">{{transaction.type}}</td>
-                <td>{{transaction.amount}}</td>
+                <td>$USD {{transaction.amount}}</td>
                 <td >{{transaction.description}}</td>
                 <td class="p-2" >{{ dateAsherter[index]}}</td>
-                <td>{{transaction.balance}}</td>
+                <td>$USD {{transaction.balance}}</td>
               </tr>
             </template>
           </tbody>

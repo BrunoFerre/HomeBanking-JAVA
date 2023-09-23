@@ -35,6 +35,8 @@ header {
     flex-wrap: wrap;
     align-content: flex-start;
     justify-content: center;
+    gap: 1rem;
+    align-items: center;
 }
 .section{
   display: flex;
@@ -49,6 +51,7 @@ header {
   width: 100%;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
 #debitCards .bi-trash{
   align-self: flex-start;
@@ -242,9 +245,6 @@ footer {
   align-items: center;
   background-color: #2c3038;
 }
-.btn{
-  height: 3rem !important;
-}
 .container-cards{
   display: flex;
   gap: 2.5rem;
@@ -254,4 +254,26 @@ footer {
 }
 .footer a{
   text-decoration: none;
+}
+.h3{
+  align-self: start;
+}
+@media screen and (max-width: 768px) {
+  .este{
+    flex-wrap: wrap;
+  }
+  .card .card-gold .card-titanium .card-silver{
+    width: 200px !important;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  .h3{
+    font-size: 27px;
+    font-weight: bolder;
+    color: white;
+  }
+  #main-cards{
+    background-image:none;
+  }
 }

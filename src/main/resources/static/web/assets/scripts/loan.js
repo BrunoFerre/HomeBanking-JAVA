@@ -15,6 +15,7 @@ const app = createApp({
     },
     created() {
         this.loadData()
+        this.getData()
     },
     methods: {
         newLoans(event) {
@@ -52,9 +53,7 @@ const app = createApp({
                 allowOutsideClick: () => !Swal.isLoading(),
             })
         },
-        loadData() {
-            
-            this.client = JSON.parse(localStorage.getItem('client')) ?? []
+        loadData() {   
             axios.get(`/api/clients/current/accounts`)
                 .then(response => {
                     const accounts = response.data
@@ -69,6 +68,13 @@ const app = createApp({
                 }).catch(error => {
                     console.log(error);
                 })
+            },
+            getData(){
+                axios.get(`/api/clients/current`)
+                    .then(response => {
+                        this.client = response.data
+                        console.log(this.clients);
+                    })
             },
         logOut() {
             logout()

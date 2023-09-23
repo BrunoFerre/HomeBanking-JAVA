@@ -17,14 +17,21 @@ const app = createApp({
     },
     created() {
         this.loadData()
+        this.getData()
     },
     methods: {
         loadData() {
-            this.client = JSON.parse(localStorage.getItem('client'))
             axios.get(`/api/clients/current/accounts`)
                 .then(response => {
                     const accounts = response.data
                     this.accounts = accounts.filter(account => account.status == true)
+                })
+        },
+        getData(){
+            axios.get(`/api/clients/current`)
+                .then(response => {
+                    this.client = response.data
+                    console.log(this.clients);
                 })
         },
         logOut() {

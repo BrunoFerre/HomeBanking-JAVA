@@ -17,33 +17,48 @@ createApp({
         }
     },
     created() {
-        this.loadData() 
+        this.loadData()
+        this.getData()
     },
     methods: {
         loadData() {
-            this.client= JSON.parse(localStorage.getItem('client'))??[]
             console.log(this.client);
             const parameter = location.search
             const parameterUrl = new URLSearchParams(parameter)
             this.id_account = parameterUrl.get("id")
-            axios.get(`/api/clients/accounts/${this.id_account}`)
+            axios.get(`/api/clients/current/accounts/${this.id_account}`)
                 .then(response => {
                     this.account = response.data
+                    this.account.balance=this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                     if(this.account.status == false){
                         this.account=[]
                     }      
                     for(let transaction of this.account.transactions){
-                        this.transaction.push(transaction)
+                        let newObj = {
+                            type: transaction.type,
+                            amount: transaction.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+                            description: transaction.description,
+                            date: transaction.date,
+                            balance: transaction.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                        }
+                        this.transaction.push(newObj)
                     }
                     this.dateAsherter=this.transaction.map(transaction=>transaction.date.slice(2,-3).replace(/-/g, '/'))
-                    
+                   
                     this.transaction.sort((a,b)=> a.id - b.id)
-                    console.log(this.transaction);
+                   
             }).catch(error => {
                 this.error= error.message
                 console.log(this.error);
                 // location.href = "../pages/error.html"
             })
+        },
+        getData(){
+            axios.get(`/api/clients/current`)
+                .then(response => {
+                    this.client = response.data
+                    console.log(this.clients);
+                })
         },
         logOut(){
             logout()

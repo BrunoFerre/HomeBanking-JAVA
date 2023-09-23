@@ -29,10 +29,10 @@ public class CardController {
     @Autowired
     private CardRepository cardRepository;
 
-    @GetMapping("/cards")
+   /* @GetMapping("/cards")
     public List<CardDTO>getCards(){
         return cardService.getCards();
-    }
+    }*/
     @GetMapping("/clients/current/cards")
     public List<CardDTO>getCards(Authentication authentication){
         return cardService.cardsAuthentication(authentication);

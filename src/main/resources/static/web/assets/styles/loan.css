@@ -106,7 +106,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  width: 24rem;
+  width: 21rem;
   min-height: 20rem;
   background-image: linear-gradient(to right, rgb(59, 39, 151), rgb(18, 121, 56));
   color: white;
@@ -131,5 +131,6 @@ body {
   align-items: flex-end;
   justify-content: center;
   gap: 2rem;
+  flex-wrap: wrap;
 
 }
