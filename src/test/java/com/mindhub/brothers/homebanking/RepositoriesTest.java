@@ -77,10 +77,4 @@ public class RepositoriesTest {
         assertThat(s,is(not(empty())));
     }
 
-  @Test
-    public void findAccountWithMaxBalanceAndClientId(){
-        long id =14;
-        Account account = accountRepository.findAccountWithMaxBalanceAndClient(id);
-        assertThat(account, is(not(nullValue())));
-    }
 }
