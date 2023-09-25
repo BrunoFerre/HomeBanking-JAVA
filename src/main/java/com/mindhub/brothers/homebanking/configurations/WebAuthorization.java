@@ -33,7 +33,7 @@ public class WebAuthorization {
                 .antMatchers("/web/adminPages/manager.html").hasAuthority("ADMIN")
                 .antMatchers("/web/adminPages/bank.png").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/loans/create").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/clients/current","/api/clients/current/**", "/api/cards","/api/loans", "/api/clients/current/loans",
+                .antMatchers(HttpMethod.GET, "/api/clients/current","/api/clients/current/**","/api/clients/current/cards", "/api/cards","/api/loans", "/api/clients/current/loans",
                         "/web/**", "/api/transactions/findDate").hasAuthority("CLIENT")
                 .antMatchers("/api/clients/accounts/{id}").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards", "/api/transactions", "/api/loans").hasAuthority("CLIENT")

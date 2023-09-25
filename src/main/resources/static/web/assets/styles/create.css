@@ -78,9 +78,7 @@ header {
     border-radius: 40px;
     transition-duration: .3s;
   }
-  .buttonBro{
-    background-color: #ca670a !important;
-  }
+
   .Btn:hover .sign {
     width: 30%;
     transition-duration: .3s;

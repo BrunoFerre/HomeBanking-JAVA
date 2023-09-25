@@ -3,6 +3,7 @@ package com.mindhub.brothers.homebanking.service.implement;
 import com.mindhub.brothers.homebanking.dtos.CardDTO;
 import com.mindhub.brothers.homebanking.dtos.ClientDTO;
 import com.mindhub.brothers.homebanking.models.Card;
+import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.repositories.CardRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.service.CardService;
@@ -53,7 +54,12 @@ public class CardServiceImplement implements CardService {
     }
 
     @Override
-    public Optional<Card> findById(long id) {
-        return cardRepository.findById(id);
+    public Card findById(long id) {
+        return cardRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Card> findAllByClientAndStatusTrue(Client client) {
+        return cardRepository.findAllByClientAndStatusTrue(client);
     }
 }

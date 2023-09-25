@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import java.util.List;
 
 public interface ClientService {
+    Client findById(Long id);
     List<ClientDTO> getClients();
 
     ClientDTO getClientAuthentication(Authentication authentication);

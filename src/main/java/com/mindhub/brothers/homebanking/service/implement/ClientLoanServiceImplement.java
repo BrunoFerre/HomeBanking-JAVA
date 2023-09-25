@@ -9,6 +9,8 @@ import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientLoanServiceImplement implements ClientLoanService {
 @Autowired
@@ -20,5 +22,10 @@ public class ClientLoanServiceImplement implements ClientLoanService {
     @Override
     public boolean existByClientAndLoan(Client client, Loan loan) {
         return clientLoanRepository.existsByClientAndLoan(client,loan);
+    }
+
+    @Override
+    public List<ClientLoan> findAllByClient(Client client) {
+        return clientLoanRepository.findAllByClient(client);
     }
 }

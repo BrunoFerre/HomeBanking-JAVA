@@ -20,7 +20,6 @@ createApp({
                     location.href='../assets/pages/accounts.html'
                 }
                 this.client=response.data
-                localStorage.setItem('client',JSON.stringify(this.client))
             })  .catch(error =>  {
                 console.log(error);
                 Swal.fire({

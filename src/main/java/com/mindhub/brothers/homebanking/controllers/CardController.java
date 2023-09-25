@@ -26,13 +26,11 @@ public class CardController {
     private CardService cardService;
     @Autowired
     private ClientService clientService;
-    @Autowired
-    private CardRepository cardRepository;
 
-    @GetMapping("/cards")
+   /* @GetMapping("/cards")
     public List<CardDTO>getCards(){
         return cardService.getCards();
-    }
+    }*/
     @GetMapping("/clients/current/cards")
     public List<CardDTO>getCards(Authentication authentication){
         return cardService.cardsAuthentication(authentication);
@@ -41,7 +39,7 @@ public class CardController {
     public ResponseEntity<Object> addCard(Authentication authentication, @RequestParam String type,
             @RequestParam String color) {
         Client client = clientService.findByEmail(authentication.getName());
-        List <Card> filterCard = cardRepository.findAllByClientAndStatusTrue(client);
+        List <Card> filterCard = cardService.findAllByClientAndStatusTrue(client);
         if (type.isBlank()) {
             return new ResponseEntity<>("Missing type ", HttpStatus.FORBIDDEN);
         }

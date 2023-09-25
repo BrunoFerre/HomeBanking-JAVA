@@ -34,5 +34,14 @@ public class LoanServiceImplement implements LoanService  {
        return loanRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public boolean existsByName(String name) {
+        return loanRepository.existsByName(name);
+    }
+
+    @Override
+    public void save(Loan loan) {
+        loanRepository.save(loan);
+    }
 
 }

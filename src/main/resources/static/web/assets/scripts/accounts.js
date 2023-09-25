@@ -13,23 +13,41 @@ createApp({
     },
     created() {
         this.loadData()
+        this.getData()
     },
     methods: {
         loadData() {
             axios.get(`/api/clients/current`)
                 .then(response => {
                     this.clients = response.data
-                    localStorage.setItem('client', JSON.stringify(this.clients))
                     axios.get(`/api/clients/current/accounts`)
-                    .then(response => {
-                        const accounts = response.data
-                        this.accounts = accounts.filter(account => account.status == true);
-                        console.log(this.accounts);
-                        axios.get(`/api/clients/current/loans`)
-                            .then(response => {
-                                this.loans = response.data
-                            })
-                    })
+                        .then(response => {
+                            const accounts = response.data
+                            for (const account of accounts) {
+                                let objet = {
+                                    id: account.id,
+                                    number: account.number.toLocaleString(),
+                                    balance: account.balance,
+                                    creationDate: account.creationDate,
+                                    type: account.type
+                                }
+                                this.accounts.push(objet)
+                                this.accounts.sort((a, b) => a.id - b.id)
+                            }
+                            // this.accounts = accounts.filter(account => account.status == true);
+                            
+                            axios.get(`/api/clients/current/loans`)
+                                .then(response => {
+                                    this.loans = response.data
+                                })
+                        })
+                })
+        },
+        getData() {
+            axios.get(`/api/clients/current`)
+                .then(response => {
+                    this.client = response.data
+                    console.log(this.clients);
                 })
         },
         showOption() {
