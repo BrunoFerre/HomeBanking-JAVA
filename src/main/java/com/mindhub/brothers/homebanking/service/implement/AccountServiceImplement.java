@@ -55,8 +55,13 @@ public class AccountServiceImplement implements AccountService {
         accountRepository.delete(account);
     }
 
-  /*  @Override
+   @Override
     public boolean existsByNumber(String number) {
         return accountRepository.existsByNumber(number);
-    }*/
+    }
+
+    @Override
+    public List<Account> findByClientAndStatusIsTrue(Client client) {
+        return accountRepository.findByClientAndStatusIsTrue(client);
+    }
 }

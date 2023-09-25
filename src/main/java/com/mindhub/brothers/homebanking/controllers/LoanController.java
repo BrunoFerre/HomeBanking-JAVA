@@ -36,11 +36,7 @@ public class LoanController {
     @Autowired
     private LoanService loanService;
     @Autowired
-    private LoanRepository loanRepository;
-    @Autowired
     private ClientLoanService clientLoanService;
-    @Autowired
-    private ClientLoanRepository clientLoanRepository;
     @Autowired
     private TransactionService transactionService;
     @GetMapping("/loans")
@@ -112,12 +108,12 @@ public class LoanController {
         if (!authClient.getEmail().contains("admin.com")){
         return new ResponseEntity<>("You are not an admin", HttpStatus.FORBIDDEN);
         }
-        boolean exist = loanRepository.existsByName(loanDTO.getName());
+        boolean exist = loanService.existsByName(loanDTO.getName());
         if (exist){
         return new ResponseEntity<>("Loan already exist",HttpStatus.FORBIDDEN);
         }
         Loan loan = new Loan(loanDTO.getName(),loanDTO.getMaxAmount(),loanDTO.getPayments(),loanDTO.getInterest());
-        loanRepository.save(loan);
+        loanService.save(loan);
         return new ResponseEntity<>("Loan created successfu",HttpStatus.OK);
     }
 

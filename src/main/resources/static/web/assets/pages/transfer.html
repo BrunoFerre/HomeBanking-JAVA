@@ -130,7 +130,7 @@
           <h3 class="text-white">SEND</h3>
           <select class="form-select " multiple aria-label="Multiple select example" v-model="origin">
             <template v-for="account of accounts">
-            <option class="m-1" :value="account.number">{{account.number}} || USD {{account.balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</option>
+            <option class="m-1" :value="account.number">{{account.number}} || USD {{account.balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(".",",")}}</option>
           </template>
           </select>
         </section>

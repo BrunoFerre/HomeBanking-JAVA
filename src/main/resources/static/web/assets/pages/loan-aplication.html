@@ -92,7 +92,7 @@
             <div class="">
               <input id="amountinput" name="amountinput" type="number" v-model="amount" placeholder="Example:10.000"
                 class="form-control input-md" required="">
-                <span> Max Amount for Loan:{{selectLoan.maxAmount}}</span>
+                <span> Max Amount for Loan:{{selectLoan.maxAmount+",000"}}</span>
             </div>
           </div>
           <!-- Select Basic -->
@@ -118,7 +118,7 @@
         <div class="card-body">
           <h5 class="card-title fw-bolder">Type of Loan: <span>{{selectLoan.name}}</span></h5>
           <p class="card-text fw-bolder">Account Destiny: <span> {{accountDest}}</span>.</p>
-          <p class="card-text fw-bolder">Amount Finally: <span> $ {{calculateInterest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}}</span>.</p>
+          <p class="card-text fw-bolder">Amount Finally: <span> $ {{calculateInterest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(".",",")}}</span>.</p>
           <p class="card-text fw-bolder">Payments: <span> {{payment}}</span>.</p>
         </div>
         

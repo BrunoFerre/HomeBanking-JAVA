@@ -23,7 +23,6 @@ createApp({
                     axios.get(`/api/clients/current/accounts`)
                         .then(response => {
                             const accounts = response.data
-                            console.log(accounts);
                             for (const account of accounts) {
                                 let objet = {
                                     id: account.id,
@@ -33,6 +32,7 @@ createApp({
                                     type: account.type
                                 }
                                 this.accounts.push(objet)
+                                this.accounts.sort((a, b) => a.id - b.id)
                             }
                             // this.accounts = accounts.filter(account => account.status == true);
                             

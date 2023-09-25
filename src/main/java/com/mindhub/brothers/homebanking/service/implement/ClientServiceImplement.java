@@ -18,6 +18,11 @@ public class ClientServiceImplement implements ClientService {
     private ClientRepository clientRepository;
 
     @Override
+    public Client findById(Long id) {
+        return clientRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public List<ClientDTO> getClients() {
         return clientRepository.findAll().stream().map(client -> new ClientDTO(client)).collect(toList());
     }

@@ -11,6 +11,7 @@ import com.mindhub.brothers.homebanking.models.enums.TransactionType;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.repositories.TransactionRepository;
+import com.mindhub.brothers.homebanking.service.AccountService;
 import com.mindhub.brothers.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,9 +32,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class TransactionController {
     @Autowired
-    private AccountsRepository accountsRepository;
-    @Autowired
-    private ClientRepository clientRepository;
+    private AccountService accountService;
     @Autowired
     private ClientService clientService;
     @Autowired
@@ -59,12 +58,12 @@ public class TransactionController {
         if (accountOrigin.equals(accountDestination)) {
             return new ResponseEntity<>("Cannot send transactions to the same account", HttpStatus.FORBIDDEN);
         }
-        if (accountsRepository.findByNumber(accountOrigin) == null) {
+        if (accountService.findByNumber(accountOrigin) == null) {
             return new ResponseEntity<>("Invalid account origin", HttpStatus.FORBIDDEN);
         }
-        Client clientAuth = clientRepository.findByEmail(authentication.getName());
-        Account originalAccount = accountsRepository.findByNumber(accountOrigin);
-        Account destAccount = accountsRepository.findByNumber(accountDestination);
+        Client clientAuth = clientService.findByEmail(authentication.getName());
+        Account originalAccount = accountService.findByNumber(accountOrigin);
+        Account destAccount = accountService.findByNumber(accountDestination);
 
         if (originalAccount.getOwner().getId() != clientAuth.getId()) {
             return new ResponseEntity<>("Invalid account origin", HttpStatus.FORBIDDEN);
@@ -77,8 +76,8 @@ public class TransactionController {
             transactionRepository.save(debit);
             Transaction credit= new Transaction(TransactionType.CREDIT,amount,description,LocalDateTime.now(),destAccount.getBalance());
             destAccount.addTransaction(credit);
-            accountsRepository.save(originalAccount);
-            accountsRepository.save(destAccount);
+            accountService.save(originalAccount);
+            accountService.save(destAccount);
             transactionRepository.save(credit);
         }else{
             return new ResponseEntity<>("Insufficient funds", HttpStatus.FORBIDDEN);
@@ -91,7 +90,7 @@ public class TransactionController {
                                                             Authentication authentication) throws DocumentException, IOException {
         Client current = clientService.findByEmail(authentication.getName());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        if (!accountsRepository.existsByNumber(numberAcc)){
+        if (!accountService.existsByNumber(numberAcc)){
             return new ResponseEntity<>("this account dont exist", HttpStatus.NOT_FOUND);
         }
         if (current == null){

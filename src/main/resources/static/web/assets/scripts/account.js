@@ -37,9 +37,9 @@ createApp({
                         let newObj = {
                             type: transaction.type,
                             amount: transaction.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
-                            description: transaction.description,
                             date: transaction.date,
-                            balance: transaction.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                            balance: transaction.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+                            description: transaction.description
                         }
                         this.transaction.push(newObj)
                     }

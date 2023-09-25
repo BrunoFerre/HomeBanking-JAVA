@@ -62,6 +62,7 @@ const app = createApp({
                         .then(response => {
                             this.loans = response.data
                             console.log(this.loans);
+                            this.selectLoan.maxAmount=0
                         }).catch(error => {
                             console.log(error);
                         })

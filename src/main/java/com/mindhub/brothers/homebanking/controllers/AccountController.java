@@ -22,8 +22,6 @@ public class    AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private AccountsRepository accountsRepository;
-    @Autowired
     private ClientService clientService;
    /* @GetMapping("/api/accounts")
     public List<AccountDTO> getAccounts(){
@@ -50,7 +48,7 @@ public class    AccountController {
             return new ResponseEntity<>("Missing type", HttpStatus.FORBIDDEN);
         }
         Client client = clientService.findByEmail(authentication.getName());
-        List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
+        List <Account> acounts = accountService.findByClientAndStatusIsTrue(client);
         System.out.println(acounts);
         if (acounts.size()<=2){
             String accountNumber = RandomNumberGenerate.accountNumber();
@@ -70,7 +68,7 @@ public class    AccountController {
         }
         Client client = clientService.findByEmail(authentication.getName());
         Account acc = accountService.accountId(id);
-        List <Account> acounts = accountsRepository.findByClientAndStatusIsTrue(client);
+        List <Account> acounts = accountService.findByClientAndStatusIsTrue(client);
         if (acounts.size()==1){
             return new ResponseEntity<>("You cannot delete your only account", HttpStatus.NOT_ACCEPTABLE);
         }

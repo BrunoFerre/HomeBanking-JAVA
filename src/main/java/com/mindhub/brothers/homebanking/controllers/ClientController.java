@@ -9,6 +9,8 @@ import com.mindhub.brothers.homebanking.models.enums.AccountType;
 import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientLoanRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
+import com.mindhub.brothers.homebanking.service.AccountService;
+import com.mindhub.brothers.homebanking.service.ClientLoanService;
 import com.mindhub.brothers.homebanking.service.ClientService;
 import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +31,11 @@ public class ClientController{
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private AccountsRepository accountsRepository;
-    @Autowired
-    private ClientLoanRepository clientLoanRepository;
+    private AccountService accountService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private ClientLoanService clientLoanService;
     @GetMapping("/clients")
     public List<ClientDTO> getClients(){
       return  clientService.getClients();
@@ -60,7 +60,7 @@ public class ClientController{
         if (password.isBlank()) {
             return new ResponseEntity<>("Password cannot be empty", HttpStatus.FORBIDDEN);
         }
-        if (clientRepository.findByEmail(email) !=  null) {
+        if (clientService.findByEmail(email) !=  null) {
             return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
         }
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
@@ -68,17 +68,17 @@ public class ClientController{
         String accountNumber = RandomNumberGenerate.accountNumber();
         Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),0.0, AccountType.CURRENT,true);
         newClient.addAccount(newAccount);
-        accountsRepository.save(newAccount);
+        accountService.save(newAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @GetMapping("/clients/current/loans")
     public List<ClientLoanDTO> getLoans(Authentication authentication){
-       return clientLoanRepository.findAllByClient(clientService.findByEmail(authentication.getName())).stream().map(ClientLoanDTO::new).collect(toList());
+       return clientLoanService.findAllByClient(clientService.findByEmail(authentication.getName())).stream().map(ClientLoanDTO::new).collect(toList());
     }
 
     @GetMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
-        Client client = clientRepository.findById(id).orElse(null);
+        Client client = clientService.findById(id);
         return new ClientDTO(client);
     }
 }

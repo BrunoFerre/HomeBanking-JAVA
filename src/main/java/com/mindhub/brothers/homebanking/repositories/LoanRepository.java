@@ -11,5 +11,4 @@ import java.util.List;
 public interface LoanRepository extends JpaRepository<Loan, Long> {
 //Loan findById(long id);
     boolean existsByName(String name);
-
 }

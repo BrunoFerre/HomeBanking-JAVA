@@ -51,7 +51,7 @@
           <div id="content">
             <p id="heading">Account Number: <span>{{account.number}}</span></p>
             <p id="para">Creation Date: <span>{{account.creationDate}}</span></p>
-           <p id="para"> Balance: <span>{{account.balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</span></p>
+           <p id="para"> Balance: <span>${{account.balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</span></p>
            <p id="para">Type: <span>{{account.type}}</span></p>
            <a :href="'./account.html?id=' + account.id" class="btn">More Details</a>
           </div>
@@ -86,7 +86,7 @@
           <template v-for="(loan,index) of loans">
           <tr class="">
             <td>{{loan.loan}}</td>
-            <td>{{loan.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+            <td>{{loan.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(".",",")}}</td>
             <td>{{loan.payments}}</td>
           </tr>
         </template>

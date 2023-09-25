@@ -10,8 +10,10 @@ import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
 import com.mindhub.brothers.homebanking.repositories.CardRepository;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.repositories.TransactionRepository;
+import com.mindhub.brothers.homebanking.service.AccountService;
 import com.mindhub.brothers.homebanking.service.CardService;
 import com.mindhub.brothers.homebanking.service.ClientService;
+import com.mindhub.brothers.homebanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +32,12 @@ public class PaymentController {
     @Autowired
     private CardService cardService;
     @Autowired
-    private CardRepository cardRepository;
-    @Autowired
     private ClientService clientService;
+
     @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private AccountsRepository accountsRepository;
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private AccountService accountService;
+@Autowired
+private TransactionService transactionService;
     @Transactional
     @PostMapping("/payments")
     public ResponseEntity<Object> newPayment(@RequestBody CardPaymentDTO cardPaymentDTO){
@@ -46,7 +45,7 @@ public class PaymentController {
         if (cardNumber.isBlank()){
             return new ResponseEntity<>("Card number cannot be empty", HttpStatus.FORBIDDEN);
         }
-        Card exist = cardRepository.findByNumber(cardNumber);
+        Card exist = cardService.findByNumber(cardNumber);
         if (exist.getStatus() == false || exist == null){
             return new ResponseEntity<>("Card not exist", HttpStatus.NOT_FOUND);
         }
@@ -55,7 +54,7 @@ public class PaymentController {
         }
 
         long idClient = exist.getClient().getId();
-        Client client = clientRepository.findById(idClient).orElse(null);
+        Client client = clientService.findById(idClient);
         Set<Account> accountList = client.getAccounts();
         List<Account> maxBalanceAccountList = new ArrayList<>();
         for (Account account : accountList) {
@@ -71,8 +70,8 @@ public class PaymentController {
             maxBalanceAccount.setBalance(maxBalanceAccount.getBalance() - cardPaymentDTO.getAmount());
             Transaction transaction = new Transaction(TransactionType.DEBIT, cardPaymentDTO.getAmount(), cardPaymentDTO.getDescription(), LocalDateTime.now(), maxBalanceAccount.getBalance());
             maxBalanceAccount.addTransaction(transaction);
-            transactionRepository.save(transaction);
-            accountsRepository.save(maxBalanceAccount);
+            transactionService.saveTransaction(transaction);
+            accountService.save(maxBalanceAccount);
         }
         return new ResponseEntity<>("Payment successful", HttpStatus.OK);
     }
