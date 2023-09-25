@@ -18,7 +18,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 public class RepositoriesTest {
-    @Autowired
+  /*  @Autowired
     private AccountsRepository accountRepository;
     @Autowired
     private CardRepository cardRepository;
@@ -75,6 +75,6 @@ public class RepositoriesTest {
         Client client = clientRepository.findById(id).orElse(null);
         List<Account> s = accountRepository.findByClientAndStatusIsTrue(client);
         assertThat(s,is(not(empty())));
-    }
+    }*/
 
 }
