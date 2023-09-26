@@ -22,7 +22,6 @@ createApp({
     },
     methods: {
         loadData() {
-            console.log(this.client);
             const parameter = location.search
             const parameterUrl = new URLSearchParams(parameter)
             this.id_account = parameterUrl.get("id")
@@ -44,12 +43,9 @@ createApp({
                         this.transaction.push(newObj)
                     }
                     this.dateAsherter=this.transaction.map(transaction=>transaction.date.slice(2,-3).replace(/-/g, '/'))
-                   
                     this.transaction.sort((a,b)=> a.id - b.id)
-                   
             }).catch(error => {
                 this.error= error.message
-                console.log(this.error);
                 // location.href = "../pages/error.html"
             })
         },
@@ -57,7 +53,7 @@ createApp({
             axios.get(`/api/clients/current`)
                 .then(response => {
                     this.client = response.data
-                    console.log(this.clients);
+            
                 })
         },
         logOut(){
@@ -80,7 +76,6 @@ createApp({
                             location.href = "../pages/accounts.html";  
                             },200)
                         }).catch(error => {
-                            console.log(error);
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',

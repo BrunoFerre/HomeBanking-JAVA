@@ -19,7 +19,6 @@ const app = createApp({
     },
     methods: {
         newLoans(event) {
-            console.log(this.selectLoan);
             event.preventDefault()
             let newLoan = {
                 "id": this.selectLoan.id,
@@ -37,7 +36,6 @@ const app = createApp({
                 showLoaderOnConfirm: true,
                 buttonColor: '#32a852',
                 preConfirm: login => {
-                    console.log(newLoan);
                 return axios.post('/api/loans', newLoan)
                     .then(response => {
                         window.location.reload()
@@ -61,7 +59,6 @@ const app = createApp({
                     axios.get(`/api/loans`)
                         .then(response => {
                             this.loans = response.data
-                            console.log(this.loans);
                             this.selectLoan.maxAmount=0
                         }).catch(error => {
                             console.log(error);
@@ -74,7 +71,6 @@ const app = createApp({
                 axios.get(`/api/clients/current`)
                     .then(response => {
                         this.client = response.data
-                        console.log(this.clients);
                     })
             },
         logOut() {

@@ -68,7 +68,6 @@ createApp({
                 showLoaderOnConfirm: true,
                 buttonColor: '#32a852',
                 preConfirm: login => {
-                    console.log(data);
                     return axios.post('/api/loans/create', data)
                         .then(response => {
                             Swal.fire({
@@ -80,7 +79,6 @@ createApp({
                             location.reload()
                         })
                         .catch(error => {
-                            console.log(error);
                             Swal.fire({
                                 icon: 'error',
                                 text: error.response.data,

@@ -31,7 +31,6 @@ const app = createApp({
             axios.get(`/api/clients/current`)
                 .then(response => {
                     this.client = response.data
-                    console.log(this.clients);
                 })
         },
         logOut() {

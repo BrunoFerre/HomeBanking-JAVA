@@ -38,7 +38,6 @@ createApp({
                                     confirmButtonColor: '#5b31be93',
                                 })
                             }).catch(error => {
-                                console.log(error);
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Oops...',
