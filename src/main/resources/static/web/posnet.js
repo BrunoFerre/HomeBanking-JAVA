@@ -4,9 +4,8 @@ createApp({
     data() {
         return {
             cardNumber: "",
-            cvv: 0,
-            amount: 0,
-            description: "",
+            cvv:null,
+            amount: null,
         }
     },
     created() {
@@ -18,7 +17,6 @@ createApp({
                 "cardNumber":this.cardNumber,
                 "amount": this.amount,
                 "cvv": this.cvv,
-                "description": this.description
             }
             Swal.fire({
                     title: 'Payment?',

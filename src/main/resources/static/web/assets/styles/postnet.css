@@ -1,0 +1,21 @@
+header{
+    min-height: 10vh;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+main{
+    background-image: url('../images/E-Wallet-amico.png');
+    background-size: 35rem;
+    background-repeat: no-repeat;
+    background-position: left;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+form{
+    align-self: center !important;
+}

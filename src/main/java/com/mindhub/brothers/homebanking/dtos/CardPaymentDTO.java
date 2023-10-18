@@ -9,11 +9,10 @@ public class CardPaymentDTO {
     public CardPaymentDTO() {
     }
 
-    public CardPaymentDTO(String cardNumber, Double amount, int cvv, String description) {
+    public CardPaymentDTO(String cardNumber, Double amount, int cvv) {
         this.cardNumber = cardNumber;
         this.amount = amount;
         this.cvv = cvv;
-        this.description = description;
     }
 
     public String getCardNumber() {
