@@ -1,5 +1,6 @@
 package com.mindhub.brothers.homebanking.configurations;
 
+
 import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Configuration
+@CrossOrigin(origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = {"Accept", "Content-Type"})
 public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
     private ClientRepository clientRepository;

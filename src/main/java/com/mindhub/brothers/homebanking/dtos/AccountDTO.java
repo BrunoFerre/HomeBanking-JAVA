@@ -4,7 +4,6 @@ import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Transaction;
 import com.mindhub.brothers.homebanking.models.enums.AccountType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.HashSet;

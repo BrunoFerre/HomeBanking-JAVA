@@ -36,20 +36,21 @@ public class PaymentController {
 
     @Autowired
     private AccountService accountService;
-@Autowired
-private TransactionService transactionService;
+    @Autowired
+    private TransactionService transactionService;
+
     @Transactional
     @PostMapping("/payments")
-    public ResponseEntity<Object> newPayment(@RequestBody CardPaymentDTO cardPaymentDTO){
+    public ResponseEntity<Object> newPayment(@RequestBody CardPaymentDTO cardPaymentDTO) {
         String cardNumber = cardPaymentDTO.getCardNumber();
-        if (cardNumber.isBlank()){
+        if (cardNumber.isBlank()) {
             return new ResponseEntity<>("Card number cannot be empty", HttpStatus.FORBIDDEN);
         }
         Card exist = cardService.findByNumber(cardNumber);
-        if (exist.getStatus() == false || exist == null){
+        if (exist.getStatus() == false || exist == null) {
             return new ResponseEntity<>("Card not exist", HttpStatus.NOT_FOUND);
         }
-        if (exist.getCvv() != cardPaymentDTO.getCvv()){
+        if (exist.getCvv() != cardPaymentDTO.getCvv()) {
             return new ResponseEntity<>("Error CVV", HttpStatus.BAD_GATEWAY);
         }
 
@@ -58,15 +59,15 @@ private TransactionService transactionService;
         Set<Account> accountList = client.getAccounts();
         List<Account> maxBalanceAccountList = new ArrayList<>();
         for (Account account : accountList) {
-            if (account.getStatus()==true){
+            if (account.getStatus() == true) {
                 maxBalanceAccountList.add(account);
                 System.out.println(maxBalanceAccountList);
             }
         }
         Account maxBalanceAccount = maxBalanceAccountList.stream().reduce((ac2, ac3) -> ac2.getBalance() > ac3.getBalance() ? ac2 : ac3).orElse(null);
-        if (maxBalanceAccount.getBalance() < cardPaymentDTO.getAmount()){
+        if (maxBalanceAccount.getBalance() < cardPaymentDTO.getAmount()) {
             return new ResponseEntity<>("Insufficient funds", HttpStatus.BAD_GATEWAY);
-        }else{
+        } else {
             maxBalanceAccount.setBalance(maxBalanceAccount.getBalance() - cardPaymentDTO.getAmount());
             Transaction transaction = new Transaction(TransactionType.DEBIT, cardPaymentDTO.getAmount(), cardPaymentDTO.getDescription(), LocalDateTime.now(), maxBalanceAccount.getBalance());
             maxBalanceAccount.addTransaction(transaction);

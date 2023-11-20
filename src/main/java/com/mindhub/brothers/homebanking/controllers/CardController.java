@@ -1,15 +1,13 @@
 package com.mindhub.brothers.homebanking.controllers;
 
 import com.mindhub.brothers.homebanking.dtos.CardDTO;
-import com.mindhub.brothers.homebanking.dtos.ClientDTO;
 import com.mindhub.brothers.homebanking.models.Card;
 import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.models.enums.CardColor;
 import com.mindhub.brothers.homebanking.models.enums.CardType;
-import com.mindhub.brothers.homebanking.repositories.CardRepository;
-import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.service.CardService;
 import com.mindhub.brothers.homebanking.service.ClientService;
+
 import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class CardController {
     @Autowired
     private CardService cardService;
@@ -32,8 +31,8 @@ public class CardController {
         return cardService.getCards();
     }*/
     @GetMapping("/clients/current/cards")
-    public List<CardDTO>getCards(Authentication authentication){
-        return cardService.cardsAuthentication(authentication);
+    public List<CardDTO>getCards(){
+        return cardService.getCards();
     }
     @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> addCard(Authentication authentication, @RequestParam String type,
@@ -66,7 +65,7 @@ public class CardController {
         cardService.addCard(newCard);
         return new ResponseEntity<>("Card Created", HttpStatus.CREATED);
     }
-    @PutMapping("/clients/current/cards")
+   @PutMapping("/clients/current/cards")
     public ResponseEntity<Object> deleteCard(Authentication authentication, @RequestParam String number){
         Client client = clientService.findByEmail(authentication.getName());
         if (number.isBlank()) {

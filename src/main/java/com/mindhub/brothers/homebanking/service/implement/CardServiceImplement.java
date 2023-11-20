@@ -28,7 +28,7 @@ public class CardServiceImplement implements CardService {
         return cardRepository.findAll().stream().map(CardDTO::new).collect(toList());
     }
 
-    @Override
+   @Override
     public List<CardDTO> cardsAuthentication(Authentication authentication) {
         return new ClientDTO(clientRepository.findByEmail(authentication.getName())).getCards().stream().collect(toList());
     }

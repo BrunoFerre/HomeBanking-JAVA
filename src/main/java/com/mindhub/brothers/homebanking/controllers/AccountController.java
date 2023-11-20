@@ -8,74 +8,78 @@ import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
 import com.mindhub.brothers.homebanking.service.AccountService;
 import com.mindhub.brothers.homebanking.service.ClientService;
 import com.mindhub.brothers.homebanking.utils.RandomNumberGenerate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-public class    AccountController {
+public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
     private ClientService clientService;
+
    /* @GetMapping("/api/accounts")
-    public List<AccountDTO> getAccounts(){
+    public List<AccountDTO> getAccounts() {
         return accountService.getAccounts();
     }*/
+
     @GetMapping("/api/clients/current/accounts")
-    public List<AccountDTO> getAcccount(Authentication authentication){
+    public List<AccountDTO> getAcccount(Authentication authentication) {
         return accountService.getAcccount(authentication);
     }
+
     @GetMapping("/api/clients/current/accounts/{id}")
-    public ResponseEntity<Object> getAccount(@PathVariable Long id, Authentication authentication){
+    public ResponseEntity<Object> getAccount(@PathVariable Long id, Authentication authentication) {
         Client client = clientService.findByEmail(authentication.getName());
         Account acc = accountService.accountId(id);
-        if (client.getId() == acc.getOwner().getId()){
-            return new ResponseEntity<>(new AccountDTO(acc),HttpStatus.OK);
-        }else{
+        if (client.getId() == acc.getOwner().getId()) {
+            return new ResponseEntity<>(new AccountDTO(acc), HttpStatus.OK);
+        } else {
             return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
         }
     }
 
     @PostMapping("/api/clients/current/accounts")
-    public ResponseEntity<Object> newAccount(Authentication authentication, @RequestParam String type){
+    public ResponseEntity<Object> newAccount(Authentication authentication, @RequestParam String type) {
         if (type.isBlank()) {
             return new ResponseEntity<>("Missing type", HttpStatus.FORBIDDEN);
         }
         Client client = clientService.findByEmail(authentication.getName());
-        List <Account> acounts = accountService.findByClientAndStatusIsTrue(client);
+        List<Account> acounts = accountService.findByClientAndStatusIsTrue(client);
         System.out.println(acounts);
-        if (acounts.size()<=2){
+        if (acounts.size() <= 2) {
             String accountNumber = RandomNumberGenerate.accountNumber();
-            Account newAccount = new Account("VIN-"+accountNumber, LocalDate.now(),
-                    0.0, AccountType.valueOf(type),true);
+            Account newAccount = new Account("VIN-" + accountNumber, LocalDate.now(),
+                    0.0, AccountType.valueOf(type), true);
             clientService.findByEmail(authentication.getName()).addAccount(newAccount);
             accountService.save(newAccount);
-        }else{
+        } else {
             return new ResponseEntity<>("Maximum of accounts made", HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PutMapping("/api/clients/current/accounts/{id}")
-    public ResponseEntity<Object> deleteAccount(Authentication authentication,@PathVariable Long id){
-        if (id == null){
+    public ResponseEntity<Object> deleteAccount(Authentication authentication, @PathVariable Long id) {
+        if (id == null) {
             return new ResponseEntity<>("Missing id", HttpStatus.FORBIDDEN);
         }
         Client client = clientService.findByEmail(authentication.getName());
         Account acc = accountService.accountId(id);
-        List <Account> acounts = accountService.findByClientAndStatusIsTrue(client);
-        if (acounts.size()==1){
+        List<Account> acounts = accountService.findByClientAndStatusIsTrue(client);
+        if (acounts.size() == 1) {
             return new ResponseEntity<>("You cannot delete your only account", HttpStatus.NOT_ACCEPTABLE);
         }
-        if (client.getId() != acc.getOwner().getId()){
+        if (client.getId() != acc.getOwner().getId()) {
             return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
         }
-        if(acc.getBalance() > 0){
+        if (acc.getBalance() > 0) {
             return new ResponseEntity<>("You cannot delete an account with a balance", HttpStatus.NOT_ACCEPTABLE);
         }
         acc.setStatus(false);

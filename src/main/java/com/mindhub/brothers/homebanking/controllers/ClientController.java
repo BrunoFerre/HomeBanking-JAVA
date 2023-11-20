@@ -4,11 +4,7 @@ import com.mindhub.brothers.homebanking.dtos.ClientDTO;
 import com.mindhub.brothers.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Client;
-import com.mindhub.brothers.homebanking.models.ClientLoan;
 import com.mindhub.brothers.homebanking.models.enums.AccountType;
-import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
-import com.mindhub.brothers.homebanking.repositories.ClientLoanRepository;
-import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.service.AccountService;
 import com.mindhub.brothers.homebanking.service.ClientLoanService;
 import com.mindhub.brothers.homebanking.service.ClientService;
@@ -40,7 +36,7 @@ public class ClientController{
     public List<ClientDTO> getClients(){
       return  clientService.getClients();
     }
-    @GetMapping("/clients/current")
+  @GetMapping("/clients/current")
     public ClientDTO getClient(Authentication authentication ) {
         return new ClientDTO(clientService.findByEmail(authentication.getName()));
     }

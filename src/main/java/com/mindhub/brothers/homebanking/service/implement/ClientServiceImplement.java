@@ -4,8 +4,8 @@ import com.mindhub.brothers.homebanking.dtos.ClientDTO;
 import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.service.ClientService;
-import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class ClientServiceImplement implements ClientService {
 
     @Override
     public List<ClientDTO> getClients() {
-        return clientRepository.findAll().stream().map(client -> new ClientDTO(client)).collect(toList());
+        return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
     }
 
     @Override

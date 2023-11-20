@@ -1,5 +1,6 @@
 package com.mindhub.brothers.homebanking.configurations;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,20 +9,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 
 @EnableWebSecurity
-@Configuration
 public class WebAuthorization {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors();
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/clients", "/api/login", "/api/logout", "/api/payments").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/clients", "/api/login", "/api/logout","/api/payments").permitAll()
                 .antMatchers("/web/public/**").permitAll()
                 .antMatchers("/web/index.html", "/web/login.html", "/web/register.html", "/web/images/**", "/web/posnet.html", "/web/posnet.js").permitAll()
                 .antMatchers("/web/assets/styles/**", "/web/assets/images/**").permitAll()
@@ -38,7 +43,7 @@ public class WebAuthorization {
                 .antMatchers("/api/clients/accounts/{id}").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards", "/api/transactions", "/api/loans").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.PUT, "/api/clients/current/accounts/{id}", "/api/clients/current/cards").hasAuthority("CLIENT")
-                .anyRequest().denyAll();
+                .anyRequest().permitAll();
         http.formLogin().usernameParameter("email").passwordParameter("password").loginPage("/api/login");
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
         http.csrf().disable();
@@ -48,8 +53,8 @@ public class WebAuthorization {
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
 
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
-
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+        http.cors();
         return http.build();
 
     }
@@ -58,5 +63,14 @@ public class WebAuthorization {
         if (session != null) {
             session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
+    }
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

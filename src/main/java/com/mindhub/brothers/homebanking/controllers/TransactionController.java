@@ -1,6 +1,9 @@
 package com.mindhub.brothers.homebanking.controllers;
 
-import com.lowagie.text.*;
+
+
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -8,8 +11,6 @@ import com.mindhub.brothers.homebanking.models.Account;
 import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.models.Transaction;
 import com.mindhub.brothers.homebanking.models.enums.TransactionType;
-import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
-import com.mindhub.brothers.homebanking.repositories.ClientRepository;
 import com.mindhub.brothers.homebanking.repositories.TransactionRepository;
 import com.mindhub.brothers.homebanking.service.AccountService;
 import com.mindhub.brothers.homebanking.service.ClientService;
@@ -19,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.transaction.Transactional;
 import java.io.ByteArrayOutputStream;
@@ -41,8 +41,8 @@ public class TransactionController {
     @Transactional
     @PostMapping("/transactions")
     public ResponseEntity<Object> newTransaction(Authentication authentication,
-              @RequestParam Double amount,@RequestParam String description,@RequestParam String accountOrigin,
-              @RequestParam String accountDestination) {
+                                                 @RequestParam Double amount, @RequestParam String description, @RequestParam String accountOrigin,
+                                                 @RequestParam String accountDestination) {
         if (amount.isNaN() || amount < 0) {
             return new ResponseEntity<>("Invalid amount", HttpStatus.FORBIDDEN);
         }
