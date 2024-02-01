@@ -2,7 +2,7 @@ package com.mindhub.brothers.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,8 +11,7 @@ import java.util.stream.Collectors;
 @Entity
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name="native", strategy = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
     private String firstName;
     private String lastName;

@@ -2,14 +2,14 @@ package com.mindhub.brothers.homebanking.models;
 
 import com.mindhub.brothers.homebanking.models.enums.TransactionType;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.nio.DoubleBuffer;
 import java.time.LocalDateTime;
 
 @Entity
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private TransactionType type;
     private double amount;

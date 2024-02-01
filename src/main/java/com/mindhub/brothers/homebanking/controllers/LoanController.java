@@ -1,30 +1,21 @@
 package com.mindhub.brothers.homebanking.controllers;
 
-import com.mindhub.brothers.homebanking.dtos.AccountDTO;
 import com.mindhub.brothers.homebanking.dtos.LoanAplicationDTO;
 import com.mindhub.brothers.homebanking.dtos.LoanDTO;
 import com.mindhub.brothers.homebanking.models.*;
 import com.mindhub.brothers.homebanking.models.enums.TransactionType;
-import com.mindhub.brothers.homebanking.repositories.AccountsRepository;
-import com.mindhub.brothers.homebanking.repositories.ClientLoanRepository;
-import com.mindhub.brothers.homebanking.repositories.ClientRepository;
-import com.mindhub.brothers.homebanking.repositories.LoanRepository;
 import com.mindhub.brothers.homebanking.service.*;
-import com.mindhub.brothers.homebanking.utils.InterestRate;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import static com.mindhub.brothers.homebanking.utils.InterestRate.calculateInterest;
-import static java.util.stream.Collectors.toSet;
 
 @RestController
 @RequestMapping("/api")

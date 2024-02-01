@@ -1,14 +1,13 @@
 package com.mindhub.brothers.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 
 @Entity
 public class ClientLoan {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = " client_id")

@@ -4,11 +4,11 @@ import com.mindhub.brothers.homebanking.models.Card;
 import com.mindhub.brothers.homebanking.models.Client;
 import com.mindhub.brothers.homebanking.models.enums.CardType;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@RepositoryRestResource
+@Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
     Card findByNumber(String number);
     Card findByCvv(int cvv);
